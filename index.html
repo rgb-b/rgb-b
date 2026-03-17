@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>eloise rgb-b</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="a site" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            (function () {
+                let title = "eloise rgb-b ✦ ";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        <!-- Fixed header -->
+        <header>
+            <a class="site-title" href="index.html">eloise rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">home</a></li>
+                    <li><a href="blog.html">blog</a></li>
+                    <!-- add more nav links here -->
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Intro section -->
+            <section id="intro">
+                <h2>welcome</h2>
+                <div
+                    class="two-col mb-sm"
+                    style="margin-top: var(--spacing-sm)"
+                >
+                    <div class="card visible">
+                        <h3>about</h3>
+                        <p>eloise | 21 | artist, web developer, designer.</p>
+                        <p>Melbourne, Australia.</p>
+                    </div>
+                    <div class="card visible">
+                        <h3>links</h3>
+                        <p class="mono muted" style="margin-bottom: 4px">
+                            &gt;
+                            <a
+                                href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+                                >linkedin</a
+                            >
+                        </p>
+                        <p class="mono muted" style="margin-bottom: 4px">
+                            &gt; <a href="#">another place</a>
+                        </p>
+                        <p class="mono muted">
+                            &gt; <a href="mailto:eloise@rgb-b.com">email</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Marquee strip -->
+            <div class="marquee-wrapper">
+                <div class="marquee-track">
+                    <!-- Replace these with real badge images or text badges -->
+                    <span class="marquee-badge">html</span>
+                    <span class="marquee-badge">css</span>
+                    <span class="marquee-badge">linux</span>
+                    <span class="marquee-badge">made with tahoma</span>
+                    <span class="marquee-badge">no frameworks</span>
+                    <span class="marquee-badge">self-hosted</span>
+                    <span class="marquee-badge">hand-coded</span>
+                    <span class="marquee-badge">old web forever</span>
+                    <!-- Clones for seamless loop -->
+                    <span class="marquee-badge">html</span>
+                    <span class="marquee-badge">css</span>
+                    <span class="marquee-badge">linux</span>
+                    <span class="marquee-badge">made with tahoma</span>
+                    <span class="marquee-badge">no frameworks</span>
+                    <span class="marquee-badge">self-hosted</span>
+                    <span class="marquee-badge">hand-coded</span>
+                    <span class="marquee-badge">old web forever</span>
+                </div>
+            </div>
+
+            <!-- Projects section -->
+            <section id="projects">
+                <h2>projects</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3>ink density tool</h3>
+                        <p>
+                            a program that takes direct imput from an X-Rite
+                            spectrodensitometer, and writes it into a chart
+                            which can export to excel and illustrator templates
+                            using variable data and cells.
+                        </p>
+                        <p
+                            class="mono muted"
+                            style="margin-top: var(--spacing-xs)"
+                        >
+                            <a href="project-one.html">view &rarr;</a>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>brandpack tools</h3>
+                        <p>
+                            a dashboard for tracking shift hours, maintenance
+                            issues, technician visits, stock levels, colour
+                            mixing records,LAB/CMYK/RGB conversions, task time,
+                            and to-do lists.
+                        </p>
+                        <p
+                            class="mono muted"
+                            style="margin-top: var(--spacing-xs)"
+                        >
+                            <a href="project-two.html">view &rarr;</a>
+                        </p>
+                    </div>
+                    <!-- copy .card blocks to add more -->
+                </div>
+            </section>
+
+            <!-- Updates section -->
+            <section id="updates">
+                <h2>update log</h2>
+                <div class="updates-box">
+                    <div class="update-entry">
+                        <em>march 17 2026</em>
+                        <pre>site created. work in progress.</pre>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- colour palette note -->
+        <!--
+            website colours
+            --color-accent:        #00ffcc  (cyan-green, primary accent)
+            --color-accent-alt:    #ff44aa  (hot pink, secondary accent)
+            --color-bg:            #0a0a0a  (page background)
+            --color-bg-card:       #141414  (card background)
+            --color-bg-card-hover: #0d1f1c  (card hover fill)
+            --color-border:        #222222  (borders)
+            --color-text:          #e0fff8  (primary text)
+            --color-text-muted:    #5fa088  (muted/secondary text)
+        -->
+
+        <footer>
+            <p>
+                eloise &mdash;
+                <a href="mailto:you@example.com">eloise@rgb-b.com</a> &mdash;
+                2026
+            </p>
+        </footer>
+
+        <script>
+            // Staggered fade-in for .card elements
+            document.addEventListener("DOMContentLoaded", function () {
+                const cards = document.querySelectorAll(".card:not(.visible)");
+                cards.forEach(function (card, i) {
+                    card.style.animation =
+                        "fadeIn 0.4s ease forwards " + i * 80 + "ms";
+                });
+            });
+        </script>
+    </body>
+</html>

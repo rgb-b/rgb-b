@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>blog — eloise rgb-b</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="blog" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            (function () {
+                let title = "blog ✦ eloise rgb-b ✦ ";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        <!-- Fixed header (shared) -->
+        <header>
+            <a class="site-title" href="index.html">eloise rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="blog.html" class="active">blog</a></li>
+                    <!-- add more nav links here -->
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+
+            <a class="back-link" href="index.html">&larr; back home</a>
+
+            <div class="blog-layout">
+
+                <!-- Main blog content -->
+                <div class="blog-content">
+                    <section style="margin-bottom: var(--spacing-md)">
+                        <h2>blog</h2>
+                    </section>
+
+                    <!-- Blog post entries — copy this block to add more posts -->
+                    <div class="blog-post-card">
+                        <h3><a href="post-march-17.html">post title here</a></h3>
+                        <div class="post-date">march 17, 2026</div>
+                        <p>
+                            excerpt or opening lines from the post. keep it
+                            short enough to make someone want to click through.
+                        </p>
+                        <a class="read-more" href="post-march-17.html">read more &rarr;</a>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <h3><a href="post-march-10.html">another post title</a></h3>
+                        <div class="post-date">march 10, 2026</div>
+                        <p>
+                            another excerpt. you can link these to individual
+                            html files (e.g. blog-mar-17-2026.html) like
+                            elphiene does.
+                        </p>
+                        <a class="read-more" href="post-march-10.html">read more &rarr;</a>
+                    </div>
+
+                    <div class="blog-post-card">
+                        <h3><a href="post-march-01.html">first post</a></h3>
+                        <div class="post-date">march 1, 2026</div>
+                        <p>
+                            first entry. could be an intro, a hello world, a
+                            ramble about what you want to use this blog for.
+                        </p>
+                        <a class="read-more" href="post-march-01.html">read more &rarr;</a>
+                    </div>
+
+                    <!-- end blog posts -->
+                </div>
+
+                <!-- Sidebar -->
+                <div class="blog-sidebar">
+
+                    <div class="sidebar-section">
+                        <h3>categories</h3>
+                        <ul>
+                            <li><a href="category-work.html">work</a></li>
+                            <li><a href="category-web.html">web</a></li>
+                            <li><a href="category-tech.html">tech</a></li>
+                            <li><a href="category-other.html">other</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>elsewhere</h3>
+                        <ul>
+                            <li><a href="#">link one</a></li>
+                            <li><a href="#">link two</a></li>
+                            <li><a href="#">link three</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>about this blog</h3>
+                        <p class="muted">
+                            a couple of sentences about what you write about
+                            here. keep it brief.
+                        </p>
+                    </div>
+
+                </div>
+                <!-- end sidebar -->
+
+            </div>
+            <!-- end blog-layout -->
+
+        </main>
+
+        <footer>
+            <p>eloise &mdash; <a href="mailto:eloise@rgb-b.com">eloise@rgb-b.com</a> &mdash; 2026</p>
+        </footer>
+
+        <script>
+            // Staggered fade-in for blog post cards
+            document.addEventListener("DOMContentLoaded", function () {
+                const cards = document.querySelectorAll(".blog-post-card");
+                cards.forEach(function (card, i) {
+                    card.style.opacity = "0";
+                    card.style.animation =
+                        "fadeIn 0.4s ease forwards " + i * 80 + "ms";
+                });
+            });
+        </script>
+    </body>
+</html>

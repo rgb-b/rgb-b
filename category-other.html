@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>other — eloise rgb-b</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="other posts" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            (function () {
+                let title = "other ✦ eloise rgb-b ✦ ";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <a class="site-title" href="index.html">eloise rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="blog.html" class="active">blog</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <a class="back-link" href="blog.html">&larr; back to blog</a>
+
+            <div class="blog-layout">
+
+                <!-- Main content -->
+                <div class="blog-content">
+                    <section style="margin-bottom: var(--spacing-md)">
+                        <h2>other</h2>
+                    </section>
+
+                    <div class="blog-post-card">
+                        <h3><a href="#">no posts yet</a></h3>
+                        <div class="post-date">—</div>
+                        <p>nothing here yet. check back later.</p>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="blog-sidebar">
+
+                    <div class="sidebar-section">
+                        <h3>categories</h3>
+                        <ul>
+                            <li><a href="category-work.html">work</a></li>
+                            <li><a href="category-web.html">web</a></li>
+                            <li><a href="category-tech.html">tech</a></li>
+                            <li><a href="category-other.html" class="active">other</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>elsewhere</h3>
+                        <ul>
+                            <li><a href="#">link one</a></li>
+                            <li><a href="#">link two</a></li>
+                            <li><a href="#">link three</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3>about this blog</h3>
+                        <p class="muted">
+                            a couple of sentences about what you write about
+                            here. keep it brief.
+                        </p>
+                    </div>
+
+                </div>
+                <!-- end sidebar -->
+
+            </div>
+            <!-- end blog-layout -->
+
+        </main>
+
+        <footer>
+            <p>eloise &mdash; <a href="mailto:eloise@rgb-b.com">eloise@rgb-b.com</a> &mdash; 2026</p>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const cards = document.querySelectorAll(".blog-post-card");
+                cards.forEach(function (card, i) {
+                    card.style.opacity = "0";
+                    card.style.animation =
+                        "fadeIn 0.4s ease forwards " + i * 80 + "ms";
+                });
+            });
+        </script>
+    </body>
+</html>
