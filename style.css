@@ -9,14 +9,14 @@
 
 :root {
     /* Monochrome palette — swap these to add color */
-    --color-accent: #e0e0e0; /* bright highlight */
-    --color-accent-alt: cya; /* secondary accent */
-    --color-bg: #0f0f0f; /* page background */
-    --color-bg-card: #1a1a1a; /* card background */
-    --color-bg-card-hover: cyan;
-    --color-border: #2a2a2a;
-    --color-text: #f0f0f0;
-    --color-text-muted: #888888;
+    --color-accent: #00ffcc; /* cyan-green, primary accent */
+    --color-accent-alt: #ff44aa; /* hot pink, secondary accent */
+    --color-bg: #0a0a0a; /* page background */
+    --color-bg-card: #141414; /* card background */
+    --color-bg-card-hover: #0d1f1c; /* card hover fill */
+    --color-border: #222222; /* borders */
+    --color-text: #e0fff8; /* primary text */
+    --color-text-muted: #5fa088; /* muted/secondary text */
 
     /* Gradients */
     --gradient-card: linear-gradient(to bottom right, #1f1f1f, #111111);
@@ -24,8 +24,8 @@
     --gradient-bg: radial-gradient(ellipse at top, #1e1e1e 0%, #0a0a0a 70%);
 
     /* Glows */
-    --glow: 0 0 12px rgba(255, 255, 255, 0.08);
-    --glow-hover: 0 0 20px rgba(255, 255, 255, 0.15);
+    --glow: 0 0 12px rgba(0, 255, 204, 0.08);
+    --glow-hover: 0 0 20px rgba(0, 255, 204, 0.18);
 
     /* Typography */
     --font-main: Tahoma, Verdana, sans-serif;
