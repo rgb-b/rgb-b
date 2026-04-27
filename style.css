@@ -61,10 +61,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjustment: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
@@ -119,6 +122,7 @@ a {
     color: var(--color-accent);
     text-decoration: none;
     transition: color var(--transition);
+    touch-action: manipulation;
 }
 
 a:hover {
@@ -158,6 +162,9 @@ header {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 
     padding: var(--spacing-xs) var(--spacing-md);
+    padding-top: max(var(--spacing-xs), env(safe-area-inset-top));
+    padding-left: max(var(--spacing-md), env(safe-area-inset-left));
+    padding-right: max(var(--spacing-md), env(safe-area-inset-right));
 
     display: flex;
     align-items: center;
@@ -312,6 +319,7 @@ section h2 {
 .updates-box {
     height: 260px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     padding-right: var(--spacing-xs);
 }
 
@@ -523,7 +531,6 @@ footer a:hover {
 
 .sidebar-section ul li {
     font-size: var(--font-size-sm);
-    padding: 4px 0;
     border-bottom: var(--border);
     display: block;
     margin: 0;
@@ -534,8 +541,13 @@ footer a:hover {
 }
 
 .sidebar-section ul li a {
+    display: block;
     color: var(--color-text-muted);
     font-size: var(--font-size-sm);
+    padding: 10px 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
 }
 
 .sidebar-section ul li a:hover {
@@ -657,8 +669,11 @@ footer a:hover {
     }
 
     nav ul li a {
-        padding: 4px var(--spacing-xs);
-        font-size: 11px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        min-height: 44px;
+        display: flex;
+        align-items: center;
     }
 
     .site-title {
@@ -672,4 +687,41 @@ footer a:hover {
     section {
         padding: var(--spacing-sm);
     }
+}
+
+/* ===================================
+   IOS / SAFE AREA
+   =================================== */
+
+/* Body padding accounts for dynamic header height + notch */
+body {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Extend footer above home indicator */
+footer {
+    padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+}
+
+/* Main content side padding respects landscape notch */
+@supports (padding: max(0px)) {
+    main {
+        padding-left: max(var(--spacing-md), env(safe-area-inset-left));
+        padding-right: max(var(--spacing-md), env(safe-area-inset-right));
+    }
+
+    @media screen and (max-width: 768px) {
+        main {
+            padding-left: max(var(--spacing-sm), env(safe-area-inset-left));
+            padding-right: max(var(--spacing-sm), env(safe-area-inset-right));
+        }
+    }
+}
+
+/* Ensure read-more and back-link have adequate touch targets */
+.back-link,
+.blog-post-card a.read-more {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
 }
