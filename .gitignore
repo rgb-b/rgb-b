@@ -1,3 +1,10 @@
 CLAUDE.md
 .claude/
 PLAN.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
