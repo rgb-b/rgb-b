@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>project three — eloise rgb-b</title>
+        <title>colour-match — eloise rgb-b</title>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
         <meta name="description" content="project three" />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
@@ -40,19 +43,29 @@
             <section>
                 <h2>project three</h2>
                 <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
-                    <span>tag one</span> &nbsp;
-                    <span>tag two</span> &nbsp;
-                    <span>tag three</span>
+                    <span>SQLite</span> &nbsp; <span>Vite</span> &nbsp;
+                    <span>pdf-lib + pdfkit</span>
                 </p>
                 <p>
-                    Full description of the project goes here. What it is, what
-                    it does, why you built it, how it works. Replace this with
-                    real content.
+                    Colour-match is a tool I created to help assist with colour
+                    matching, speeding up the process and removing human error.
+                    The program creates a calibration chart for the user to scan
+                    with a Spectrodensitometer, which is connected to the PC via
+                    xrite's DataCatcher program.
+                </p>
+                <p>
+                    The program compares the LAB reading between the target
+                    colour, and the current scanned colour. It uses the
+                    calibration chart to calculate how far off from standard
+                    LAB->CMYK conversion your printer is, and use that value to
+                    compensate your CMYK formula values for you.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
-                    <a href="#">live site &rarr;</a>
+                    <a href="https://colour.rgb-b.com">live site &rarr;</a>
                     &nbsp;&nbsp;
-                    <a href="#">source &rarr;</a>
+                    <a href="https://github.com/rgb-b/colour-match"
+                        >source &rarr;</a
+                    >
                 </p>
             </section>
         </main>
