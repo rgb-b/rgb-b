@@ -1,15 +1,18 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>brandpack tools — eloise rgb-b</title>
+        <title>zpl studio — eloise rgb-b</title>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <meta name="description" content="brandpack tools workplace dashboard" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta name="description" content="wysiwyg label designer for zebra printers" />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
         <script>
             (function () {
-                let title = "brandpack tools ✦ eloise rgb-b ✦ ";
+                let title = "zpl studio ✦ eloise rgb-b ✦ ";
                 let position = 0;
                 function scrollTitle() {
                     document.title =
@@ -38,21 +41,26 @@
             <a class="back-link" href="index.html">&larr; back home</a>
 
             <section>
-                <h2>brandpack tools</h2>
+                <h2>zpl studio</h2>
                 <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
-                    <span>node</span> &nbsp;
-                    <span>express</span> &nbsp;
-                    <span>vite</span> &nbsp;
-                    <span>sqlite</span>
+                    <span>rust</span> &nbsp; <span>egui</span> &nbsp;
+                    <span>android</span> &nbsp; <span>WIP</span>
                 </p>
                 <p>
-                    A functional dashboard providing workplace specific data tracking, statistics, and management.
-                <p> Allows the page admin to create custom accounts for users, manage and track stock levels, manage Pantone library, track maintenance visits, as well as issues with equipment. </p>
+                    A Dymo-style WYSIWYG label designer for Zebra printers. You
+                    design labels visually on a canvas and the ZPL is generated
+                    at print time &mdash; no hand-writing raw ZPL.
+                </p>
+                <p>
+                    Built as a Rust + egui desktop app with an Android build
+                    alongside it. Image elements and a clipart library have
+                    shipped; batch print, <span class="mono">.zlabel</span>
+                    save/load, barcode and shape elements, and undo/redo are in
+                    progress. GitHub Actions builds Windows EXE, Linux AppImage,
+                    and an Android APK on every push.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
-                    <a href="https://tools.rgb-b.com">live site &rarr;</a>
-                    &nbsp;&nbsp;
-                    <a href="https://github.com/rgb-b/brandpack-tools">source &rarr;</a>
+                    <a href="https://github.com/elphiene/zpl-studio">source &rarr;</a>
                 </p>
             </section>
         </main>
