@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -53,13 +52,46 @@
                     any track added or removed propagates automatically to every
                     collaborator's own playlist.
                 </p>
+
+                <figure class="project-shot">
+                    <img src="images/tidal-collaborative.png" alt="tidal-collaborative sign-in screen with a 'sign in with Tidal' button" />
+                    <figcaption>server-side OAuth &mdash; the browser never touches a token</figcaption>
+                </figure>
+
+                <h3>how it works</h3>
                 <p>
-                    Built on a DB-backed journal sync engine: an append-only
-                    event log drives a poller that detects changes, flushes them
-                    to shared state over WebSocket, and applies them back to each
-                    user's Tidal account. Tokens are stored AES-256-GCM
-                    encrypted and the browser never sees them. Shipped v1.0.0.
+                    Tidal doesn't offer any way to be notified the instant
+                    someone changes a playlist, so instead the server quietly
+                    checks each linked playlist every so often. When it spots a
+                    change, it writes down exactly what changed in a running log
+                    (a bit like a diary that's only ever added to, never edited),
+                    tells everyone's browser about it instantly, and then queues
+                    that same change up to be copied into every other
+                    collaborator's own playlist. Keeping a full log like this
+                    means that if someone's connection drops or the server
+                    restarts, nothing gets lost or duplicated &mdash; it can always
+                    pick up exactly where it left off, and the log doubles as a
+                    built-in activity history.
                 </p>
+
+                <h3>built with</h3>
+                <p>
+                    A Node.js server that talks to browsers over a
+                    &ldquo;WebSocket&rdquo; &mdash; a permanently-open connection
+                    that lets the server push updates to your screen instantly,
+                    instead of your browser having to keep asking &ldquo;anything
+                    new?&rdquo;. All the playlist data lives in SQLite, a
+                    lightweight database that's just a single file rather than a
+                    separate server to run. Signing in uses Tidal's own official
+                    login flow, so this app never sees or stores your password
+                    &mdash; and the access it is given is scrambled
+                    (encrypted) before being saved, so even someone who got hold
+                    of the database file couldn't use it to access anyone's
+                    account. It's packaged with Docker, a way of bundling an app
+                    so it runs identically on any computer, and comes with a
+                    guided first-time setup. Released as version 1.0.0.
+                </p>
+
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://github.com/elphiene/tidal-collaborative">source &rarr;</a>
                 </p>

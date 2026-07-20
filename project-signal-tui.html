@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -47,14 +46,33 @@
                     <span>signal-cli</span> &nbsp; <span>WIP</span>
                 </p>
                 <p>
-                    A keyboard-driven terminal UI for Signal messenger, backed
-                    by <span class="mono">signal-cli</span> over JSON-RPC.
+                    A keyboard-driven, buddy-list-style terminal UI for Signal
+                    messenger.
                 </p>
+
+                <h3>how it works</h3>
                 <p>
-                    Originally built in Python with Textual, it's being rebuilt
-                    in Rust with <span class="mono">ratatui</span> for a faster,
-                    leaner, buddy-list-style interface. The Python version still
-                    lives in the archive but is no longer maintained.
+                    Signal's own security and messaging logic is genuinely
+                    difficult to get right, so rather than reimplement any of
+                    that, this project sits entirely on top of
+                    <span class="mono">signal-cli</span>, an existing,
+                    well-trusted command-line tool that already does the actual
+                    talking to Signal's servers. This project's whole job is just
+                    to be a nicer way of looking at and controlling that
+                    &mdash; a fully keyboard-operated interface, styled like an
+                    old-school instant-messenger buddy list, running right there
+                    in your terminal instead of a graphical window.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    Originally written in Python using a terminal-interface
+                    toolkit called Textual; now being rebuilt in Rust (a
+                    programming language chosen for speed and reliability) with a
+                    similar toolkit called ratatui, aiming for a program that
+                    opens instantly and is easier to keep adding features to. The
+                    old Python version is kept around for reference but is no
+                    longer being updated.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://github.com/elphiene/signal-tui">source &rarr;</a>

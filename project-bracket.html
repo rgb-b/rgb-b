@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -48,16 +47,58 @@
                     <span>live</span>
                 </p>
                 <p>
-                    A live knockout-bracket display for the 2026 FIFA World Cup.
-                    It renders the full tournament tree and keeps it in sync as
-                    results come in.
+                    A live knockout-bracket display for single-match knockout
+                    tournaments &mdash; the 2026 FIFA World Cup, Wimbledon, the
+                    Australian Open, the AFL finals. It renders the full
+                    tournament tree, auto-focuses whatever match is live, and has
+                    an optional spoiler guard.
+                </p>
+
+                <figure class="project-shot">
+                    <img src="images/bracket.png" alt="bracket landing page showing the editions grid for World Cup, Wimbledon, Australian Open and AFL Finals" />
+                    <figcaption>the edition picker &mdash; bracket.cherryslabs.com</figcaption>
+                </figure>
+
+                <h3>how it works</h3>
+                <p>
+                    Every tournament pulls its live results from somewhere
+                    different online, and none of those sources format their data
+                    the same way &mdash; the World Cup feed looks nothing like
+                    ESPN's tennis scores, for instance. So for each sport there's
+                    a small translator that takes whatever messy format that
+                    sport's source uses and converts it into one single, tidy
+                    shape that the rest of the site understands. That means
+                    adding a brand-new tournament is mostly just writing one new
+                    translator &mdash; the part of the site that actually draws
+                    the bracket on screen never has to change. The bracket
+                    itself, and which round is "current", is always worked out
+                    fresh from the latest results rather than being drawn by hand
+                    ahead of time.
                 </p>
                 <p>
-                    Under the hood it's an Express proxy and cache sitting over
-                    an external results feed &mdash; no database. The server
-                    fetches upstream fixtures, caches them, and serves a React
-                    front end that draws the bracket.
+                    The page automatically shows whichever is most useful: a
+                    live match in progress, or failing that a countdown to the
+                    next one, or failing that just the full bracket. One shared
+                    piece of logic is the single source of truth for "what's
+                    happening in this match right now", down to figuring out
+                    penalty shootouts and who scored.
                 </p>
+
+                <h3>built with</h3>
+                <p>
+                    A small always-on server (built with Node and a web
+                    framework called Express) fetches the latest scores and
+                    keeps a short-lived copy in memory so the site stays fast and
+                    keeps working even if a results feed is briefly down. The
+                    part you actually see and click around in is built with
+                    React, a widely-used toolkit for building interactive web
+                    pages. Match kick-off times are converted from whichever
+                    stadium's local time zone into everyone's own time zone
+                    automatically. Visit counts are tracked with a small
+                    self-hosted, privacy-respecting analytics tool rather than a
+                    third-party tracker like Google Analytics.
+                </p>
+
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://bracket.cherryslabs.com">live site &rarr;</a>
                     &nbsp;&nbsp;

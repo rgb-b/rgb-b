@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -52,11 +51,35 @@
                     &mdash; friends share live location, history, and driving
                     stats.
                 </p>
+
+                <h3>how it works</h3>
                 <p>
-                    Traccar handles the GPS backend, with a thin Bun layer on top
-                    adding invite, auth, and notification logic, and a React +
-                    Tailwind front end. Built and running locally for testing;
-                    awaiting DNS before it goes public.
+                    Rather than build GPS tracking from scratch, this uses
+                    Traccar &mdash; free, well-established software that already
+                    handles the tricky part of receiving and storing location
+                    data from phones. On top of that sits a thinner layer I built
+                    myself that adds the parts specific to this app: inviting
+                    friends in, logging people in securely, and sending
+                    notifications. The app itself is a website that behaves like
+                    an installed app on your phone &mdash; you can add it to your
+                    home screen, and it keeps working even with a patchy signal
+                    &mdash; showing everyone's live location on a map, plus
+                    driving statistics as charts.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    The screens you see are built with React (a common toolkit
+                    for interactive web pages) and written in TypeScript, a
+                    version of JavaScript that catches more mistakes before they
+                    ever reach you. The custom middle layer runs on Bun, a fast
+                    JavaScript engine, and keeps its data in SQLite, a database
+                    that's just a single file. The whole thing &mdash; the
+                    tracking server, the middle layer, the maps, and the app
+                    itself &mdash; is packaged up with Docker so it can be
+                    started or moved as one unit, running on a home server for
+                    now. Built and running locally for testing; waiting on domain
+                    setup before it goes public.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://github.com/elphiene/whereis">source &rarr;</a>

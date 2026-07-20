@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>xrite-export — eloise rgb-b</title>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta name="description" content="xrite-export spectrodensitometer tool" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            (function () {
+                let title = "xrite-export ✦ eloise rgb-b ✦ ";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <a class="site-title" href="index.html">eloise rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <a class="back-link" href="index.html">&larr; back home</a>
+
+            <section>
+                <h2>xrite-export</h2>
+                <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
+                    <span>rust</span> &nbsp; <span>egui</span> &nbsp;
+                    <span>axum</span> &nbsp; <span>tokio</span>
+                </p>
+                <p>
+                    A tool for recording CMYK ink-density readings off an X-Rite
+                    eXact spectrodensitometer and turning them into finished
+                    exports &mdash; Adobe Illustrator templates, Excel workbooks,
+                    HTML reports, SVG. It replaces the tedious, error-prone job of
+                    typing dozens of density values into a chart by hand.
+                </p>
+
+                <figure class="project-shot">
+                    <img src="images/xrite-export.png" alt="the ink density tool showing a job form on the left and a filled-in tonal step density table with per-channel deviation from target" />
+                    <figcaption>the density chart &mdash; step values with live deviation from target</figcaption>
+                </figure>
+
+                <h3>how it works</h3>
+                <p>
+                    The spectrodensitometer &mdash; a handheld device that
+                    measures how dark a printed colour patch is &mdash; comes with
+                    its own X-Rite software called DataCatcher. Every time you
+                    scan a patch, DataCatcher behaves like an invisible extra
+                    keyboard: it types the reading straight into whichever box on
+                    screen is currently selected, then presses a key (tab, enter,
+                    or the down arrow) to jump to the next box automatically. So I
+                    built this chart's boxes in the exact same order the scanner
+                    reads a strip of patches, top to bottom in each column &mdash;
+                    which means you can scan an entire strip without ever
+                    touching the mouse or looking up from the device. When you're
+                    done, one click fills all of that data straight into a
+                    ready-made Excel spreadsheet or Illustrator artwork file, in
+                    the spots where the numbers are supposed to go &mdash; no more
+                    manually copying figures across by hand.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    Written in Rust, a programming language chosen for being fast
+                    and hard to crash. The same code is packaged three different
+                    ways depending on where it's needed: as a regular desktop
+                    program you double-click to open (using a toolkit called
+                    egui), as a website version anyone can open in a browser (built
+                    with a web-server toolkit called axum), and as a small
+                    Windows-only helper program that sits quietly in the
+                    background so the browser version can still tell Adobe
+                    Illustrator what to do &mdash; something a web page normally
+                    isn't allowed to do on its own. Everything the program needs
+                    is bundled inside it, so there's nothing extra to install. The
+                    live site above is the browser version.
+                </p>
+
+                <p style="margin-top: var(--spacing-sm)">
+                    <a href="https://xrite-export.elphiene.com"
+                        >live site &rarr;</a
+                    >
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/rgb-b/xrite-export"
+                        >source &rarr;</a
+                    >
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                eloise &mdash;
+                <a href="mailto:eloise@rgb-b.com">eloise@rgb-b.com</a> &mdash;
+                2026
+            </p>
+        </footer>
+    </body>
+</html>

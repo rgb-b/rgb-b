@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -47,17 +46,39 @@
                     <span>android</span> &nbsp; <span>WIP</span>
                 </p>
                 <p>
-                    A Dymo-style WYSIWYG label designer for Zebra printers. You
-                    design labels visually on a canvas and the ZPL is generated
-                    at print time &mdash; no hand-writing raw ZPL.
+                    A Dymo-style WYSIWYG label designer for Zebra thermal
+                    printers. You design labels visually on a canvas and the ZPL
+                    is generated at print time &mdash; no hand-writing raw ZPL.
                 </p>
+
+                <h3>how it works</h3>
                 <p>
-                    Built as a Rust + egui desktop app with an Android build
-                    alongside it. Image elements and a clipart library have
-                    shipped; batch print, <span class="mono">.zlabel</span>
-                    save/load, barcode and shape elements, and undo/redo are in
-                    progress. GitHub Actions builds Windows EXE, Linux AppImage,
-                    and an Android APK on every push.
+                    Zebra printers are told what to print using ZPL, a plain-text
+                    command language for printers &mdash; normally something you'd
+                    have to write by hand, line by line, with no way to see the
+                    result until it's actually printed. This tool skips all of
+                    that: you design the label visually, like arranging text and
+                    boxes on a page, and the correct ZPL code is written for you
+                    automatically the moment you hit print, with an accurate
+                    on-screen preview the whole time so there are no surprises.
+                    You can also turn any label into a reusable template &mdash;
+                    mark a field as, say,
+                    <span class="mono">{{Name}}</span>, and it automatically
+                    becomes a fill-in-the-blank box the next time you use that
+                    template, so printing a batch of different name badges from
+                    one design is quick.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    Written in Rust, a programming language chosen for speed and
+                    reliability, using a toolkit called egui to build the visual,
+                    click-and-drag design screen. There's also a matching Android
+                    version so labels can be designed from a phone or tablet, not
+                    just a desktop computer. The finished program is a small,
+                    self-contained download &mdash; only a few megabytes &mdash;
+                    with nothing extra to install. Every update automatically
+                    produces ready-to-use builds for Windows, Linux, and Android.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://github.com/elphiene/zpl-studio">source &rarr;</a>

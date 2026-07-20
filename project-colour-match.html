@@ -1,15 +1,18 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>brandpack tools — eloise rgb-b</title>
+        <title>colour-match — eloise rgb-b</title>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <meta name="description" content="brandpack tools workplace dashboard" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta name="description" content="colour-match LAB to CMYK matching tool" />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
         <script>
             (function () {
-                let title = "brandpack tools ✦ eloise rgb-b ✦ ";
+                let title = "colour-match ✦ eloise rgb-b ✦ ";
                 let position = 0;
                 function scrollTitle() {
                     document.title =
@@ -29,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -38,21 +40,31 @@
             <a class="back-link" href="index.html">&larr; back home</a>
 
             <section>
-                <h2>brandpack tools</h2>
+                <h2>colour-match</h2>
                 <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
-                    <span>node</span> &nbsp;
-                    <span>express</span> &nbsp;
-                    <span>vite</span> &nbsp;
-                    <span>sqlite</span>
+                    <span>node</span> &nbsp; <span>express</span> &nbsp;
+                    <span>sqlite</span> &nbsp; <span>vite</span>
                 </p>
                 <p>
-                    A functional dashboard providing workplace specific data tracking, statistics, and management.
-                <p> Allows the page admin to create custom accounts for users, manage and track stock levels, manage Pantone library, track maintenance visits, as well as issues with equipment. </p>
+                    Colour-match is a tool I created to help assist with colour
+                    matching, speeding up the process and removing human error.
+                    The program creates a calibration chart for the user to scan
+                    with a Spectrodensitometer, which is connected to the PC via
+                    xrite's DataCatcher program.
+                </p>
+                <p>
+                    The program compares the LAB reading between the target
+                    colour, and the current scanned colour. It uses the
+                    calibration chart to calculate how far off from standard
+                    LAB->CMYK conversion your printer is, and use that value to
+                    compensate your CMYK formula values for you.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
-                    <a href="https://tools.rgb-b.com">live site &rarr;</a>
+                    <a href="https://colour.rgb-b.com">live site &rarr;</a>
                     &nbsp;&nbsp;
-                    <a href="https://github.com/rgb-b/brandpack-tools">source &rarr;</a>
+                    <a href="https://github.com/rgb-b/colour-match"
+                        >source &rarr;</a
+                    >
                 </p>
             </section>
         </main>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>brandpack tools — eloise rgb-b</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="description" content="brandpack tools workplace dashboard" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <script>
+            (function () {
+                let title = "brandpack tools ✦ eloise rgb-b ✦ ";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <a class="site-title" href="index.html">eloise rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <a class="back-link" href="index.html">&larr; back home</a>
+
+            <section>
+                <h2>brandpack tools</h2>
+                <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
+                    <span>node</span> &nbsp; <span>express</span> &nbsp;
+                    <span>preact</span> &nbsp; <span>vite</span> &nbsp;
+                    <span>sqlite</span>
+                </p>
+                <p>
+                    A self-hosted toolkit for the proofing room at work &mdash;
+                    one dashboard behind a PIN login stores jobs and data that used to be kept untracked:
+                    inventory and stock levels, an ink and Pantone book library, a
+                    LAB / CMYK / RGB colour converter, maintenance issues and
+                    technician visits, equipment records, customer profiles, ink
+                    density readings, and shift statistics.
+                </p>
+
+                <h3>how it works</h3>
+                <p>
+                    You log in with a user and PIN and land on a launcher screen, each
+                    tool from there is its own self-contained little app.
+                    Under the hood, each tool is also built as its own
+                    self-contained chunk of code with a clear, checked-over
+                    boundary for what data goes in and out &mdash; so I can add a
+                    brand-new tool, or change an existing one, without the risk
+                    of accidentally breaking something unrelated elsewhere in the
+                    dashboard.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    A Node.js server handles requests from the browser and reads
+                    and writes to a SQLite database &mdash; a lightweight
+                    database that lives in a single file on the server rather
+                    than needing separate database software installed. Every
+                    piece of data coming in gets double-checked against a strict
+                    set of rules before it's accepted, to catch mistakes early.
+                    The screens you actually interact with are built with a
+                    lightweight cousin of React (a common toolkit for building
+                    interactive web interfaces). It runs on a small home server
+                    and is made reachable from the internet at
+                    <span class="mono">tools.rgb-b.com</span> through Cloudflare,
+                    without needing to open anything up directly to the wider
+                    internet. I'm currently doing a ground-up rebuild to tidy up
+                    the code and refresh the look.
+                </p>
+
+                <p style="margin-top: var(--spacing-sm)">
+                    <a href="https://tools.rgb-b.com">live site &rarr;</a>
+                    &nbsp;&nbsp;
+                    <a href="https://github.com/rgb-b/brandpack-tools">source &rarr;</a>
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                eloise &mdash;
+                <a href="mailto:eloise@rgb-b.com">eloise@rgb-b.com</a> &mdash;
+                2026
+            </p>
+        </footer>
+    </body>
+</html>

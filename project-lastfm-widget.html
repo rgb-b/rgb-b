@@ -32,7 +32,6 @@
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
-                    <li><a href="blog.html">blog</a></li>
                 </ul>
             </nav>
         </header>
@@ -48,14 +47,36 @@
                 </p>
                 <p>
                     A compact always-on-top desktop widget (300&times;100px)
-                    that shows what's currently playing from Last.fm.
+                    that shows what's currently playing from Last.fm, with a
+                    Y2K / Winamp frosted-glass look.
                 </p>
+
+                <h3>how it works</h3>
                 <p>
-                    It polls <span class="mono">user.getRecentTracks</span>
-                    every 15 seconds and renders an HTML/CSS/React UI through
-                    pywebview (WebKitGTK on Linux). No backend, no database, no
-                    build step &mdash; just a config file with a username and API
-                    key.
+                    Every 15 seconds it quietly asks Last.fm, a music
+                    scrobbling/tracking site, what track you're currently
+                    listening to, and updates the widget to match. Even though it
+                    looks and behaves like a proper little native desktop app
+                    &mdash; you can drag it around by its title bar and even
+                    collapse it down to just that title bar &mdash; it's actually
+                    built almost entirely with regular web page styling, just
+                    displayed in a special borderless window instead of a normal
+                    browser tab. The frosted-glass see-through look is a standard
+                    visual effect, and it politely falls back to a plain solid
+                    background on setups that can't render it.
+                </p>
+
+                <h3>built with</h3>
+                <p>
+                    A small Python program opens a lightweight embedded browser
+                    window (rather than a full separate browser) to display the
+                    widget, and the widget itself is written using React, a
+                    common toolkit for building interactive web interfaces,
+                    loaded directly over the internet rather than being
+                    installed. There's no server and no database involved at all
+                    &mdash; just one small file listing your Last.fm username and
+                    an access key. It comes with a few different visual skins and
+                    a colour picker to match your desktop.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
                     <a href="https://github.com/elphiene/lastfm-widget">source &rarr;</a>

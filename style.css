@@ -109,13 +109,22 @@ h2 {
 }
 
 h3 {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     color: var(--color-accent-alt);
+    font-family: var(--font-mono);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: 0.5px;
 }
 
 p {
     font-size: var(--font-size-base);
     color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+p:last-child {
+    margin-bottom: 0;
 }
 
 a {
@@ -288,8 +297,10 @@ section h2 {
 
 .card h3 {
     color: var(--color-accent);
+    margin-top: 0;
     margin-bottom: var(--spacing-xs);
     font-family: var(--font-mono);
+    font-size: var(--font-size-base);
 }
 
 .card p {
@@ -439,122 +450,6 @@ footer a:hover {
     color: var(--color-accent);
 }
 
-/* ===================================
-   BLOG-SPECIFIC
-   =================================== */
-
-.blog-layout {
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-}
-
-.blog-content {
-    flex: 0 0 65%;
-    min-width: 0;
-}
-
-.blog-sidebar {
-    flex: 0 0 calc(35% - var(--spacing-md));
-    min-width: 0;
-}
-
-.blog-post-card {
-    background: var(--gradient-card);
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
-    box-shadow: var(--glow);
-    transition:
-        transform var(--transition),
-        box-shadow var(--transition);
-}
-
-.blog-post-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow-hover);
-}
-
-.blog-post-card h3 {
-    color: var(--color-accent);
-    margin-bottom: 4px;
-    font-family: var(--font-mono);
-}
-
-.blog-post-card .post-date {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-xs);
-    font-family: var(--font-mono);
-}
-
-.blog-post-card p {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-muted);
-}
-
-.blog-post-card a.read-more {
-    display: inline-block;
-    margin-top: var(--spacing-xs);
-    font-size: var(--font-size-sm);
-    color: var(--color-accent-alt);
-    font-family: var(--font-mono);
-}
-
-.sidebar-section {
-    background: var(--gradient-card);
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
-}
-
-.sidebar-section h3 {
-    font-family: var(--font-mono);
-    color: var(--color-accent);
-    margin-bottom: var(--spacing-xs);
-    font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.sidebar-section ul {
-    list-style: none;
-    padding: 0;
-    background: none;
-    border: none;
-    display: block;
-    border-radius: 0;
-    overflow: visible;
-}
-
-.sidebar-section ul li {
-    font-size: var(--font-size-sm);
-    border-bottom: var(--border);
-    display: block;
-    margin: 0;
-}
-
-.sidebar-section ul li:last-child {
-    border-bottom: none;
-}
-
-.sidebar-section ul li a {
-    display: block;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-    padding: 10px 0;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar-section ul li a:hover {
-    color: var(--color-accent);
-    text-decoration: none;
-}
-
 .back-link {
     display: inline-block;
     margin-bottom: var(--spacing-md);
@@ -645,16 +540,6 @@ footer a:hover {
         grid-template-columns: 1fr;
     }
 
-    .blog-layout {
-        flex-direction: column;
-    }
-
-    .blog-content,
-    .blog-sidebar {
-        flex: none;
-        width: 100%;
-    }
-
     .card-grid {
         grid-template-columns: 1fr;
     }
@@ -718,10 +603,38 @@ footer {
     }
 }
 
-/* Ensure read-more and back-link have adequate touch targets */
-.back-link,
-.blog-post-card a.read-more {
+/* Ensure back-link has an adequate touch target */
+.back-link {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+}
+
+/* ===================================
+   PROJECT SCREENSHOTS
+   =================================== */
+
+.project-shot {
+    margin: var(--spacing-md) 0;
+}
+
+.project-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--glow);
+    transition: box-shadow var(--transition);
+}
+
+.project-shot img:hover {
+    box-shadow: var(--glow-hover);
+}
+
+.project-shot figcaption {
+    margin-top: var(--spacing-xs);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
 }
