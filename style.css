@@ -660,6 +660,56 @@ footer {
 }
 
 /* ===================================
+   DESIGN / VISUAL WORK GALLERY
+   =================================== */
+
+.design-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.design-group:last-child {
+    margin-bottom: 0;
+}
+
+.design-group h3 {
+    margin-top: 0;
+}
+
+.design-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+}
+
+.design-grid a {
+    display: block;
+    line-height: 0;
+}
+
+.design-grid img {
+    height: 220px;
+    width: auto;
+    max-width: 100%;
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--glow);
+    transition: box-shadow var(--transition);
+    background: #fff;
+}
+
+.design-grid img:hover {
+    box-shadow: var(--glow-hover);
+}
+
+@media screen and (max-width: 480px) {
+    .design-grid img {
+        height: auto;
+        width: 100%;
+    }
+}
+
+/* ===================================
    PROJECT SCREENSHOTS
    =================================== */
 
