@@ -27,7 +27,73 @@
         </script>
     </head>
     <body>
-        <header>
+        <!-- Animated dithered background — a small canvas rendered at low
+             resolution and scaled up (crisp, no smoothing) for a chunky
+             1-bit look, sitting behind everything else. Static single frame
+             for anyone with prefers-reduced-motion set. -->
+        <canvas id="dither-bg" aria-hidden="true"></canvas>
+        <script>
+            (function () {
+                var canvas = document.getElementById("dither-bg");
+                if (!canvas || !canvas.getContext) return;
+                var ctx = canvas.getContext("2d");
+                var W = 160,
+                    H = 90;
+                canvas.width = W;
+                canvas.height = H;
+                var bayer = [
+                    [0, 8, 2, 10],
+                    [12, 4, 14, 6],
+                    [3, 11, 1, 9],
+                    [15, 7, 13, 5],
+                ];
+                var img = ctx.createImageData(W, H);
+                function render(t) {
+                    var data = img.data;
+                    var i = 0;
+                    var cx = W / 2 + Math.sin(t * 0.15) * 8;
+                    var cy = H * 0.62;
+                    var maxDist = W * 0.55;
+                    for (var y = 0; y < H; y++) {
+                        for (var x = 0; x < W; x++) {
+                            var dx = x - cx;
+                            var dy = (y - cy) * 1.6;
+                            var dist = Math.sqrt(dx * dx + dy * dy);
+                            var v = 1 - Math.min(dist / maxDist, 1);
+                            v = Math.max(0, v);
+                            v = Math.pow(v, 2.2);
+                            v *=
+                                0.85 +
+                                0.15 * Math.sin(dist * 0.25 - t * 1.2);
+                            v = Math.max(0, Math.min(1, v));
+                            var threshold = (bayer[y % 4][x % 4] + 0.5) / 16;
+                            var on = v > threshold;
+                            data[i++] = 0;
+                            data[i++] = 255;
+                            data[i++] = 204;
+                            data[i++] = on ? 90 : 0;
+                        }
+                    }
+                    ctx.putImageData(img, 0, 0);
+                }
+                var reduceMotion =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches;
+                if (reduceMotion) {
+                    render(0);
+                } else {
+                    var last = 0;
+                    (function loop(ts) {
+                        if (ts - last > 90) {
+                            render(ts / 1000);
+                            last = ts;
+                        }
+                        requestAnimationFrame(loop);
+                    })(0);
+                }
+            })();
+        </script>        <header>
             <a class="site-title" href="index.html">eloise rgb-b</a>
             <nav>
                 <ul>

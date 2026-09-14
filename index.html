@@ -27,6 +27,74 @@
         </script>
     </head>
     <body>
+        <!-- Animated dithered background — a small canvas rendered at low
+             resolution and scaled up (crisp, no smoothing) for a chunky
+             1-bit look, sitting behind everything else. Static single frame
+             for anyone with prefers-reduced-motion set. -->
+        <canvas id="dither-bg" aria-hidden="true"></canvas>
+        <script>
+            (function () {
+                var canvas = document.getElementById("dither-bg");
+                if (!canvas || !canvas.getContext) return;
+                var ctx = canvas.getContext("2d");
+                var W = 160,
+                    H = 90;
+                canvas.width = W;
+                canvas.height = H;
+                var bayer = [
+                    [0, 8, 2, 10],
+                    [12, 4, 14, 6],
+                    [3, 11, 1, 9],
+                    [15, 7, 13, 5],
+                ];
+                var img = ctx.createImageData(W, H);
+                function render(t) {
+                    var data = img.data;
+                    var i = 0;
+                    var cx = W / 2 + Math.sin(t * 0.15) * 8;
+                    var cy = H * 0.62;
+                    var maxDist = W * 0.55;
+                    for (var y = 0; y < H; y++) {
+                        for (var x = 0; x < W; x++) {
+                            var dx = x - cx;
+                            var dy = (y - cy) * 1.6;
+                            var dist = Math.sqrt(dx * dx + dy * dy);
+                            var v = 1 - Math.min(dist / maxDist, 1);
+                            v = Math.max(0, v);
+                            v = Math.pow(v, 2.2);
+                            v *=
+                                0.85 +
+                                0.15 * Math.sin(dist * 0.25 - t * 1.2);
+                            v = Math.max(0, Math.min(1, v));
+                            var threshold = (bayer[y % 4][x % 4] + 0.5) / 16;
+                            var on = v > threshold;
+                            data[i++] = 0;
+                            data[i++] = 255;
+                            data[i++] = 204;
+                            data[i++] = on ? 90 : 0;
+                        }
+                    }
+                    ctx.putImageData(img, 0, 0);
+                }
+                var reduceMotion =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches;
+                if (reduceMotion) {
+                    render(0);
+                } else {
+                    var last = 0;
+                    (function loop(ts) {
+                        if (ts - last > 90) {
+                            render(ts / 1000);
+                            last = ts;
+                        }
+                        requestAnimationFrame(loop);
+                    })(0);
+                }
+            })();
+        </script>
+
         <!-- Fixed header -->
         <header>
             <a class="site-title" href="index.html">eloise rgb-b</a>
@@ -103,30 +171,6 @@
                 </p>
 
                 <div class="design-group">
-                    <h3>cherry's labs &mdash; brand identity</h3>
-                    <div class="design-grid">
-                        <a href="images/cherryslabs-logo.png" target="_blank">
-                            <img
-                                src="images/cherryslabs-logo.png"
-                                alt="the CHERRYSOFA wordmark logo, pink and purple retro stripes with a target-style ring motif"
-                            />
-                        </a>
-                        <a href="images/cherryslabs-cards.png" target="_blank">
-                            <img
-                                src="images/cherryslabs-cards.png"
-                                alt="five Cherry's Laboratories business card variants, pink and black with QR codes"
-                            />
-                        </a>
-                        <a href="images/cherryslabs-banner.png" target="_blank">
-                            <img
-                                src="images/cherryslabs-banner.png"
-                                alt="a Cherry's Laboratories banner, neon pink glowing text over a dark cherry-print pattern"
-                            />
-                        </a>
-                    </div>
-                </div>
-
-                <div class="design-group">
                     <h3>chantilly's tallow &mdash; client branding &amp; packaging</h3>
                     <div class="design-grid">
                         <a href="images/chantilly-card-front.png" target="_blank">
@@ -151,18 +195,6 @@
                             <img
                                 src="images/chantilly-label-lush.png"
                                 alt="Chantilly's Tallow product label, The Lush and Lux, vanilla and almond oil, 100ml"
-                            />
-                        </a>
-                    </div>
-                </div>
-
-                <div class="design-group">
-                    <h3>elphiene blue &mdash; packaging design</h3>
-                    <div class="design-grid">
-                        <a href="images/elphiene-box-trial.png" target="_blank">
-                            <img
-                                src="images/elphiene-box-trial.png"
-                                alt="a structural die-line trial for an Elphiene Blue box, with the folded 3D preview alongside it"
                             />
                         </a>
                     </div>
@@ -331,6 +363,50 @@
                 </div>
             </section>
 
+            <!-- Cherry's Labs section -->
+            <section id="cherryslabs" class="accent-pink">
+                <h2>cherry's labs</h2>
+                <div class="design-grid design-grid-sm" style="margin-bottom: var(--spacing-sm)">
+                    <a href="images/cherryslabs-logo.png" target="_blank">
+                        <img
+                            src="images/cherryslabs-logo.png"
+                            alt="the CHERRYSOFA wordmark logo, pink and purple retro stripes with a target-style ring motif"
+                        />
+                    </a>
+                    <a href="images/cherryslabs-banner.png" target="_blank">
+                        <img
+                            src="images/cherryslabs-banner.png"
+                            alt="a Cherry's Laboratories banner, neon pink glowing text over a dark cherry-print pattern"
+                        />
+                    </a>
+                    <a href="images/cherryslabs-cards.png" target="_blank">
+                        <img
+                            src="images/cherryslabs-cards.png"
+                            alt="five Cherry's Laboratories business card variants, pink and black with QR codes"
+                        />
+                    </a>
+                </div>
+                <p>
+                    Cherry's Labs is a small studio I run with my friend and
+                    collaborator, Cherry &mdash; not a registered business
+                    yet, but heading that way. Part lab, part studio: science,
+                    tech, and art, with the same R&amp;D mindset applied to
+                    everything from client work to our own tools, hardware,
+                    and software (more at
+                    <a href="https://cherryslabs.elphiene.com">cherryslabs.elphiene.com</a>).
+                </p>
+                <p>
+                    Informally, it's a design-and-dev studio &mdash; we take
+                    on client branding and build our own projects for fun,
+                    including a couple of the things listed above.
+                </p>
+                <p>
+                    My side of it is mostly design and ideas: brand identity,
+                    visual direction, and the R&amp;D thinking behind what we
+                    build next.
+                </p>
+            </section>
+
             <!-- Updates section -->
             <section id="updates">
                 <h2>update log</h2>
@@ -338,7 +414,7 @@
                     <div class="update-entry">
                         <em>september 14 2026</em>
                         <pre>
-reordered projects to lead with print/pre-press work (xrite-export, proofing room, colour-match, zpl studio). added tidal-radio. filled in colour-match's missing detail, gave zpl studio a downloads link, and added real screenshots to the proofing room dashboard. added a visual work section (Cherry's Labs branding, Chantilly's Tallow client work, Elphiene Blue packaging) and dropped the WhereIs logo into its project page.</pre
+reordered projects to lead with print/pre-press work (xrite-export, proofing room, colour-match, zpl studio). added tidal-radio. filled in colour-match's missing detail, gave zpl studio a downloads link, and added real screenshots to the proofing room dashboard. added a visual work section (Chantilly's Tallow client work) and a Cherry's Labs section, and dropped the WhereIs logo into its project page. fixed a layout bug squishing gallery images, added a small animated dithered background across the whole site, and dropped the Elphiene Blue packaging piece from the gallery.</pre
                         >
                     </div>
                     <div class="update-entry">
