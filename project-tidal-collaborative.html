@@ -27,55 +27,121 @@
         </script>
     </head>
     <body>
-        <!-- Animated dithered background — a small canvas rendered at low
-             resolution and scaled up (crisp, no smoothing) for a chunky
-             1-bit look, sitting behind everything else. Static single frame
-             for anyone with prefers-reduced-motion set. -->
+        <!-- Animated RGB-screen background — a low-res canvas scaled up with
+             no smoothing, so it reads as a chunky halftone screen. Two
+             interfering wave sets are Bayer-dithered into small square cells;
+             a minority of cells are pink/blue instead of teal, and a few rows
+             per frame tear sideways for a glitched-signal look. Keeps clear
+             of the middle of the viewport so body copy stays legible. Static
+             single frame for anyone with prefers-reduced-motion set. -->
         <canvas id="dither-bg" aria-hidden="true"></canvas>
         <script>
             (function () {
                 var canvas = document.getElementById("dither-bg");
                 if (!canvas || !canvas.getContext) return;
                 var ctx = canvas.getContext("2d");
-                var W = 160,
-                    H = 90;
+                var W = 480,
+                    H = 270;
                 canvas.width = W;
                 canvas.height = H;
+
+                /* 8x8 Bayer — finer gradation than a 4x4, which is what lets
+                   the cells get small without the ramp banding into blobs. */
                 var bayer = [
-                    [0, 8, 2, 10],
-                    [12, 4, 14, 6],
-                    [3, 11, 1, 9],
-                    [15, 7, 13, 5],
+                    [0, 32, 8, 40, 2, 34, 10, 42],
+                    [48, 16, 56, 24, 50, 18, 58, 26],
+                    [12, 44, 4, 36, 14, 46, 6, 38],
+                    [60, 28, 52, 20, 62, 30, 54, 22],
+                    [3, 35, 11, 43, 1, 33, 9, 41],
+                    [51, 19, 59, 27, 49, 17, 57, 25],
+                    [15, 47, 7, 39, 13, 45, 5, 37],
+                    [63, 31, 55, 23, 61, 29, 53, 21],
                 ];
+
+                /* teal accent, hot pink, cold blue */
+                var PALETTE = [
+                    [0, 255, 204],
+                    [255, 68, 170],
+                    [90, 140, 255],
+                ];
+
                 var img = ctx.createImageData(W, H);
+
+                function fract(n) {
+                    return n - Math.floor(n);
+                }
+
                 function render(t) {
                     var data = img.data;
-                    var i = 0;
-                    var cx = W / 2 + Math.sin(t * 0.15) * 8;
-                    var cy = H * 0.62;
-                    var maxDist = W * 0.55;
                     for (var y = 0; y < H; y++) {
+                        /* a couple of row-bands per frame tear sideways and
+                           flip to a pink or blue channel */
+                        var noise = fract(
+                            Math.sin(
+                                Math.floor(y / 2) * 12.9898 +
+                                    Math.floor(t * 3) * 7.233,
+                            ) * 43758.5453,
+                        );
+                        var isGlitch = noise > 0.972;
+                        var shift = isGlitch
+                            ? Math.floor((noise - 0.972) * 900) - 12
+                            : 0;
+                        var scan = y % 2 === 0 ? 1 : 0.78; /* CRT scanline */
+                        var wave = Math.sin(y * 0.11 - t * 0.45);
+                        var rowEdge = ((y / H - 0.5) * 2) ** 2 * 0.55;
+
                         for (var x = 0; x < W; x++) {
-                            var dx = x - cx;
-                            var dy = (y - cy) * 1.6;
-                            var dist = Math.sqrt(dx * dx + dy * dy);
-                            var v = 1 - Math.min(dist / maxDist, 1);
-                            v = Math.max(0, v);
-                            v = Math.pow(v, 2.2);
-                            v *=
-                                0.85 +
-                                0.15 * Math.sin(dist * 0.25 - t * 1.2);
-                            v = Math.max(0, Math.min(1, v));
-                            var threshold = (bayer[y % 4][x % 4] + 0.5) / 16;
-                            var on = v > threshold;
-                            data[i++] = 0;
-                            data[i++] = 255;
-                            data[i++] = 204;
-                            data[i++] = on ? 45 : 0;
+                            var i = (y * W + x) * 4;
+
+                            /* halftone screen: 2x2 cells with a 1px gutter */
+                            if (x % 3 === 2 || y % 3 === 2) {
+                                data[i + 3] = 0;
+                                continue;
+                            }
+
+                            var sx = x + shift;
+                            var v =
+                                (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
+                                    Math.sin(
+                                        sx * 0.04 + y * 0.06 + t * 0.3,
+                                    ) *
+                                        0.5 +
+                                    1) /
+                                2;
+
+                            /* fade out of the middle so body copy keeps its
+                               contrast against the cards */
+                            var nx = (x / W - 0.5) * 2;
+                            var edge = Math.min(1, nx * nx * 0.95 + rowEdge);
+                            v = Math.max(0, Math.min(1, v * edge)) * scan;
+
+                            if (v <= (bayer[y % 8][x % 8] + 0.5) / 64) {
+                                data[i + 3] = 0;
+                                continue;
+                            }
+
+                            var hash = ((x * 37 + y * 101) % 97) / 97;
+                            var ci = isGlitch
+                                ? noise > 0.986
+                                    ? 1
+                                    : 2
+                                : hash > 0.92
+                                  ? 1
+                                  : hash > 0.84
+                                    ? 2
+                                    : 0;
+                            var col = PALETTE[ci];
+                            data[i] = col[0];
+                            data[i + 1] = col[1];
+                            data[i + 2] = col[2];
+                            /* pink/blue sit darker than the teal at the
+                               same alpha, so lift them to match */
+                            data[i + 3] = isGlitch ? 78 : ci === 0 ? 42 : 66;
                         }
                     }
                     ctx.putImageData(img, 0, 0);
                 }
+
                 var reduceMotion =
                     window.matchMedia &&
                     window.matchMedia("(prefers-reduced-motion: reduce)")

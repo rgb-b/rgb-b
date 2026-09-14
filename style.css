@@ -11,25 +11,30 @@
     /* Monochrome palette — swap these to add color */
     --color-accent: #00ffcc; /* cyan-green, primary accent */
     --color-accent-alt: #ff44aa; /* hot pink, secondary accent */
-    --color-bg: #0a0a0a; /* page background */
-    --color-bg-card: #141414; /* card background */
-    --color-bg-card-hover: #0d1f1c; /* card hover fill */
-    --color-border: #222222; /* borders */
-    --color-text: #e0fff8; /* primary text */
-    --color-text-muted: #5fa088; /* muted/secondary text */
+    --color-bg: #050505; /* page background */
+    --color-bg-card: rgba(25, 25, 25, 0.72); /* card background */
+    --color-bg-card-hover: #102a25; /* card hover fill */
+    --color-border: #3d3d3d; /* borders */
+    --color-text: #f4fffc; /* primary text */
+    --color-text-muted: #9ad6bd; /* muted/secondary text */
 
-    /* Gradients */
+    /* Gradients — surfaces are translucent so the screen pattern reads
+       through them; the brighter text tokens above carry the legibility */
     --gradient-card: linear-gradient(
         to bottom right,
-        rgba(31, 31, 31, 0.82),
-        rgba(17, 17, 17, 0.82)
+        rgba(28, 28, 28, 0.72),
+        rgba(13, 13, 13, 0.72)
     );
-    --gradient-nav: linear-gradient(to bottom right, #1a1a1a, #0d0d0d);
-    --gradient-bg: radial-gradient(ellipse at top, #1e1e1e 0%, #0a0a0a 70%);
+    --gradient-nav: linear-gradient(
+        to bottom right,
+        rgba(28, 28, 28, 0.72),
+        rgba(10, 10, 10, 0.72)
+    );
+    --gradient-bg: radial-gradient(ellipse at top, #1c1c1c 0%, #050505 70%);
 
     /* Glows */
-    --glow: 0 0 12px rgba(0, 255, 204, 0.08);
-    --glow-hover: 0 0 20px rgba(0, 255, 204, 0.18);
+    --glow: 0 0 12px rgba(0, 255, 204, 0.12);
+    --glow-hover: 0 0 22px rgba(0, 255, 204, 0.26);
 
     /* Typography */
     --font-main: Tahoma, Verdana, sans-serif;
@@ -190,7 +195,7 @@ header {
     right: 0;
     z-index: 1000;
 
-    background: rgba(15, 15, 15, 0.85);
+    background: rgba(8, 8, 8, 0.72);
     background-image: var(--gradient-nav);
     backdrop-filter: blur(var(--blur));
     -webkit-backdrop-filter: blur(var(--blur));
@@ -405,7 +410,7 @@ section h2 {
     padding: var(--spacing-xs) 0;
     border-top: var(--border);
     border-bottom: var(--border);
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.45);
 }
 
 .marquee-track {
