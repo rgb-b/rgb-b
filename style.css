@@ -19,7 +19,11 @@
     --color-text-muted: #5fa088; /* muted/secondary text */
 
     /* Gradients */
-    --gradient-card: linear-gradient(to bottom right, #1f1f1f, #111111);
+    --gradient-card: linear-gradient(
+        to bottom right,
+        rgba(31, 31, 31, 0.82),
+        rgba(17, 17, 17, 0.82)
+    );
     --gradient-nav: linear-gradient(to bottom right, #1a1a1a, #0d0d0d);
     --gradient-bg: radial-gradient(ellipse at top, #1e1e1e 0%, #0a0a0a 70%);
 
@@ -124,7 +128,7 @@ h2 {
 }
 
 h3 {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-base);
     color: var(--color-accent-alt);
     font-family: var(--font-mono);
     margin-top: var(--spacing-md);
@@ -401,6 +405,7 @@ section h2 {
     padding: var(--spacing-xs) 0;
     border-top: var(--border);
     border-bottom: var(--border);
+    background: rgba(0, 0, 0, 0.35);
 }
 
 .marquee-track {
