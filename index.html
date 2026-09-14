@@ -48,7 +48,13 @@
                 >
                     <div class="card visible">
                         <h3>about</h3>
-                        <p>eloise | 21 | artist, web developer, designer.</p>
+                        <p>
+                            eloise | 21 | pre-press apprentice with a full
+                            development and design background &mdash; the two
+                            don't usually come in one person, which is kind of
+                            the point. R&amp;D tinkerer, with enough
+                            IT/networking know-how to run my own servers.
+                        </p>
                         <p>Melbourne, Australia.</p>
                     </div>
                     <div class="card visible">
@@ -67,8 +73,9 @@
                 </div>
             </section>
 
-            <!-- Marquee strip -->
-            <div class="marquee-wrapper">
+            <!-- Marquee strip (decorative — content is duplicated for the
+                 seamless loop, so it's hidden from assistive tech) -->
+            <div class="marquee-wrapper" aria-hidden="true">
                 <div class="marquee-track">
                     <!-- Replace these with real badge images or text badges -->
                     <span class="marquee-badge">html</span>
@@ -94,10 +101,11 @@
                     <div class="card">
                         <h3>xrite-export</h3>
                         <p>
-                            a program that takes direct input from an X-Rite
-                            spectrodensitometer, and writes it into a chart
-                            which can export it's data out to a standard
-                            formatted template.
+                            Replaced a job that used to mean handwriting ~385
+                            density readings per job and typing them all up a
+                            second time. Now it's one scan-through and a
+                            finished report &mdash; in daily use by me and my
+                            coworkers.
                         </p>
                         <p
                             class="mono muted"
@@ -107,18 +115,19 @@
                         </p>
                     </div>
                     <div class="card">
-                        <h3>brandpack tools</h3>
+                        <h3>proofing room</h3>
                         <p>
-                            a dashboard for tracking shift hours, maintenance
-                            issues, technician visits, stock levels, colour
-                            mixing records, Pantone library, LAB/CMYK/RGB
-                            conversions, task time, and to-do lists.
+                            Built after a day I couldn't find a single SOP I
+                            needed. Grew from one small inventory tracker into
+                            the dashboard the whole proofing room now runs on
+                            &mdash; stock, maintenance, colour conversions, and
+                            more.
                         </p>
                         <p
                             class="mono muted"
                             style="margin-top: var(--spacing-xs)"
                         >
-                            <a href="project-brandpack-tools.html"
+                            <a href="project-proofing-room.html"
                                 >view &rarr;</a
                             >
                         </p>
@@ -126,9 +135,10 @@
                     <div class="card">
                         <h3>colour-match</h3>
                         <p>
-                            Assistance tool for colour matching and corrections
-                            in CGS Flexpack. Cross references LAB values with
-                            CMYK formulas.
+                            Every press drifts from the textbook LAB&rarr;CMYK
+                            conversion. This measures exactly how far, so a
+                            proofer stops eyeballing a second correction pass
+                            by hand.
                         </p>
                         <p
                             class="mono muted"
@@ -138,12 +148,42 @@
                         </p>
                     </div>
                     <div class="card">
+                        <h3>zpl studio</h3>
+                        <p>
+                            No more hand-writing ZPL line by line. Design a
+                            Zebra label visually, on a real canvas, and the
+                            print code writes itself &mdash; with a matching
+                            Android app on the way.
+                        </p>
+                        <p
+                            class="mono muted"
+                            style="margin-top: var(--spacing-xs)"
+                        >
+                            <a href="project-zpl-studio.html">view &rarr;</a>
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>tidal-radio</h3>
+                        <p>
+                            A self-hosted radio station with its own auto-DJ
+                            &mdash; real loudness matching, dead-air trimming,
+                            and seamless crossfades, running five stations in
+                            production.
+                        </p>
+                        <p
+                            class="mono muted"
+                            style="margin-top: var(--spacing-xs)"
+                        >
+                            <a href="project-tidal-radio.html">view &rarr;</a>
+                        </p>
+                    </div>
+                    <div class="card">
                         <h3>bracket</h3>
                         <p>
-                            A live bracket-style sports score. Shows live
-                            updates for sporting events as they happen,
-                            including kick-off times, locations, local
-                            timezones, and an anti-spoiler mode.
+                            Turns a dozen mismatched live-score feeds into one
+                            clean bracket that always knows what's on right
+                            now &mdash; World Cup, Wimbledon, the Australian
+                            Open, AFL finals.
                         </p>
                         <p
                             class="mono muted"
@@ -155,10 +195,10 @@
                     <div class="card">
                         <h3>tidal-collaborative</h3>
                         <p>
-                            Self-hosted real-time collaborative Tidal playlist
-                            sync. Collaborate with friends over LAN/VPN, songs
-                            added to a playlist on Tidal are auomatically synced
-                            to other linked playlists.
+                            Keeps a shared Tidal playlist in sync across
+                            everyone's own account in real time &mdash;
+                            without this app ever seeing or storing anyone's
+                            Tidal login.
                         </p>
                         <p
                             class="mono muted"
@@ -170,25 +210,12 @@
                         </p>
                     </div>
                     <div class="card">
-                        <h3>zpl studio</h3>
-                        <p>
-                            An Illustrator-style label designer for Zebra
-                            printers. Design labels visually on a canvas; ZPL is
-                            generated at print time. Rust + egui, plus Android (WIP).
-                        </p>
-                        <p
-                            class="mono muted"
-                            style="margin-top: var(--spacing-xs)"
-                        >
-                            <a href="project-zpl-studio.html">view &rarr;</a>
-                        </p>
-                    </div>
-                    <div class="card">
                         <h3>whereis</h3>
                         <p>
-                            A self-hosted PWA location tracker for a small
-                            private group &mdash; live location, history, and
-                            driving stats. Traccar backend with a Bun layer.
+                            A private, self-hosted take on the "where's
+                            everyone" location apps &mdash; live location,
+                            history, and driving stats, for a small group who
+                            actually trust each other.
                         </p>
                         <p
                             class="mono muted"
@@ -200,9 +227,9 @@
                     <div class="card">
                         <h3>signal-tui</h3>
                         <p>
-                            A keyboard-driven terminal UI for Signal messenger,
-                            backed by signal-cli over JSON-RPC. Being rebuilt in
-                            Rust with ratatui.
+                            Signal messenger, fully keyboard-driven from the
+                            terminal &mdash; for anyone who'd rather never
+                            touch a mouse just to send a text.
                         </p>
                         <p
                             class="mono muted"
@@ -214,9 +241,9 @@
                     <div class="card">
                         <h3>lastfm-widget</h3>
                         <p>
-                            A compact always-on-top desktop widget showing
-                            Last.fm now-playing. Polls every 15s and renders a
-                            React UI through pywebview.
+                            A tiny always-on-top now-playing widget with the
+                            Winamp energy modern desktops forgot &mdash;
+                            300&times;100px, updates every 15s.
                         </p>
                         <p
                             class="mono muted"
@@ -234,9 +261,15 @@
                 <h2>update log</h2>
                 <div class="updates-box">
                     <div class="update-entry">
+                        <em>september 14 2026</em>
+                        <pre>
+reordered projects to lead with print/pre-press work (xrite-export, proofing room, colour-match, zpl studio). added tidal-radio. filled in colour-match's missing detail, gave zpl studio a downloads link, and added real screenshots to the proofing room dashboard.</pre
+                        >
+                    </div>
+                    <div class="update-entry">
                         <em>july 10 2026</em>
                         <pre>
-added six projects: bracket, tidal-collaborative, zpl studio, whereis, signal-tui, and lastfm-widget. refreshed the existing three (fixed dead brandpack link + repo, tech tags, colour-match title).</pre
+added six projects: bracket, tidal-collaborative, zpl studio, whereis, signal-tui, and lastfm-widget. refreshed the existing three (fixed dead proofing-room link + repo, tech tags, colour-match title).</pre
                         >
                     </div>
                     <div class="update-entry">
@@ -246,7 +279,7 @@ added six projects: bracket, tidal-collaborative, zpl studio, whereis, signal-tu
                     <div class="update-entry">
                         <em>april 27 2026</em>
                         <pre>
-filled in details for xrite and brandpack projects. linked to proper sites. Made small adjustmnets to blog page, work in progress.</pre
+filled in details for xrite and proofing room projects. linked to proper sites. Made small adjustmnets to blog page, work in progress.</pre
                         >
                     </div>
                     <div class="update-entry">

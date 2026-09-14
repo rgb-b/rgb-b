@@ -15,4 +15,6 @@ No build step. Push to `main` to deploy.
 
 ## Tech
 
-Pure HTML5/CSS3/JS. Three theme variants (`style.css`, `style-mono.css`, `style-rgb.css`) — swap the `<link>` to change.
+Pure HTML5/CSS3/JS, no build step. One stylesheet (`style.css`) — colours are
+CSS custom properties at the top, so recolour the whole site by editing those
+variables rather than swapping stylesheets.

@@ -139,6 +139,15 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Visible keyboard-focus state — every interactive element needs one of
+   these, since hover alone tells a keyboard/screen-reader user nothing */
+a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--color-accent-alt);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
 hr {
     border: none;
     border-top: var(--border);
@@ -235,6 +244,13 @@ nav ul li a.active {
     border-color: var(--color-border);
     box-shadow: var(--glow);
     text-decoration: none;
+}
+
+nav ul li a:focus-visible {
+    color: var(--color-text);
+    background: var(--color-bg-card);
+    outline: 2px solid var(--color-accent-alt);
+    outline-offset: 2px;
 }
 
 /* ===================================
@@ -468,6 +484,19 @@ footer a:hover {
     text-decoration: none;
 }
 
+.back-link:focus-visible {
+    color: var(--color-accent);
+    border-color: var(--color-accent-alt);
+    outline: 2px solid var(--color-accent-alt);
+    outline-offset: 2px;
+    text-decoration: none;
+}
+
+.card:has(a:focus-visible) {
+    border-color: var(--color-accent-alt);
+    box-shadow: var(--glow-hover);
+}
+
 /* ===================================
    UTILITY CLASSES
    =================================== */
@@ -571,6 +600,26 @@ footer a:hover {
 
     section {
         padding: var(--spacing-sm);
+    }
+}
+
+/* ===================================
+   REDUCED MOTION
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .card {
+        opacity: 1 !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .marquee-track {
+        animation: none !important;
+    }
+
+    html {
+        scroll-behavior: auto;
     }
 }
 

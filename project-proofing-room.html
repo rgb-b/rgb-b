@@ -1,15 +1,15 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>brandpack tools — eloise rgb-b</title>
+        <title>proofing room — eloise rgb-b</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-        <meta name="description" content="brandpack tools workplace dashboard" />
+        <meta name="description" content="proofing room workplace dashboard" />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
         <script>
             (function () {
-                let title = "brandpack tools ✦ eloise rgb-b ✦ ";
+                let title = "proofing room ✦ eloise rgb-b ✦ ";
                 let position = 0;
                 function scrollTitle() {
                     document.title =
@@ -37,7 +37,7 @@
             <a class="back-link" href="index.html">&larr; back home</a>
 
             <section>
-                <h2>brandpack tools</h2>
+                <h2>proofing room</h2>
                 <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
                     <span>node</span> &nbsp; <span>express</span> &nbsp;
                     <span>preact</span> &nbsp; <span>vite</span> &nbsp;
@@ -51,18 +51,45 @@
                     technician visits, equipment records, customer profiles, ink
                     density readings, and shift statistics.
                 </p>
+                <p>
+                    Before this, there was basically no tracking or
+                    documentation system at all &mdash; files ended up in random
+                    drawers, in personal notebooks, on personal computers,
+                    wherever. The moment that actually started this project was
+                    a day I couldn't find any of the SOPs I needed and realised
+                    just how bad the situation had gotten.
+                </p>
+
+                <figure class="project-shot">
+                    <img src="images/proofing-room-dashboard.png" alt="the proofing room dashboard home screen showing open issues, low stock, overdue tasks, this week's stats, and a shift clock-in tracker" />
+                    <figcaption>the launcher &mdash; everyone's shift starts here</figcaption>
+                </figure>
 
                 <h3>how it works</h3>
                 <p>
-                    You log in with a user and PIN and land on a launcher screen, each
-                    tool from there is its own self-contained little app.
-                    Under the hood, each tool is also built as its own
-                    self-contained chunk of code with a clear, checked-over
-                    boundary for what data goes in and out &mdash; so I can add a
+                    It didn't start as one dashboard &mdash; it grew into one.
+                    The first pieces were small, single-purpose tools: a basic
+                    inventory tracker, a way to log when maintenance had been
+                    done. Those got used, so more tools got added the same way,
+                    and it grew from there into the dashboard it is now. You log
+                    in with a user and PIN and land on a launcher screen, and
+                    each tool from there is still its own self-contained little
+                    app under the hood &mdash; each one has a clear, checked-over
+                    boundary for what data goes in and out, so I can add a
                     brand-new tool, or change an existing one, without the risk
                     of accidentally breaking something unrelated elsewhere in the
                     dashboard.
                 </p>
+
+                <figure class="project-shot">
+                    <img src="images/proofing-room-converter.png" alt="the LAB to CMYK/RGB colour converter, editing a colour in LAB space with the other colour spaces updating live" />
+                    <figcaption>colour converter &mdash; edit any space, the others update live</figcaption>
+                </figure>
+
+                <figure class="project-shot">
+                    <img src="images/proofing-room-inventory.png" alt="the stock and supplies view, showing per-printer ink and maintenance inventory with low-stock warnings" />
+                    <figcaption>inventory &mdash; per-printer stock, tracked instead of guessed at</figcaption>
+                </figure>
 
                 <h3>built with</h3>
                 <p>
