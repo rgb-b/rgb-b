@@ -7,9 +7,16 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
-        <meta name="description" content="always-on-top last.fm now-playing widget" />
+        <meta
+            name="description"
+            content="always-on-top last.fm now-playing widget"
+        />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,300..1000,0..1,0..1&display=swap"
+        />
         <script>
             (function () {
                 let title = "lastfm-widget ✦ eloise rgb-b ✦ ";
@@ -102,9 +109,7 @@
                             var sx = x + shift;
                             var v =
                                 (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
-                                    Math.sin(
-                                        sx * 0.04 + y * 0.06 + t * 0.3,
-                                    ) *
+                                    Math.sin(sx * 0.04 + y * 0.06 + t * 0.3) *
                                         0.5 +
                                     1) /
                                 2;
@@ -159,8 +164,9 @@
                     })(0);
                 }
             })();
-        </script>        <header>
-            <a class="site-title" href="index.html">eloise rgb-b</a>
+        </script>
+        <header>
+            <a class="site-title" href="index.html">rgb-b</a>
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
@@ -177,25 +183,27 @@
                     <span>python</span> &nbsp; <span>pywebview</span> &nbsp;
                     <span>react</span>
                 </p>
+                <img src="images/last-fm-widget.png" />
                 <p>
                     A compact always-on-top desktop widget (300&times;100px)
-                    that shows what's currently playing from Last.fm, with a
-                    Y2K / Winamp frosted-glass look.
+                    that shows what's currently playing from Last.fm, with a Y2K
+                    / Winamp frosted-glass look.
                 </p>
 
                 <h3>how it works</h3>
                 <p>
                     Every 15 seconds it quietly asks Last.fm, a music
                     scrobbling/tracking site, what track you're currently
-                    listening to, and updates the widget to match. Even though it
-                    looks and behaves like a proper little native desktop app
+                    listening to, and updates the widget to match. Even though
+                    it looks and behaves like a proper little native desktop app
                     &mdash; you can drag it around by its title bar and even
-                    collapse it down to just that title bar &mdash; it's actually
-                    built almost entirely with regular web page styling, just
-                    displayed in a special borderless window instead of a normal
-                    browser tab. The frosted-glass see-through look is a standard
-                    visual effect, and it politely falls back to a plain solid
-                    background on setups that can't render it.
+                    collapse it down to just that title bar &mdash; it's
+                    actually built almost entirely with regular web page
+                    styling, just displayed in a special borderless window
+                    instead of a normal browser tab. The frosted-glass
+                    see-through look is a standard visual effect, and it
+                    politely falls back to a plain solid background on setups
+                    that can't render it.
                 </p>
 
                 <h3>built with</h3>
@@ -206,12 +214,14 @@
                     common toolkit for building interactive web interfaces,
                     loaded directly over the internet rather than being
                     installed. There's no server and no database involved at all
-                    &mdash; just one small file listing your Last.fm username and
-                    an access key. It comes with a few different visual skins and
-                    a colour picker to match your desktop.
+                    &mdash; just one small file listing your Last.fm username
+                    and an access key. It comes with a few different visual
+                    skins and a colour picker to match your desktop.
                 </p>
                 <p style="margin-top: var(--spacing-sm)">
-                    <a href="https://github.com/elphiene/lastfm-widget">source &rarr;</a>
+                    <a href="https://github.com/elphiene/lastfm-widget"
+                        >source &rarr;</a
+                    >
                 </p>
             </section>
         </main>

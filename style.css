@@ -3,6 +3,13 @@
  * Monochrome retro-modern blend — swap --color-accent to add color
  */
 
+/* Cross-document view transitions between index.html and the project pages
+   — same mechanism used on cherrys-labs. No named pairs yet, so this just
+   upgrades the default navigation from a hard cut to a cross-fade. */
+@view-transition {
+    navigation: auto;
+}
+
 /* ===================================
    CSS VARIABLES
    =================================== */
@@ -39,6 +46,9 @@
     /* Typography */
     --font-main: Tahoma, Verdana, sans-serif;
     --font-mono: "Courier New", Courier, monospace;
+    /* Variable font used only for the hero wordmark's hover morph — falls
+       back to the mono stack if the Google Fonts request ever fails. */
+    --font-display: "Recursive", "Courier New", monospace;
     --font-size-sm: 13px;
     --font-size-base: 16px;
     --font-size-md: 20px;
@@ -63,7 +73,22 @@
 }
 
 /* ===================================
-   DITHERED BACKGROUND
+   AMBIENT BACKGROUND (three.js particle field — index.html only)
+   =================================== */
+
+#bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ===================================
+   DITHERED BACKGROUND (original 2D canvas version — still used on every
+   project-*.html detail page; kept here rather than deleted so it keeps
+   rendering there)
    =================================== */
 
 #dither-bg {
@@ -75,6 +100,102 @@
     pointer-events: none;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+}
+
+/* ===================================
+   GRAIN OVERLAY
+   =================================== */
+
+#grain-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+}
+
+#grain-overlay::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+    filter: url(#grainFilter);
+}
+
+/* ===================================
+   SCROLL PROGRESS (native CSS, zero JS)
+   =================================== */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent),
+        var(--color-accent-alt)
+    );
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    z-index: 1001;
+    animation: grow-progress linear;
+    animation-timeline: scroll(root);
+}
+
+@keyframes grow-progress {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* ===================================
+   HERO TITLE (variable font morph)
+   =================================== */
+
+.hero-title-section {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.hero-title-section .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.var-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 0.95;
+    color: var(--color-text);
+    font-variation-settings: "MONO" 0.25, "CASL" 0.15, "wght" 620, "slnt" 0;
+    transition:
+        font-variation-settings 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+        color 0.4s,
+        text-shadow 0.4s;
+    cursor: default;
+    display: inline-block;
+}
+
+.hero-title-section:hover .var-title,
+.hero-title-section:focus-within .var-title {
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
+    color: var(--color-accent);
+    text-shadow: var(--glow-hover);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress {
+        animation: none;
+    }
 }
 
 /* ===================================
@@ -213,18 +334,25 @@ header {
     justify-content: space-between;
 }
 
+/* Same variable-font wordmark as the homepage hero (.var-title), sized down
+   for the header — a small resting state that morphs open on hover/focus. */
 .site-title {
-    font-family: var(--font-mono);
+    font-family: var(--font-display);
     font-size: var(--font-size-md);
-    font-weight: bold;
     color: var(--color-accent);
     text-decoration: none;
     letter-spacing: 1px;
+    font-variation-settings: "MONO" 0.25, "CASL" 0.15, "wght" 620, "slnt" 0;
+    transition:
+        font-variation-settings 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+        color 0.3s;
 }
 
-.site-title:hover {
+.site-title:hover,
+.site-title:focus-visible {
     text-decoration: none;
     color: var(--color-text);
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
 }
 
 nav ul {
@@ -313,6 +441,7 @@ section h2 {
    =================================== */
 
 .card {
+    position: relative;
     background: var(--gradient-card);
     border: var(--border);
     border-radius: var(--radius);
@@ -327,6 +456,22 @@ section h2 {
 
 .card.visible {
     opacity: 1;
+}
+
+/* Project cards: the whole card is clickable, not just the small "view →"
+   text — the link gets a stretched ::after overlay covering the card, so
+   any other real links inside the card (there are none currently) would
+   still need their own higher z-index to stay clickable above it. */
+.card:has(.card-link) {
+    cursor: pointer;
+}
+
+.card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
 }
 
 .card:hover {

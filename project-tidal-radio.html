@@ -7,9 +7,16 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
-        <meta name="description" content="self-hosted multi-station live radio with an auto-DJ audio pipeline" />
+        <meta
+            name="description"
+            content="self-hosted multi-station live radio with an auto-DJ audio pipeline"
+        />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,300..1000,0..1,0..1&display=swap"
+        />
         <script>
             (function () {
                 let title = "tidal-radio ✦ eloise rgb-b ✦ ";
@@ -102,9 +109,7 @@
                             var sx = x + shift;
                             var v =
                                 (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
-                                    Math.sin(
-                                        sx * 0.04 + y * 0.06 + t * 0.3,
-                                    ) *
+                                    Math.sin(sx * 0.04 + y * 0.06 + t * 0.3) *
                                         0.5 +
                                     1) /
                                 2;
@@ -159,8 +164,9 @@
                     })(0);
                 }
             })();
-        </script>        <header>
-            <a class="site-title" href="index.html">eloise rgb-b</a>
+        </script>
+        <header>
+            <a class="site-title" href="index.html">rgb-b</a>
             <nav>
                 <ul>
                     <li><a href="index.html">home</a></li>
@@ -179,58 +185,62 @@
                     <span>docker</span> &nbsp; <span>websocket</span>
                 </p>
                 <p>
-                    A self-hosted, multi-station live radio. People link a
-                    Tidal playlist, point a station at an artist, or submit
-                    individual songs &mdash; each station downloads the audio
-                    into one shared library and streams a fair-shuffle
-                    rotation continuously, live, as its own Icecast mount. A
-                    station can also be defined by genre instead of a link,
-                    drawing from whatever's already in the library. Running in
-                    production with five stations and a 450-track library,
-                    plus a 15,000+ file local collection indexed and matched
-                    on demand.
+                    A self-hosted, multi-station live radio. People link a Tidal
+                    playlist, point a station at an artist, or submit individual
+                    songs &mdash; each station downloads the audio into one
+                    shared library and streams a fair-shuffle rotation
+                    continuously, live, as its own Icecast mount. A station can
+                    also be defined by genre instead of a link, drawing from
+                    whatever's already in the library. Running in production
+                    with five stations and a 450-track library, plus a 15,000+
+                    file local collection indexed and matched on demand.
                 </p>
 
                 <figure class="project-shot">
-                    <img src="images/tidal-radio.png" alt="the tidal-radio listen page for a station called Night Shift, showing an on-air track, its progress, a tune-in button, volume slider, and the next track coming up" />
-                    <figcaption>the listen page &mdash; rendered straight from the shipped server code, no mockup</figcaption>
+                    <img
+                        src="images/tidal-radio.png"
+                        height="50px"
+                        alt="the tidal-radio listen page for a station called Night Shift, showing an on-air track, its progress, a tune-in button, volume slider, and the next track coming up"
+                    />
+                    <figcaption>
+                        the listen page &mdash; rendered straight from the
+                        shipped server code, no mockup
+                    </figcaption>
                 </figure>
 
                 <h3>how it works</h3>
                 <p>
-                    Tidal is only ever used as a catalogue and a source of
-                    files &mdash; a submitted track is downloaded once into
-                    the shared library and played from there, never streamed
-                    live from Tidal itself. Sync only ever flows one way in:
-                    linking a playlist to a station can never write back to
-                    it, by construction, because there's no code path that
-                    lets it. Playback itself works as a pull, not a push: the
-                    streaming engine (Liquidsoap) asks the app for the next
-                    track over a small internal API, the app's rotation logic
-                    picks one, and Liquidsoap reports back what actually went
-                    on air &mdash; which is also what pushes the "on air" state
-                    out to listeners' browsers over a live WebSocket
-                    connection.
+                    Tidal is only ever used as a catalogue and a source of files
+                    &mdash; a submitted track is downloaded once into the shared
+                    library and played from there, never streamed live from
+                    Tidal itself. Sync only ever flows one way in: linking a
+                    playlist to a station can never write back to it, by
+                    construction, because there's no code path that lets it.
+                    Playback itself works as a pull, not a push: the streaming
+                    engine (Liquidsoap) asks the app for the next track over a
+                    small internal API, the app's rotation logic picks one, and
+                    Liquidsoap reports back what actually went on air &mdash;
+                    which is also what pushes the "on air" state out to
+                    listeners' browsers over a live WebSocket connection.
                 </p>
                 <p>
-                    Underneath that sits an auto-DJ pass that runs on every
-                    file once, when it arrives, rather than while it's
-                    playing. Loudness is measured properly (integrated LUFS,
-                    the same standard broadcast uses) and turned into one
-                    fixed gain per track, capped so it can never clip. Dead air
-                    at the start and end of a file is detected and trimmed
-                    &mdash; over 95% of the library was carrying trailing
-                    silence, which meant crossfades used to start inside the
-                    silence rather than the song. Crossfades themselves use a
-                    curve chosen specifically so the overlap doesn't dip in
-                    volume in the middle, which is what makes a fade sound
-                    like a hole. Track selection also prefers whatever follows
-                    the last song well in tempo and loudness, without ever
-                    letting that preference stop a track from getting its
-                    turn. A station stops pulling audio the moment nobody's
-                    listening and picks back up the instant someone tunes in
-                    &mdash; the stream itself never goes down, so there's
-                    always something to tune into.
+                    Underneath that sits an auto-DJ pass that runs on every file
+                    once, when it arrives, rather than while it's playing.
+                    Loudness is measured properly (integrated LUFS, the same
+                    standard broadcast uses) and turned into one fixed gain per
+                    track, capped so it can never clip. Dead air at the start
+                    and end of a file is detected and trimmed &mdash; over 95%
+                    of the library was carrying trailing silence, which meant
+                    crossfades used to start inside the silence rather than the
+                    song. Crossfades themselves use a curve chosen specifically
+                    so the overlap doesn't dip in volume in the middle, which is
+                    what makes a fade sound like a hole. Track selection also
+                    prefers whatever follows the last song well in tempo and
+                    loudness, without ever letting that preference stop a track
+                    from getting its turn. A station stops pulling audio the
+                    moment nobody's listening and picks back up the instant
+                    someone tunes in &mdash; the stream itself never goes down,
+                    so there's always something to tune into.
                 </p>
 
                 <h3>built with</h3>
@@ -241,10 +251,10 @@
                     station's rotation and pushes it to air), Icecast (one
                     stream mount per station), and Caddy for TLS and routing.
                     Loudness analysis runs through ffmpeg, and beat-grid
-                    measurement through aubio. The whole thing is covered by
-                    24 self-contained test suites and 773 assertions, run as
-                    plain Node scripts rather than a test framework, each one
-                    named after the specific bug it was written to catch.
+                    measurement through aubio. The whole thing is covered by 24
+                    self-contained test suites and 773 assertions, run as plain
+                    Node scripts rather than a test framework, each one named
+                    after the specific bug it was written to catch.
                 </p>
 
                 <p class="muted mono" style="margin-top: var(--spacing-sm)">
