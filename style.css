@@ -189,7 +189,13 @@
 .hero-title-section:focus-within .var-title {
     font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
     color: var(--color-accent);
-    text-shadow: var(--glow-hover);
+    /* RGB-split chromatic aberration — pink and blue channels peel apart
+       either side of the accent glow, since the whole site's namesake is
+       literally the R/G/B channels. */
+    text-shadow:
+        -3px 0 0 rgba(255, 68, 170, 0.75),
+        3px 0 0 rgba(90, 140, 255, 0.75),
+        var(--glow-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -345,7 +351,8 @@ header {
     font-variation-settings: "MONO" 0.25, "CASL" 0.15, "wght" 620, "slnt" 0;
     transition:
         font-variation-settings 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
-        color 0.3s;
+        color 0.3s,
+        text-shadow 0.3s;
 }
 
 .site-title:hover,
@@ -353,6 +360,11 @@ header {
     text-decoration: none;
     color: var(--color-text);
     font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
+    /* Same RGB-split chromatic aberration as the hero title, just a
+       tighter offset to suit the smaller header size. */
+    text-shadow:
+        -1.5px 0 0 rgba(255, 68, 170, 0.75),
+        1.5px 0 0 rgba(90, 140, 255, 0.75);
 }
 
 nav ul {
@@ -894,6 +906,98 @@ footer {
     --glow: 0 0 12px rgba(255, 68, 170, 0.12);
     --glow-hover: 0 0 20px rgba(255, 68, 170, 0.22);
 }
+
+/* ===================================
+   CHERRY'S LABS SECTION
+   A deliberate bridge between rgb-b's own identity (terminal mono type,
+   flat bordered cards) and cherrys-labs' identity (pink/purple, cut
+   corners, dithered glass) — same two-layer "fill = border colour,
+   ::before = inset glass panel" trick cherrys-labs' own stylesheet uses,
+   plus its Bayer-dither texture, recoloured to purple so it reads as a
+   guest here rather than a full reskin.
+   =================================== */
+
+#cherryslabs {
+    /* Muted, desaturated purple — a hint of cherrys-labs' colour, not a
+       repaint. Same border-colour-as-fill trick as before, just at the
+       same low alpha the rest of this site's borders already sit at. */
+    --cl-purple: rgba(157, 130, 216, 0.4);
+    --cl-cut: 14px;
+    position: relative;
+    background: var(--cl-purple);
+    border: none;
+    clip-path: polygon(
+        var(--cl-cut) 0,
+        100% 0,
+        100% calc(100% - var(--cl-cut)),
+        calc(100% - var(--cl-cut)) 100%,
+        0 100%,
+        0 var(--cl-cut)
+    );
+}
+
+#cherryslabs::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    /* Same card gradient every other section uses — this panel should
+       read as "a card with cut corners", not a different material. */
+    background-image: var(--gradient-card);
+    clip-path: polygon(
+        calc(var(--cl-cut) - 2px) 0,
+        100% 0,
+        100% calc(100% - var(--cl-cut) + 2px),
+        calc(100% - var(--cl-cut) + 2px) 100%,
+        0 100%,
+        0 calc(var(--cl-cut) - 2px)
+    );
+    z-index: 0;
+}
+
+#cherryslabs::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><g fill='%239d82d8' fill-opacity='0.09'><rect x='0' y='0' width='1' height='1'/><rect x='2' y='0' width='1' height='1'/><rect x='4' y='0' width='1' height='1'/><rect x='6' y='0' width='1' height='1'/><rect x='1' y='1' width='1' height='1'/><rect x='5' y='1' width='1' height='1'/><rect x='0' y='2' width='1' height='1'/><rect x='2' y='2' width='1' height='1'/><rect x='4' y='2' width='1' height='1'/><rect x='6' y='2' width='1' height='1'/><rect x='3' y='3' width='1' height='1'/><rect x='7' y='3' width='1' height='1'/><rect x='0' y='4' width='1' height='1'/><rect x='2' y='4' width='1' height='1'/><rect x='4' y='4' width='1' height='1'/><rect x='6' y='4' width='1' height='1'/><rect x='1' y='5' width='1' height='1'/><rect x='5' y='5' width='1' height='1'/><rect x='0' y='6' width='1' height='1'/><rect x='2' y='6' width='1' height='1'/><rect x='4' y='6' width='1' height='1'/><rect x='6' y='6' width='1' height='1'/><rect x='3' y='7' width='1' height='1'/><rect x='7' y='7' width='1' height='1'/></g></svg>");
+    background-size: 16px 16px;
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    /* Fixed-size circle rather than a %-of-diagonal one — this section is
+       much wider than cherrys-labs' own cards, so a percentage-based fade
+       would spread the texture across most of the card instead of just
+       kissing the corner. */
+    mask-image: radial-gradient(circle 140px at top right, black 0%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle 140px at top right, black 0%, transparent 100%);
+    clip-path: polygon(
+        calc(var(--cl-cut) - 2px) 0,
+        100% 0,
+        100% calc(100% - var(--cl-cut) + 2px),
+        calc(100% - var(--cl-cut) + 2px) 100%,
+        0 100%,
+        0 calc(var(--cl-cut) - 2px)
+    );
+    z-index: 0;
+    pointer-events: none;
+}
+
+#cherryslabs > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Body copy here sat directly in the section rather than inside a .card
+   like every other block of body text on the site (the about/links/project
+   cards), so it was rendering at the base 16px bright-white paragraph
+   style instead of the smaller muted tone the rest of the page's copy
+   uses. Match that convention instead of the base <p> default. */
+#cherryslabs p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Heading stays exactly like every other section heading (.accent-pink
+   already makes it the same hot pink) — only the card shape borrows from
+   cherrys-labs, not the typography. */
 
 /* ===================================
    PROJECT SCREENSHOTS
