@@ -21,9 +21,46 @@
     --color-bg: #050505; /* page background */
     --color-bg-card: rgba(25, 25, 25, 0.72); /* card background */
     --color-bg-card-hover: #102a25; /* card hover fill */
-    --color-border: #3d3d3d; /* borders */
+    /* was a neutral #3d3d3d — retoned so even the borders read as ink,
+       not grey, on a site whose whole "no mid-tone anywhere" bet is that
+       every color is a deliberate one. */
+    --color-border: #2a3a35; /* dark, low-saturation teal-tinted border */
     --color-text: #f4fffc; /* primary text */
     --color-text-muted: #9ad6bd; /* muted/secondary text */
+
+    /* Tint/shade ramps for the three-accent system (teal/pink/blue) that the
+       redesign work is building toward. Purely additive for now — every
+       existing rule still reads --color-accent / --color-accent-alt
+       directly, untouched. Teal and pink ramps are centred on the two
+       existing accents; blue is a new third accent deliberately chosen
+       close to Cherry's Labs' own purple territory rather than the safer,
+       more-separated alternative. */
+    --color-teal-100: #e0fff7;
+    --color-teal-300: #7cffe2;
+    --color-teal-500: #00ffcc; /* = --color-accent */
+    --color-teal-700: #00a886;
+    --color-teal-900: #063b31;
+    --color-teal-950: #071a17;
+
+    --color-pink-100: #ffe3f2;
+    --color-pink-300: #ff97d0;
+    --color-pink-500: #ff44aa; /* = --color-accent-alt */
+    --color-pink-700: #c2177a;
+    --color-pink-900: #4a0d30;
+    --color-pink-950: #1e0714;
+
+    --color-blue-100: #adb6ff;
+    --color-blue-300: #8f9aff; /* the practical default — small metadata text */
+    --color-blue-500: #6c7bff; /* base/source token */
+    --color-blue-700: #4756e1;
+    --color-blue-900: #333fa3;
+    --color-blue-950: #292e5b;
+
+    /* Semantic alias matching the .accent-pink pattern already used below.
+       Points at -300, not -500: blue's job is quiet technical metadata,
+       almost always small text, so the lighter step is the one actually
+       meant to get used day to day. */
+    --color-accent-blue: var(--color-blue-300);
 
     /* Gradients — surfaces are translucent so the screen pattern reads
        through them; the brighter text tokens above carry the legibility */
@@ -920,8 +957,12 @@ footer {
 #cherryslabs {
     /* Muted, desaturated purple — a hint of cherrys-labs' colour, not a
        repaint. Same border-colour-as-fill trick as before, just at the
-       same low alpha the rest of this site's borders already sit at. */
-    --cl-purple: rgba(157, 130, 216, 0.4);
+       same low alpha the rest of this site's borders already sit at.
+       Retoned onto cherrys-labs' actual brand hue (#9354d3, ~270°) rather
+       than an approximation, and kept deliberately desaturated (~50%)
+       against the new --color-blue-* ramp's full saturation — that's the
+       real dividing line once a blue accent sits this close to purple. */
+    --cl-purple: rgba(173, 131, 216, 0.4);
     --cl-cut: 14px;
     position: relative;
     background: var(--cl-purple);
@@ -958,7 +999,7 @@ footer {
     content: "";
     position: absolute;
     inset: 2px;
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><g fill='%239d82d8' fill-opacity='0.09'><rect x='0' y='0' width='1' height='1'/><rect x='2' y='0' width='1' height='1'/><rect x='4' y='0' width='1' height='1'/><rect x='6' y='0' width='1' height='1'/><rect x='1' y='1' width='1' height='1'/><rect x='5' y='1' width='1' height='1'/><rect x='0' y='2' width='1' height='1'/><rect x='2' y='2' width='1' height='1'/><rect x='4' y='2' width='1' height='1'/><rect x='6' y='2' width='1' height='1'/><rect x='3' y='3' width='1' height='1'/><rect x='7' y='3' width='1' height='1'/><rect x='0' y='4' width='1' height='1'/><rect x='2' y='4' width='1' height='1'/><rect x='4' y='4' width='1' height='1'/><rect x='6' y='4' width='1' height='1'/><rect x='1' y='5' width='1' height='1'/><rect x='5' y='5' width='1' height='1'/><rect x='0' y='6' width='1' height='1'/><rect x='2' y='6' width='1' height='1'/><rect x='4' y='6' width='1' height='1'/><rect x='6' y='6' width='1' height='1'/><rect x='3' y='7' width='1' height='1'/><rect x='7' y='7' width='1' height='1'/></g></svg>");
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'><g fill='%23ad83d8' fill-opacity='0.09'><rect x='0' y='0' width='1' height='1'/><rect x='2' y='0' width='1' height='1'/><rect x='4' y='0' width='1' height='1'/><rect x='6' y='0' width='1' height='1'/><rect x='1' y='1' width='1' height='1'/><rect x='5' y='1' width='1' height='1'/><rect x='0' y='2' width='1' height='1'/><rect x='2' y='2' width='1' height='1'/><rect x='4' y='2' width='1' height='1'/><rect x='6' y='2' width='1' height='1'/><rect x='3' y='3' width='1' height='1'/><rect x='7' y='3' width='1' height='1'/><rect x='0' y='4' width='1' height='1'/><rect x='2' y='4' width='1' height='1'/><rect x='4' y='4' width='1' height='1'/><rect x='6' y='4' width='1' height='1'/><rect x='1' y='5' width='1' height='1'/><rect x='5' y='5' width='1' height='1'/><rect x='0' y='6' width='1' height='1'/><rect x='2' y='6' width='1' height='1'/><rect x='4' y='6' width='1' height='1'/><rect x='6' y='6' width='1' height='1'/><rect x='3' y='7' width='1' height='1'/><rect x='7' y='7' width='1' height='1'/></g></svg>");
     background-size: 16px 16px;
     background-repeat: repeat;
     image-rendering: pixelated;
