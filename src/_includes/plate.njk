@@ -1,5 +1,5 @@
 <a
-    class="plate plate--{{ p.plate.ink }} plate--d{{ p.plate.depth }} plate--{{ p.plate.pitch }} plate--angle-{{ p.plate.angle }}"
+    class="plate plate--{{ p.plate.ink }} plate--d{{ p.plate.depth }} plate--{{ p.plate.pitch }} plate--angle-{{ p.plate.angle }}{% if p.plate.face %} plate--face-{{ p.plate.face }}{% endif %}"
     style="--wm-fit: {{ p.plate.wmFit }}"
     href="project-{{ p.slug }}.html"
     aria-label="{{ p.name }} — {{ p.plate.label }}"
@@ -22,7 +22,7 @@
     </div>
     <span
         class="plate-wordmark"
-        style="font-variation-settings: 'MONO' {{ p.plate.axis.mono }}, 'CASL' {{ p.plate.axis.casl }}, 'wght' {{ p.plate.axis.wght }}, 'slnt' {{ p.plate.axis.slnt }}"
+        {% if p.plate.face == "alt" %}style="font-variation-settings: 'wdth' {{ p.plate.axis.wdth }}, 'wght' {{ p.plate.axis.wght }}"{% elif p.plate.face == "serif" %}{# Gloock is a static face — no variation settings #}{% else %}style="font-variation-settings: 'MONO' {{ p.plate.axis.mono }}, 'CASL' {{ p.plate.axis.casl }}, 'wght' {{ p.plate.axis.wght }}, 'slnt' {{ p.plate.axis.slnt }}"{% endif %}
         >{{ p.name }}</span
     >
     <span class="plate-strip" aria-hidden="true">

@@ -86,6 +86,13 @@
     /* Variable font used only for the hero wordmark's hover morph — falls
        back to the mono stack if the Google Fonts request ever fails. */
     --font-display: "Recursive", "Courier New", monospace;
+    /* Plate wordmark faces beyond the Recursive default (added 2026-09-21).
+       Each has one explicit job — see the PROJECT PLATES section below —
+       chosen partly because their x-heights (0.528 / 0.508 em) nearly match
+       Recursive's (0.526 em), so all three sit on the same wmFit ladder
+       with no per-face size correction needed. */
+    --font-display-alt: "Bricolage Grotesque", Tahoma, Verdana, sans-serif;
+    --font-display-serif: "Gloock", "Times New Roman", Georgia, serif;
     --font-size-sm: 13px;
     --font-size-base: 16px;
     --font-size-md: 20px;
@@ -1077,9 +1084,11 @@ footer {
    so the plate looks identical at any grid column count with zero
    responsive overrides. Per-project variation comes from four ingredients
    — ink family, field depth, halftone screen angle, dot pitch — plus a
-   fixed per-project point in Recursive's variable-font axis space for the
-   wordmark. See the plate design consultation (2026-09-21) for the full
-   rationale and the 11-project assignment table.
+   wordmark set in one of three faces (Recursive/Bricolage Grotesque/Gloock,
+   each with an explicit role), at a fixed per-project axis point and one
+   of three wmFit size rungs. See the plate design consultation
+   (2026-09-21, revised same day after the first font-clipping/sizing
+   review) for the full rationale and the 11-project assignment table.
    =================================== */
 
 .plate {
@@ -1294,20 +1303,58 @@ footer {
 
 /* Wordmark — baseline-anchored, not top-anchored, so every plate in a
    grid row sits its type on the same horizontal line regardless of how
-   much room the name needs. --wm-fit (a unitless cqw font-size, one value
-   per project) is the only inline-styled variable on the whole component. */
+   much room the name needs. --wm-fit (one of three size rungs — 11.5 / 13.25
+   / 15.25cqw — see the plate consultation) and --wm-bl (below) are the only
+   inline/per-face-styled variables on the whole component.
+
+   The alphabetic baseline sits at a CONSTANT 15.25cqw above the plate's
+   bottom edge, regardless of font or size — that constant was chosen so
+   even a 0.30em descender (deeper than any face actually in use: Recursive
+   0.250em, Gloock 0.224em, Bricolage 0.164em) still clears the control
+   strip's top edge (8.06cqw) with real margin. --wm-bl is each face's own
+   baseline offset above its line box's bottom edge at line-height:1, i.e.
+   (1 - typoAscent + typoDescent) / 2 read from the font's OS/2 table — it
+   corrects for different fonts placing their baseline differently within
+   the same nominal line-height. There is deliberately NO overflow:hidden
+   here (unlike a first pass that had one) — .plate's own overflow:hidden
+   is the backstop for a runaway name, and a tight box here was clipping
+   descenders like the 'p' in "xrite-export" outright. */
 .plate-wordmark {
     position: absolute;
     z-index: 1;
     left: 5cqw;
     right: 5cqw;
-    bottom: calc(13.25cqw - 0.22em);
+    bottom: calc(15.25cqw - var(--wm-bl) * 1em);
     line-height: 1;
     white-space: nowrap;
-    overflow: hidden;
     font-family: var(--font-display);
     font-size: calc(var(--wm-fit) * 1cqw);
     color: var(--color-text);
+    --wm-bl: 0.15; /* Recursive (default face) */
+}
+
+/* Progressive enhancement: text-box-trim collapses the line box to the cap
+   height (top) and alphabetic baseline (bottom), so the element's own
+   bottom edge literally IS the baseline — no per-face --wm-bl correction
+   needed at all. Falls back to the --wm-bl path above on browsers without
+   it (Firefox, as of this writing). */
+@supports (text-box-trim: trim-both) {
+    .plate-wordmark {
+        text-box: trim-both cap alphabetic;
+        bottom: 15.25cqw;
+    }
+}
+
+/* Wordmark faces beyond the Recursive default — each with one explicit
+   job (see :root's --font-display-alt/--font-display-serif comment).
+   --wm-bl values are that face's own measured baseline offset. */
+.plate--face-alt .plate-wordmark {
+    font-family: var(--font-display-alt);
+    --wm-bl: 0.17; /* Bricolage Grotesque */
+}
+.plate--face-serif .plate-wordmark {
+    font-family: var(--font-display-serif);
+    --wm-bl: 0.125; /* Gloock */
 }
 
 /* Control strip — 8 butted patches (7 ascending steps + a repeat of the

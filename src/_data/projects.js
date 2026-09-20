@@ -16,7 +16,7 @@ module.exports = [
             icon: "xrite-export",
             label: "RUST · DENSITOMETRY · 2026",
             axis: { mono: 0.85, casl: 0, wght: 780, slnt: 0 },
-            wmFit: 12.45,
+            wmFit: 11.5,
         },
         cardBlurb: `Replaced a job that used to mean handwriting ~385
 density readings per job and typing them all up a
@@ -371,8 +371,15 @@ production. Custom personalise music stations.`,
             pitch: "medium",
             icon: "bracket",
             label: "NODE · LIVE FEED · 2026",
-            axis: { mono: 0.05, casl: 0, wght: 900, slnt: -8 },
-            wmFit: 20,
+            // The broadcast face — reserved for live, public, crowd-facing
+            // projects. A live match feed is exactly that case, and a heavy
+            // irregular grotesque plus hot pink reads as a scoreboard. No
+            // slnt here (Bricolage has no slant axis, and a synthesised
+            // oblique on a heavy display face looks cheap) — upright at
+            // wght 800 carries it on its own.
+            face: "alt",
+            axis: { wdth: 100, wght: 800 },
+            wmFit: 15.25,
         },
         cardBlurb: `Turns a dozen mismatched live-score feeds into one
 clean bracket that always knows what's on right now
@@ -621,7 +628,7 @@ concept/work-in-progress`,
             icon: "signal-tui",
             label: "RUST · TERMINAL CLIENT · 2026",
             axis: { mono: 1.0, casl: 0, wght: 500, slnt: 0 },
-            wmFit: 14.67,
+            wmFit: 13.25,
         },
         cardBlurb: `Signal messenger, fully keyboard-driven from the
 terminal &mdash; for anyone who'd rather never touch
