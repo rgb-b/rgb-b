@@ -182,13 +182,19 @@
                     <span>sqlite</span> &nbsp; <span>vite</span>
                 </p>
                 <p>
-                    A tool for colour matching and corrections in flexo
-                    printing, built to speed up matching and take human error
-                    out of the process. It generates a calibration chart to
-                    scan with a spectrodensitometer &mdash; the same handheld
-                    device used for ink density readings &mdash; then cross
-                    references the LAB values that come back against CMYK
-                    formulas to tell you exactly how to adjust a mix.
+                    A tool for colour matching and corrections on the shop's
+                    Roland VersaCAMM and CGS Flexpack printers, built to speed
+                    up matching and take human error out of the process. It
+                    generates a calibration chart to scan with a
+                    spectrodensitometer &mdash; the same handheld device used
+                    for ink density readings &mdash; then cross references the
+                    LAB values that come back against CMYK<strong>OG</strong>
+                    ink recipes (the usual four channels, plus orange and
+                    green, which is what those printers actually mix with) to
+                    tell you exactly how to adjust a mix. It measures the gap
+                    with &Delta;E2000, the industry-standard formula for how
+                    different two colours actually look to a human eye, not
+                    just how far apart their numbers are.
                 </p>
 
                 <h3>how it works</h3>
@@ -205,7 +211,11 @@
                     gets applied to the standard conversion so the CMYK
                     formula it hands back already accounts for how your setup
                     actually behaves &mdash; instead of a proofer eyeballing
-                    another correction pass by hand.
+                    another correction pass by hand. Each printer supports
+                    three distinct print modes &mdash; surface, reverse, and
+                    white-base &mdash; since a colour that's printed normally,
+                    printed backwards behind clear film, or printed over a
+                    white backing all need their own calibration.
                 </p>
 
                 <h3>built with</h3>
@@ -221,6 +231,10 @@
                 </p>
 
                 <p style="margin-top: var(--spacing-sm)">
+                    <a href="https://colour.rgb-b.com"
+                        >live site &rarr;</a
+                    >
+                    &nbsp;&nbsp;
                     <a href="https://github.com/rgb-b/colour-match"
                         >source &rarr;</a
                     >

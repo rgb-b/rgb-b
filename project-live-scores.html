@@ -1,16 +1,13 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>tidal-radio — eloise rgb-b</title>
+        <title>live-scores — eloise rgb-b</title>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
-        <meta
-            name="description"
-            content="self-hosted multi-station live radio with an auto-DJ audio pipeline"
-        />
+        <meta name="description" content="the least annoying way to check the score" />
         <meta name="author" content="el" />
         <link rel="stylesheet" href="style.css" />
         <link
@@ -19,7 +16,7 @@
         />
         <script>
             (function () {
-                let title = "tidal-radio ✦ eloise rgb-b ✦ ";
+                let title = "live-scores ✦ eloise rgb-b ✦ ";
                 let position = 0;
                 function scrollTitle() {
                     document.title =
@@ -109,7 +106,9 @@
                             var sx = x + shift;
                             var v =
                                 (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
-                                    Math.sin(sx * 0.04 + y * 0.06 + t * 0.3) *
+                                    Math.sin(
+                                        sx * 0.04 + y * 0.06 + t * 0.3,
+                                    ) *
                                         0.5 +
                                     1) /
                                 2;
@@ -178,91 +177,63 @@
             <a class="back-link" href="index.html">&larr; back home</a>
 
             <section>
-                <h2>tidal-radio</h2>
+                <h2>live-scores</h2>
                 <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
-                    <span>node</span> &nbsp; <span>liquidsoap</span> &nbsp;
-                    <span>icecast</span> &nbsp; <span>sqlite</span> &nbsp;
-                    <span>docker</span> &nbsp; <span>websocket</span>
+                    <span>node</span> &nbsp; <span>express</span> &nbsp;
+                    <span>react</span> &nbsp; <span>vite</span> &nbsp;
+                    <span>in progress</span>
                 </p>
                 <p>
-                    A self-hosted, multi-station live radio. People link a Tidal
-                    playlist, point a station at an artist, or submit individual
-                    songs &mdash; each station downloads the audio into one
-                    shared library and streams a fair-shuffle rotation
-                    continuously, live, as its own Icecast mount. A station can
-                    also be defined by genre instead of a link, drawing from
-                    whatever's already in the library. Running in production
-                    with five stations and a 650-track library, plus a 15,000+
-                    file local collection indexed and matched on demand.
+                    The least annoying way to check the score. One page for
+                    golf majors and European football tables &mdash; no ads,
+                    no login, no cookie banner, no betting odds shoved in your
+                    face. Just the score.
                 </p>
-
-                <figure class="project-shot">
-                    <img
-                        src="images/tidal-radio.png"
-                        height="50px"
-                        alt="the tidal-radio listen page for a station called Night Shift, showing an on-air track, its progress, a tune-in button, volume slider, and the next track coming up"
-                    />
-                    <figcaption>
-                        the listen page &mdash; rendered straight from the
-                        shipped server code, no mockup
-                    </figcaption>
-                </figure>
 
                 <h3>how it works</h3>
                 <p>
-                    Tidal is only ever used as a catalogue and a source of files
-                    &mdash; a submitted track is downloaded once into the shared
-                    library and played from there, never streamed live from
-                    Tidal itself. Sync only ever flows one way in: linking a
-                    playlist to a station can never write back to it, by
-                    construction, because there's no code path that lets it.
-                    Playback itself works as a pull, not a push: the streaming
-                    engine (Liquidsoap) asks the app for the next track over a
-                    small internal API, the app's rotation logic picks one, and
-                    Liquidsoap reports back what actually went on air &mdash;
-                    which is also what pushes the "on air" state out to
-                    listeners' browsers over a live WebSocket connection.
+                    This is the sibling to <a href="project-bracket.html">bracket</a>,
+                    the World Cup/Wimbledon/AFL knockout display I'd already
+                    built. Bracket is very good at one shape of tournament:
+                    two sides, one winner, round after round. But a golf
+                    leaderboard or a football league table isn't a bracket at
+                    all &mdash; it's a ranked list that reshuffles all day,
+                    with a completely different sense of what "currently
+                    happening" even means. Rather than bend bracket's tree
+                    layout into something it was never built for, it made
+                    more sense to build a proper sibling site that starts from
+                    the leaderboard shape instead, while keeping the same
+                    house rules: no accounts, no tracking, nothing saved
+                    anywhere except your own browser.
                 </p>
                 <p>
-                    Underneath that sits an auto-DJ pass that runs on every file
-                    once, when it arrives, rather than while it's playing.
-                    Loudness is measured properly (integrated LUFS, the same
-                    standard broadcast uses) and turned into one fixed gain per
-                    track, capped so it can never clip. Dead air at the start
-                    and end of a file is detected and trimmed &mdash; over 95%
-                    of the library was carrying trailing silence, which meant
-                    crossfades used to start inside the silence rather than the
-                    song. Crossfades themselves use a curve chosen specifically
-                    so the overlap doesn't dip in volume in the middle, which is
-                    what makes a fade sound like a hole, and for tracks with a
-                    hard ending instead of a fadeable one, it cuts cleanly on
-                    the beat instead of forcing an overlap that doesn't belong.
-                    Track selection prefers whatever follows the last song well
-                    in tempo and loudness, without ever letting that preference
-                    stop a track from getting its turn. A station stops pulling
-                    audio the
-                    moment nobody's listening and picks back up the instant
-                    someone tunes in &mdash; the stream itself never goes down,
-                    so there's always something to tune into.
+                    Under the hood it reuses the same trick as bracket: each
+                    sport gets its own small translator that turns whatever
+                    odd shape that sport's live-data source hands back into
+                    one common format the rest of the site understands.
+                    Currently wired up: the four golf majors (the Open, the
+                    Masters, the PGA Championship, the US Open) and five
+                    European leagues (Premier League, La Liga, Serie A,
+                    Bundesliga, Ligue 1) &mdash; plus, through the same feed
+                    bracket already has, whatever knockout tournament bracket
+                    is currently tracking.
                 </p>
 
                 <h3>built with</h3>
                 <p>
-                    The app is a Node.js server with no build step, storing
-                    everything in SQLite. Four Docker containers make up the
-                    full stack: the app itself, Liquidsoap (which pulls each
-                    station's rotation and pushes it to air), Icecast (one
-                    stream mount per station), and Caddy for TLS and routing.
-                    Loudness analysis runs through ffmpeg, and beat-grid
-                    measurement through aubio. The whole thing is covered by
-                    40 self-contained test suites, run as plain Node scripts
-                    rather than a test framework, each one named after the
-                    specific bug it was written to catch.
+                    Same stack as bracket: a small always-on Node/Express
+                    server holds a short-lived cache of the latest scores so
+                    the page stays fast, and a React front end renders it.
+                    It's finished and running in production mode already
+                    &mdash; the only thing left is wiring it up as a proper
+                    always-on service with its own address, the same way
+                    bracket is, rather than something I have to start by
+                    hand.
                 </p>
 
-                <p class="muted mono" style="margin-top: var(--spacing-sm)">
-                    self-hosted, running on the home network &mdash; not
-                    publicly reachable
+                <p style="margin-top: var(--spacing-sm)">
+                    <a href="https://github.com/elphiene/live-scores">source &rarr;</a>
+                    &mdash; not live yet, hang tight
                 </p>
             </section>
         </main>
