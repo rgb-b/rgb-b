@@ -2,3 +2,5 @@ CLAUDE.md
 .claude/
 PLAN.md
 .zed/
+node_modules/
+_site/

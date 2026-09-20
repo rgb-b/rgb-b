@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{{ title }}</title>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+        />
+        <meta name="description" content="{{ description }}" />
+        <meta name="author" content="el" />
+        <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Recursive:slnt,wght,CASL,MONO@-15..0,300..1000,0..1,0..1&display=swap"
+        />
+        <script>
+            (function () {
+                let title = "{{ scrollTitle }}";
+                let position = 0;
+                function scrollTitle() {
+                    document.title =
+                        title.substring(position) +
+                        title.substring(0, position);
+                    position++;
+                    if (position > title.length) position = 0;
+                    window.setTimeout(scrollTitle, 170);
+                }
+                scrollTitle();
+            })();
+        </script>
+    </head>
+    <body>
+        {% if isHome %}
+        <!-- Grain overlay + scroll progress bar (native CSS, zero JS) -->
+        <div id="grain-overlay" aria-hidden="true"></div>
+        <div class="scroll-progress" aria-hidden="true"></div>
+        <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+            <filter id="grainFilter">
+                <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.85"
+                    numOctaves="2"
+                    stitchTiles="stitch"
+                    result="noise"
+                ></feTurbulence>
+                <feColorMatrix
+                    in="noise"
+                    type="matrix"
+                    values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0"
+                ></feColorMatrix>
+            </filter>
+        </svg>
+        {% endif %}
+
+        {% include "dither-bg.njk" %}
+        <header>
+            <a class="site-title" href="index.html">rgb-b</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html"{% if isHome %} class="active"{% endif %}>home</a></li>
+                    {% if isHome %}<!-- add more nav links here -->{% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+{{ content | safe }}
+        </main>
+
+        <footer>
+            <p>
+                eloise &mdash;
+                <a href="mailto:eloise@rgb-b.com">eloise@rgb-b.com</a> &mdash;
+                2026
+            </p>
+        </footer>
+        {% if isHome %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var reduceMotion =
+                    window.matchMedia &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)")
+                        .matches;
+                var cards = document.querySelectorAll(".card:not(.visible)");
+
+                // Scroll-triggered reveal for project cards (GSAP), falling
+                // back to the old instant stagger if the CDN script failed.
+                if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+                    gsap.registerPlugin(ScrollTrigger);
+                    if (reduceMotion) {
+                        gsap.set(cards, { opacity: 1, y: 0 });
+                    } else {
+                        cards.forEach(function (card, i) {
+                            gsap.fromTo(
+                                card,
+                                { opacity: 0, y: 24 },
+                                {
+                                    opacity: 1,
+                                    y: 0,
+                                    duration: 0.6,
+                                    delay: (i % 4) * 0.08,
+                                    ease: "power2.out",
+                                    scrollTrigger: {
+                                        trigger: card,
+                                        start: "top 88%",
+                                    },
+                                },
+                            );
+                        });
+                    }
+                } else {
+                    cards.forEach(function (card, i) {
+                        card.style.animation =
+                            "fadeIn 0.4s ease forwards " + i * 80 + "ms";
+                    });
+                }
+
+                // Magnetic nav links — nudge toward the cursor on approach.
+                var fine =
+                    window.matchMedia &&
+                    window.matchMedia("(pointer: fine)").matches;
+                if (fine && !reduceMotion) {
+                    document.querySelectorAll("nav ul li a").forEach(function (link) {
+                        link.addEventListener("pointermove", function (e) {
+                            var r = link.getBoundingClientRect();
+                            var mx = e.clientX - (r.left + r.width / 2);
+                            var my = e.clientY - (r.top + r.height / 2);
+                            link.style.transform =
+                                "translate(" + mx * 0.2 + "px," + my * 0.2 + "px)";
+                        });
+                        link.addEventListener("pointerleave", function () {
+                            link.style.transform = "translate(0,0)";
+                        });
+                    });
+                }
+            });
+        </script>
+        {% endif %}
+    </body>
+</html>

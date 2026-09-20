@@ -1,0 +1,38 @@
+---
+pagination:
+  data: projects
+  size: 1
+  alias: project
+permalink: "project-{{ project.slug }}.html"
+layout: base.njk
+isHome: false
+eleventyComputed:
+  title: "{{ project.name }} — eloise rgb-b"
+  description: "{{ project.description }}"
+  scrollTitle: "{{ project.name }} ✦ eloise rgb-b ✦ "
+---
+<a class="back-link" href="index.html">&larr; back home</a>
+
+<section>
+    <h2>{{ project.name }}</h2>
+    <p class="muted mono" style="margin-bottom: var(--spacing-sm)">
+        {% for tag in project.tags %}<span>{{ tag }}</span>{% if not loop.last %} &nbsp; {% endif %}{% endfor %}
+    </p>
+
+    {{ project.intro | safe }}
+
+    {% for shot in project.shots %}
+    <figure class="project-shot">
+        <img src="images/{{ shot.file }}"{% if shot.height %} height="{{ shot.height }}"{% endif %} alt="{{ shot.alt }}" />
+        <figcaption>{{ shot.caption | safe }}</figcaption>
+    </figure>
+    {% endfor %}
+
+    <h3>how it works</h3>
+    {{ project.howItWorks | safe }}
+
+    <h3>built with</h3>
+    {{ project.builtWith | safe }}
+
+    {{ project.closingLinks | safe }}
+</section>
