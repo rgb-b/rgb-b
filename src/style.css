@@ -1068,3 +1068,346 @@ footer {
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
 }
+
+/* ===================================
+   PROJECT PLATES
+   Custom-designed banner replacing real screenshots on the index grid and
+   at the top of each project's own page. Every dimension is expressed in
+   cqw (1cqw = 1% of the plate's own width, via container-type:inline-size)
+   so the plate looks identical at any grid column count with zero
+   responsive overrides. Per-project variation comes from four ingredients
+   — ink family, field depth, halftone screen angle, dot pitch — plus a
+   fixed per-project point in Recursive's variable-font axis space for the
+   wordmark. See the plate design consultation (2026-09-21) for the full
+   rationale and the 11-project assignment table.
+   =================================== */
+
+.plate {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    container-type: inline-size;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #050505;
+    background-image: var(--field);
+    border: 1px solid transparent;
+    text-decoration: none;
+    outline-offset: 3px;
+    transition:
+        border-color var(--transition),
+        outline-color var(--transition);
+}
+
+.plate:hover,
+.plate:focus-visible {
+    border-color: color-mix(in oklab, var(--ink-500) 40%, transparent);
+}
+
+.plate:focus-visible {
+    outline: 2px solid var(--ink-500);
+}
+
+/* Noise — kills banding on the single-ink radial field. Self-contained
+   (unlike #grain-overlay, which is only ever included on the homepage). */
+.plate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Halftone screen — an oversized rotated layer clipped by the plate's own
+   overflow:hidden. CSS can't rotate a background-image in place, so the
+   layer itself is inset negative and rotated instead. Two dots per cell
+   (staggered lattice, not a square grid) is what makes even the 0deg
+   angle read as a print screen rather than graph paper. */
+.plate::after {
+    content: "";
+    position: absolute;
+    inset: -60%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--dot-alpha);
+    transform: rotate(var(--screen-angle));
+    transform-origin: center;
+    transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    background-size: var(--dot-cell) var(--dot-cell);
+    background-image:
+        radial-gradient(
+            circle at 25% 25%,
+            var(--ink-500) 0 var(--dot-r),
+            transparent calc(var(--dot-r) + 0.4px)
+        ),
+        radial-gradient(
+            circle at 75% 75%,
+            var(--ink-500) 0 var(--dot-r),
+            transparent calc(var(--dot-r) + 0.4px)
+        );
+}
+
+.plate:hover::after,
+.plate:focus-visible::after {
+    transform: rotate(calc(var(--screen-angle) + 4deg));
+}
+
+/* Ink families — set the six-step ramp the rest of the plate reads from.
+   Categorical (only 3 exist), so these are classes rather than inline
+   values; screen angle / field depth / dot pitch follow the same pattern
+   below. --wm-fit is the one genuinely per-project scalar and stays inline. */
+.plate--teal {
+    --ink-950: var(--color-teal-950);
+    --ink-900: var(--color-teal-900);
+    --ink-700: var(--color-teal-700);
+    --ink-500: var(--color-teal-500);
+    --ink-300: var(--color-teal-300);
+    --ink-100: var(--color-teal-100);
+}
+
+.plate--pink {
+    --ink-950: var(--color-pink-950);
+    --ink-900: var(--color-pink-900);
+    --ink-700: var(--color-pink-700);
+    --ink-500: var(--color-pink-500);
+    --ink-300: var(--color-pink-300);
+    --ink-100: var(--color-pink-100);
+}
+
+.plate--blue {
+    --ink-950: var(--color-blue-950);
+    --ink-900: var(--color-blue-900);
+    --ink-700: var(--color-blue-700);
+    --ink-500: var(--color-blue-500);
+    --ink-300: var(--color-blue-300);
+    --ink-100: var(--color-blue-100);
+}
+
+/* Field depth — single-ink radial gradients only. Never a two-ink blend
+   (that's banned sitewide: it wanders toward mud or, worse, straight into
+   Cherry's Labs' purple). Lift percentages are capped per-ink against
+   measured contrast headroom against --color-text (#f4fffc) — pink can
+   take the most lift, blue the least. */
+.plate--d1 {
+    --field: radial-gradient(
+        ellipse 130% 95% at 50% 30%,
+        var(--ink-950) 0%,
+        #050505 82%
+    );
+}
+
+.plate--d2 {
+    --field: radial-gradient(
+        ellipse 130% 95% at 28% 14%,
+        color-mix(in oklab, var(--ink-700) 20%, var(--ink-900)) 0%,
+        var(--ink-950) 54%,
+        #050505 100%
+    );
+}
+
+.plate--d3 {
+    --field: radial-gradient(
+        ellipse 140% 105% at 32% 10%,
+        color-mix(in oklab, var(--ink-700) 30%, var(--ink-900)) 0%,
+        var(--ink-900) 38%,
+        var(--ink-950) 72%,
+        #050505 100%
+    );
+}
+
+/* Halftone screen angle — borrows real CMYK screen angles (0/15/45/75)
+   so that a period-4 cycle across the grid's display order guarantees no
+   two orthogonally-adjacent plates share an angle, at 1/2/3 grid columns.
+   Pin .plate-grid's column counts (below) rather than using auto-fill —
+   a 4-column layout would break that guarantee. */
+.plate--angle-0 {
+    --screen-angle: 0deg;
+}
+.plate--angle-15 {
+    --screen-angle: 15deg;
+}
+.plate--angle-45 {
+    --screen-angle: 45deg;
+}
+.plate--angle-75 {
+    --screen-angle: 75deg;
+}
+
+/* Dot pitch — tracks structural complexity (more moving parts, finer
+   screen). Alpha drops as pitch gets finer so perceived ink density
+   stays even across the grid. */
+.plate--coarse {
+    --dot-cell: 2.6cqw;
+    --dot-r: 0.42cqw;
+    --dot-alpha: 0.1;
+}
+.plate--medium {
+    --dot-cell: 1.9cqw;
+    --dot-r: 0.3cqw;
+    --dot-alpha: 0.085;
+}
+.plate--fine {
+    --dot-cell: 1.3cqw;
+    --dot-r: 0.2cqw;
+    --dot-alpha: 0.07;
+}
+
+/* Head row: icon + mono label + a rule that runs to the safe-area edge —
+   flex:1 on the rule means a longer descriptor organically shortens it,
+   the way a real print job's slug line behaves. */
+.plate-head {
+    position: absolute;
+    z-index: 1;
+    top: 5.06cqw;
+    left: 5cqw;
+    right: 5cqw;
+    height: 18cqw;
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+}
+
+.plate-icon {
+    width: 18cqw;
+    height: 18cqw;
+    flex: none;
+    color: var(--ink-300);
+}
+
+.plate-label {
+    font-family: var(--font-mono);
+    font-size: max(3.2cqw, 9px);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--ink-300);
+}
+
+.plate-rule {
+    flex: 1;
+    height: 1px;
+    background: color-mix(in oklab, var(--ink-500) 28%, transparent);
+}
+
+/* Wordmark — baseline-anchored, not top-anchored, so every plate in a
+   grid row sits its type on the same horizontal line regardless of how
+   much room the name needs. --wm-fit (a unitless cqw font-size, one value
+   per project) is the only inline-styled variable on the whole component. */
+.plate-wordmark {
+    position: absolute;
+    z-index: 1;
+    left: 5cqw;
+    right: 5cqw;
+    bottom: calc(13.25cqw - 0.22em);
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-size: calc(var(--wm-fit) * 1cqw);
+    color: var(--color-text);
+}
+
+/* Control strip — 8 butted patches (7 ascending steps + a repeat of the
+   solid, which is the actual densitometer patch and also what stops the
+   strip reading as a banned two-stop gradient). Structure is identical on
+   every plate; only the hue changes — a control bar is a standard, not a
+   decoration. */
+.plate-strip {
+    position: absolute;
+    z-index: 1;
+    left: 5cqw;
+    right: 5cqw;
+    bottom: 5.06cqw;
+    height: 3cqw;
+    display: flex;
+    gap: 1px;
+}
+
+.plate-strip i {
+    flex: 1;
+    display: block;
+}
+.plate-strip i:nth-child(1) {
+    background: #050505;
+}
+.plate-strip i:nth-child(2) {
+    background: var(--ink-950);
+}
+.plate-strip i:nth-child(3) {
+    background: var(--ink-900);
+}
+.plate-strip i:nth-child(4) {
+    background: var(--ink-700);
+}
+.plate-strip i:nth-child(5),
+.plate-strip i:nth-child(8) {
+    background: var(--ink-500);
+}
+.plate-strip i:nth-child(6) {
+    background: var(--ink-300);
+}
+.plate-strip i:nth-child(7) {
+    background: var(--ink-100);
+}
+
+/* Crop mark — one asymmetric corner mark (top-right only). Four would
+   read as a border; one reads as intentional. */
+.plate::after,
+.plate-crop {
+    /* (keeps the crop mark above the halftone layer but below content) */
+}
+.plate-crop {
+    position: absolute;
+    z-index: 1;
+    top: 2cqw;
+    right: 2cqw;
+    width: 2.5cqw;
+    height: 2.5cqw;
+    pointer-events: none;
+}
+.plate-crop::before,
+.plate-crop::after {
+    content: "";
+    position: absolute;
+    background: color-mix(in oklab, var(--ink-700) 40%, transparent);
+}
+.plate-crop::before {
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+}
+.plate-crop::after {
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.plate-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+@media (min-width: 600px) {
+    .plate-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (min-width: 900px) {
+    .plate-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .plate::after,
+    .plate:hover::after,
+    .plate:focus-visible::after {
+        transition: none;
+        transform: rotate(var(--screen-angle));
+    }
+}

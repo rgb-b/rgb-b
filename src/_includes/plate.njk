@@ -1,0 +1,32 @@
+<a
+    class="plate plate--{{ p.plate.ink }} plate--d{{ p.plate.depth }} plate--{{ p.plate.pitch }} plate--angle-{{ p.plate.angle }}"
+    style="--wm-fit: {{ p.plate.wmFit }}"
+    href="project-{{ p.slug }}.html"
+    aria-label="{{ p.name }} — {{ p.plate.label }}"
+>
+    <div class="plate-head">
+        <svg
+            class="plate-icon"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="0.55"
+            stroke-linecap="square"
+            stroke-linejoin="miter"
+            aria-hidden="true"
+        >
+            {% include "icons/" + p.plate.icon + ".njk" %}
+        </svg>
+        <span class="plate-label">{{ p.plate.label }}</span>
+        <span class="plate-rule"></span>
+    </div>
+    <span
+        class="plate-wordmark"
+        style="font-variation-settings: 'MONO' {{ p.plate.axis.mono }}, 'CASL' {{ p.plate.axis.casl }}, 'wght' {{ p.plate.axis.wght }}, 'slnt' {{ p.plate.axis.slnt }}"
+        >{{ p.name }}</span
+    >
+    <span class="plate-strip" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </span>
+    <span class="plate-crop" aria-hidden="true"></span>
+</a>

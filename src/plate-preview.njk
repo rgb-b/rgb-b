@@ -1,0 +1,26 @@
+---
+layout: base.njk
+isHome: false
+title: "plate preview — eloise rgb-b"
+description: "plate component proof-of-concept, not linked from nav"
+scrollTitle: "plate preview ✦ eloise rgb-b ✦ "
+permalink: "plate-preview.html"
+---
+<a class="back-link" href="index.html">&larr; back home</a>
+
+<section>
+    <h2>plate preview</h2>
+    <p>
+        Proof-of-concept for the project plate component &mdash; 3 of 11
+        recipes designed so far (teal/pink/blue, one each). Not linked from
+        nav. See each project's own page for the plate spec context.
+    </p>
+
+    <div class="plate-grid" style="margin-top: var(--spacing-md)">
+        {% for p in projects %}
+        {% if p.plate %}
+        {% include "plate.njk" %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>

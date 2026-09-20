@@ -5,6 +5,19 @@ module.exports = [
         slug: "xrite-export",
         name: "xrite-export",
         description: "xrite-export spectrodensitometer tool",
+        // Proof-of-concept plate recipe (2026-09-21) — see the plate design
+        // consultation for the full rationale. wmFit/label year are
+        // first-pass estimates pending an eyeball pass.
+        plate: {
+            ink: "teal",
+            depth: 3,
+            angle: 15,
+            pitch: "coarse",
+            icon: "xrite-export",
+            label: "RUST · DENSITOMETRY · 2026",
+            axis: { mono: 0.85, casl: 0, wght: 780, slnt: 0 },
+            wmFit: 12.45,
+        },
         cardBlurb: `Replaced a job that used to mean handwriting ~385
 density readings per job and typing them all up a
 second time. Now it's one scan-through and a
@@ -351,6 +364,16 @@ production. Custom personalise music stations.`,
         slug: "bracket",
         name: "bracket",
         description: "live world cup bracket display",
+        plate: {
+            ink: "pink",
+            depth: 3,
+            angle: 45,
+            pitch: "medium",
+            icon: "bracket",
+            label: "NODE · LIVE FEED · 2026",
+            axis: { mono: 0.05, casl: 0, wght: 900, slnt: -8 },
+            wmFit: 20,
+        },
         cardBlurb: `Turns a dozen mismatched live-score feeds into one
 clean bracket that always knows what's on right now
 &mdash; World Cup, Wimbledon, the Australian Open,
@@ -590,6 +613,16 @@ concept/work-in-progress`,
         slug: "signal-tui",
         name: "signal-tui",
         description: "terminal ui for signal messenger",
+        plate: {
+            ink: "blue",
+            depth: 1,
+            angle: 45,
+            pitch: "coarse",
+            icon: "signal-tui",
+            label: "RUST · TERMINAL CLIENT · 2026",
+            axis: { mono: 1.0, casl: 0, wght: 500, slnt: 0 },
+            wmFit: 14.67,
+        },
         cardBlurb: `Signal messenger, fully keyboard-driven from the
 terminal &mdash; for anyone who'd rather never touch
 a mouse just to send a text, an the strippe back ui
