@@ -1,0 +1,160 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero H — same ingredients as G, no repeated content"
+description: "preview"
+scrollTitle: "preview H ✦ "
+permalink: "preview-hero-h.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation H — same styling ingredients as G (which read as "worse"
+       despite hitting every individual note el asked for), but G's real
+       problem wasn't styling: the kicker, the serif line, one fact, and
+       the pink-highlighted fact all said "art + IT / pre-press apprentice"
+       in four different typefaces. Four voices repeating one idea reads
+       as bloat no matter how each individual line is styled. Fixed by
+       giving every block something to say that nothing else says --
+       kicker=role, serif=thesis, facts=three genuinely new details,
+       nothing restated. Also dropped the vertical guide-rule beside the
+       facts (a third rule device alongside the dot-screen divider and the
+       link row's top border -- one too many graphic elements) and moved
+       the pink touch off a restated line onto a real, distinct one. */
+    .pv-h {
+        padding: var(--spacing-lg) 0 var(--spacing-lg);
+    }
+    .pv-h .kicker {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-h .var-title {
+        font-size: clamp(4rem, 24vw, 8.5rem);
+        line-height: 0.85;
+        margin: 0 -2px var(--spacing-md);
+        font-variation-settings:
+            "MONO" 0.85,
+            "CASL" 0,
+            "wght" calc(720 + var(--v) * 90),
+            "slnt" calc(-3 + var(--v) * -12);
+    }
+    .pv-h .screen-rule {
+        height: 10px;
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.8;
+        background-size: 7px 7px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+    }
+    .pv-h .editorial {
+        font-family: var(--font-display-serif);
+        font-size: 23px;
+        line-height: 1.4;
+        max-width: 22ch;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-h .facts {
+        display: grid;
+        gap: 8px;
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-h .facts span {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.4;
+        letter-spacing: 0.02em;
+        color: var(--color-text-muted);
+    }
+    .pv-h .facts span b {
+        color: var(--color-accent);
+        font-weight: 400;
+    }
+    .pv-h .facts span.pink b {
+        color: var(--color-accent-alt);
+    }
+    .pv-h .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--color-border);
+    }
+    .pv-h .inline-links a {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 500;
+        font-size: 14px;
+        color: var(--color-text-muted);
+    }
+    .pv-h .inline-links a:hover {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation H — same as G, no repeated content &middot;
+    <a href="preview-hero-g.html">G</a> &middot;
+    <a href="preview-hero-f.html">F</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-h">
+    <p class="kicker">el / pre-press apprentice / design + dev</p>
+    <h1 class="var-title">rgb-b</h1>
+    <div class="screen-rule" aria-hidden="true"></div>
+    <p class="editorial">A rare combination of art and IT skills.</p>
+    <div class="facts">
+        <span><b>&gt;</b> 21, melbourne, australia</span>
+        <span><b>&gt;</b> R&amp;D tinkerer — self-hosts &amp; manages own servers</span>
+        <span class="pink"
+            ><b>&gt;</b> enough networking know-how to run infrastructure
+            for others, too</span
+        >
+    </div>
+    <div class="inline-links">
+        <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+            >linkedin</a
+        >
+        <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+        <a href="mailto:el@rgb-b.com">email</a>
+    </div>
+</section>
