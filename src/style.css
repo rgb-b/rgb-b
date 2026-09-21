@@ -478,30 +478,36 @@ section {
     padding: var(--spacing-xl) 0;
 }
 
-/* Cherry's Labs keeps its own pre-existing ::before/::after (glass panel +
-   dither texture, see its own section below) -- these crop marks used to
-   collide with them (same pseudo-elements, properties merging per the
-   cascade rather than one replacing the other), producing a tiny
-   contradictory box clipped by its polygon. Excluded here instead. */
-section:not(#cherryslabs)::before,
-section:not(#cherryslabs)::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border-top: 1px solid var(--color-border);
-    pointer-events: none;
-}
-
-section:not(#cherryslabs)::before {
-    left: 0;
-    border-left: 1px solid var(--color-border);
-}
-
-section:not(#cherryslabs)::after {
-    right: 0;
-    border-right: 1px solid var(--color-border);
+/* Registration marks at all four corners, not just the top two -- real
+   crop/registration marks always bracket a full rectangle (top-left,
+   top-right, bottom-left, bottom-right), and having only top marks meant
+   every section read as permanently "open," never closed. Drawn as eight
+   background layers directly on the section (a horizontal + vertical
+   hairline per corner) rather than ::before/::after, since a single
+   element only gets two pseudo-elements and four corners need four pairs
+   -- also sidesteps the collision Cherry's Labs' own ::before/::after had
+   with the old approach, so no :not() exclusion is needed here. */
+section:not(#cherryslabs) {
+    background-image:
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border)),
+        linear-gradient(var(--color-border), var(--color-border));
+    background-repeat: no-repeat;
+    background-size:
+        14px 1px, 1px 14px,
+        14px 1px, 1px 14px,
+        14px 1px, 1px 14px,
+        14px 1px, 1px 14px;
+    background-position:
+        top left, top left,
+        top right, top right,
+        bottom left, bottom left,
+        bottom right, bottom right;
 }
 
 /* A small mono eyebrow above each section heading -- introduces the
