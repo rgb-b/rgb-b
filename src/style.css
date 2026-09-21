@@ -568,7 +568,7 @@ section h2 {
        sitting flush against the status line and the statement -- it's
        the one element in the block that should feel like its own
        moment, not just another line in the stack. */
-    margin: var(--spacing-md) -2px var(--spacing-lg);
+    margin: calc(var(--spacing-md) * 2) -2px calc(var(--spacing-lg) * 2);
     /* Bolder resting state than the header's small .var-title default,
        still modulated by --v on top so it keeps real scroll-tied motion
        instead of sitting dead. */
