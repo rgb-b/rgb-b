@@ -550,8 +550,29 @@ section h2 {
    #intro so it still gets the sitewide section corner marks. */
 #intro {
     text-align: center;
+    /* Pushes the wordmark down toward the vertical middle of the initial
+       viewport instead of it landing right under the header -- everything
+       below is still on the page, just reached with a bit more scroll. */
+    padding-top: 24vh;
 }
 
+.hero-wordmark {
+    font-size: clamp(3rem, 17vw, 6rem);
+    line-height: 0.85;
+    margin: 0 -2px var(--spacing-md);
+    /* Bolder resting state than the header's small .var-title default,
+       still modulated by --v on top so it keeps real scroll-tied motion
+       instead of sitting dead. */
+    font-variation-settings:
+        "MONO" 0.85,
+        "CASL" 0,
+        "wght" calc(720 + var(--v) * 90),
+        "slnt" calc(-3 + var(--v) * -12);
+}
+
+/* Now sits under the wordmark as a caption rather than announcing it
+   from above -- the wordmark itself is the first thing reached when the
+   block is pushed toward vertical center. */
 .hero-status {
     display: flex;
     align-items: center;
@@ -563,25 +584,7 @@ section h2 {
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-bottom: var(--spacing-md);
-}
-
-.hero-wordmark {
-    font-size: clamp(3rem, 17vw, 6rem);
-    line-height: 0.85;
-    /* Real breathing room above and below, rather than the wordmark
-       sitting flush against the status line and the statement -- it's
-       the one element in the block that should feel like its own
-       moment, not just another line in the stack. */
-    margin: calc(var(--spacing-md) * 2) -2px calc(var(--spacing-lg) * 2);
-    /* Bolder resting state than the header's small .var-title default,
-       still modulated by --v on top so it keeps real scroll-tied motion
-       instead of sitting dead. */
-    font-variation-settings:
-        "MONO" 0.85,
-        "CASL" 0,
-        "wght" calc(720 + var(--v) * 90),
-        "slnt" calc(-3 + var(--v) * -12);
+    margin-bottom: calc(var(--spacing-lg) * 2);
 }
 
 .hero-statement {
