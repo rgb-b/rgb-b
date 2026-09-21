@@ -553,7 +553,7 @@ section h2 {
     /* Pushes the wordmark down toward the vertical middle of the initial
        viewport instead of it landing right under the header -- everything
        below is still on the page, just reached with a bit more scroll. */
-    padding-top: 24vh;
+    padding-top: 18vh;
 }
 
 .hero-wordmark {
