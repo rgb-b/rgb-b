@@ -1,0 +1,213 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero I — one textured card, one sentence, one accent word"
+description: "preview"
+scrollTitle: "preview I ✦ "
+permalink: "preview-hero-i.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation I -- a genuinely different skeleton, built from actually
+       re-viewing the reference sites instead of remixing the same five
+       blocks again (kicker/wordmark/divider/text/links, done eight times
+       over). Two ideas pulled fresh:
+       - Perry Wang: a small dot+role status line, an ACTIVE first-person
+         sentence headline with exactly ONE word set in an accent serif
+         (not a whole separate serif paragraph), a tight two-line
+         credential block, ending in a scroll cue instead of a link row.
+       - Daniel Sun: the whole hero sits inside ONE full-bleed textured
+         card framed by corner marks, rather than stacking separate plain
+         elements down the page -- rgb-b already has both the halftone
+         texture and the crop-mark technique, just never combined into
+         the hero itself. */
+    .pv-i {
+        padding: var(--spacing-lg) 0;
+    }
+    .pv-i-card {
+        position: relative;
+        padding: var(--spacing-lg) var(--spacing-md);
+        overflow: hidden;
+        background-color: #050505;
+        background-image: radial-gradient(
+            ellipse 130% 90% at 25% 15%,
+            var(--color-teal-900) 0%,
+            #050505 88%
+        );
+    }
+    .pv-i-card::before {
+        content: "";
+        position: absolute;
+        inset: -60%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.4;
+        transform: rotate(15deg);
+        background-size: 13px 13px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-teal-500) 0 1px,
+                transparent 1.4px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-teal-500) 0 1px,
+                transparent 1.4px
+            );
+    }
+    .pv-i-card > * {
+        position: relative;
+        z-index: 1;
+    }
+    /* corner marks -- same 8-layer technique as the real section corners */
+    .pv-i-card {
+        background-image:
+            radial-gradient(
+                ellipse 130% 90% at 25% 15%,
+                var(--color-teal-900) 0%,
+                #050505 88%
+            ),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border)),
+            linear-gradient(var(--color-border), var(--color-border));
+        background-repeat: no-repeat;
+        background-size:
+            100% 100%,
+            16px 1px, 1px 16px,
+            16px 1px, 1px 16px,
+            16px 1px, 1px 16px,
+            16px 1px, 1px 16px;
+        background-position:
+            0 0,
+            top left, top left,
+            top right, top right,
+            bottom left, bottom left,
+            bottom right, bottom right;
+    }
+    .pv-i .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-i .status::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 0 6px var(--color-accent);
+        flex-shrink: 0;
+    }
+    .pv-i h1 {
+        font-family: var(--font-display-alt);
+        font-variation-settings: "wdth" 100, "wght" 650;
+        font-size: clamp(2rem, 8.5vw, 2.6rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-i h1 em {
+        font-family: var(--font-display-serif);
+        font-style: normal;
+        font-weight: 400;
+        color: var(--color-accent);
+    }
+    .pv-i .cred {
+        margin-bottom: var(--spacing-lg);
+    }
+    .pv-i .cred .line1 {
+        font-size: 14px;
+        color: var(--color-text);
+        margin-bottom: 2px;
+    }
+    .pv-i .cred .line2 {
+        font-size: 13px;
+        color: var(--color-text-muted);
+    }
+    .pv-i .scroll-cue {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+    }
+    .pv-i .scroll-cue svg {
+        width: 12px;
+        height: 12px;
+        animation: pv-bob 1.6s ease-in-out infinite;
+    }
+    @keyframes pv-bob {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(3px);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pv-i .scroll-cue svg {
+            animation: none;
+        }
+    }
+</style>
+
+<p class="pv-note">
+    variation I — one textured card, one sentence &middot;
+    <a href="preview-hero-h.html">H</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-i">
+    <div class="pv-i-card">
+        <p class="status">el &middot; pre-press apprentice &middot; design + dev</p>
+        <h1>I build the <em>tools</em> my job doesn't give me.</h1>
+        <div class="cred">
+            <p class="line1">
+                Pre-press apprentice — visual arts background, self-taught
+                in code.
+            </p>
+            <p class="line2">
+                Melbourne, Australia. Self-hosts everything she ships.
+            </p>
+        </div>
+        <a href="#projects" class="scroll-cue">
+            see the work
+            <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path
+                    d="M2 4L6 8L10 4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </a>
+    </div>
+</section>
