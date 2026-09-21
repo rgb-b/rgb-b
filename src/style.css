@@ -478,8 +478,13 @@ section {
     padding: var(--spacing-xl) 0;
 }
 
-section::before,
-section::after {
+/* Cherry's Labs keeps its own pre-existing ::before/::after (glass panel +
+   dither texture, see its own section below) -- these crop marks used to
+   collide with them (same pseudo-elements, properties merging per the
+   cascade rather than one replacing the other), producing a tiny
+   contradictory box clipped by its polygon. Excluded here instead. */
+section:not(#cherryslabs)::before,
+section:not(#cherryslabs)::after {
     content: "";
     position: absolute;
     top: 0;
@@ -489,12 +494,12 @@ section::after {
     pointer-events: none;
 }
 
-section::before {
+section:not(#cherryslabs)::before {
     left: 0;
     border-left: 1px solid var(--color-border);
 }
 
-section::after {
+section:not(#cherryslabs)::after {
     right: 0;
     border-right: 1px solid var(--color-border);
 }
@@ -1062,6 +1067,11 @@ footer {
     --cl-purple: rgba(173, 131, 216, 0.4);
     --cl-cut: 14px;
     position: relative;
+    /* The rest of the page dropped its own section padding in favour of
+       crop marks with no visible card edge to bump against -- this section
+       still has one (the solid clipped-corner purple fill below), so it
+       needs its own inner padding back or copy runs flush to that edge. */
+    padding: var(--spacing-xl) var(--spacing-md);
     background: var(--cl-purple);
     border: none;
     clip-path: polygon(
