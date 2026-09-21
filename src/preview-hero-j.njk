@@ -1,0 +1,105 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero J — new copy, no card texture, consistent voice"
+description: "preview"
+scrollTitle: "preview J ✦ "
+permalink: "preview-hero-j.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation J — I's headline structure, without the textured card or
+       the dot-screen divider (both disliked), rewritten headline, and
+       fixed to first person throughout (no more third-person "she" --
+       that was a mistake, not a choice). "see the work" becomes a plain
+       label, not a link -- it's a heading for what follows, not a CTA. */
+    .pv-j {
+        padding: var(--spacing-lg) 0;
+    }
+    .pv-j .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-j .status::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        box-shadow: 0 0 6px var(--color-accent);
+        flex-shrink: 0;
+    }
+    .pv-j h1 {
+        font-family: var(--font-display-alt);
+        font-variation-settings: "wdth" 100, "wght" 650;
+        font-size: clamp(2rem, 8.5vw, 2.6rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-j h1 em {
+        font-family: var(--font-display-serif);
+        font-style: normal;
+        font-weight: 400;
+        color: var(--color-accent);
+    }
+    .pv-j .cred {
+        margin-bottom: var(--spacing-lg);
+    }
+    .pv-j .cred .line1 {
+        font-size: 14px;
+        color: var(--color-text);
+        margin-bottom: 2px;
+    }
+    .pv-j .cred .line2 {
+        font-size: 13px;
+        color: var(--color-text-muted);
+    }
+    .pv-j .work-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+    }
+</style>
+
+<p class="pv-note">
+    variation J — new copy, no texture/divider &middot;
+    <a href="preview-hero-i.html">I</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-j">
+    <p class="status">el &middot; pre-press apprentice &middot; design + dev</p>
+    <h1>I build the <em>tools</em> that don't exist, so you don't have to.</h1>
+    <div class="cred">
+        <p class="line1">
+            Pre-press apprentice — visual arts background, self-taught
+            in code.
+        </p>
+        <p class="line2">
+            Melbourne, Australia. I self-host everything I ship.
+        </p>
+    </div>
+    <p class="work-label">see the work</p>
+</section>
