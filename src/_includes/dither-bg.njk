@@ -1,10 +1,15 @@
 <!-- Animated RGB-screen background — a low-res canvas scaled up with
-     no smoothing, so it reads as a chunky halftone screen. Two
-     interfering wave sets are Bayer-dithered into small square cells;
-     a minority of cells are pink/blue instead of teal, and a few rows
-     per frame tear sideways for a glitched-signal look. Keeps clear
-     of the middle of the viewport so body copy stays legible. Static
-     single frame for anyone with prefers-reduced-motion set. -->
+     no smoothing, so it reads as a chunky halftone screen. The same
+     halftone pattern is sampled three times, once per ink plate
+     (teal/pink/blue), each nudged by its own slow "registration drift"
+     offset on a ~45s cycle -- real presses would call this
+     misregistration. Plates converge into solid colour when their
+     offsets line up and split into coloured fringes when they don't.
+     A few rows per frame additionally tear sideways for a glitched-
+     signal look. Keeps clear of the middle of the viewport so body
+     copy stays legible. Fades in once the first frame is drawn so it
+     never blocks paint; static single frame for anyone with
+     prefers-reduced-motion set. -->
 <canvas id="dither-bg" aria-hidden="true"></canvas>
 <script>
     (function () {
@@ -42,11 +47,63 @@
             return n - Math.floor(n);
         }
 
+        /* Registration drift: each plate orbits a tiny ellipse at its
+           own frequency so the three periods only line back up (full
+           registration) roughly every ~45s, rather than breathing in
+           and out in lockstep. Amplitude is small (buffer is only
+           480x270) -- this is meant to read as a few px of print
+           misregistration, not a visible wobble. */
+        var DRIFT_AMP = 1.6;
+        var DRIFT_FREQ = [
+            [0.071, 0.053],
+            [0.098, 0.062],
+            [0.084, 0.115],
+        ];
+        var DRIFT_PHASE = [0, 2.09, 4.19]; // 2*pi/3 apart
+
+        function plateOffset(plate, t) {
+            var f = DRIFT_FREQ[plate];
+            var p = DRIFT_PHASE[plate];
+            return [
+                Math.sin(t * f[0] + p) * DRIFT_AMP,
+                Math.cos(t * f[1] + p) * DRIFT_AMP,
+            ];
+        }
+
+        function sampleMask(x, y, t, shift, wave) {
+            var sx = x + shift;
+            var v =
+                (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
+                    Math.sin(sx * 0.04 + y * 0.06 + t * 0.3) * 0.5 +
+                    1) /
+                2;
+
+            /* fade out of the middle so body copy keeps its
+               contrast against the cards */
+            var nx = (x / W - 0.5) * 2;
+            var rowEdge = ((y / H - 0.5) * 2) ** 2 * 0.55;
+            var edge = Math.min(1, nx * nx * 0.95 + rowEdge);
+            v = Math.max(0, Math.min(1, v * edge));
+
+            return (
+                v >
+                (bayer[((y % 8) + 8) % 8][((x % 8) + 8) % 8] + 0.5) / 64
+            );
+        }
+
         function render(t) {
+            /* Scroll-velocity coupling: the ambient canvas recedes while
+               the page is moving fast, so the foreground (plate parallax /
+               marquee stagger) reads as the thing actually responding to
+               the scroll. Also a perf win -- see the throttle in loop(). */
+            var v = (typeof window !== "undefined" && window.__rgbbV) || 0;
+            var ampScale = 1 - 0.3 * Math.abs(v);
+
             var data = img.data;
             for (var y = 0; y < H; y++) {
-                /* a couple of row-bands per frame tear sideways and
-                   flip to a pink or blue channel */
+                /* a couple of row-bands per frame tear sideways --
+                   an occasional CRT-style glitch on top of the slow
+                   plate drift */
                 var noise = fract(
                     Math.sin(
                         Math.floor(y / 2) * 12.9898 +
@@ -54,12 +111,11 @@
                     ) * 43758.5453,
                 );
                 var isGlitch = noise > 0.972;
-                var shift = isGlitch
+                var glitchShift = isGlitch
                     ? Math.floor((noise - 0.972) * 900) - 12
                     : 0;
                 var scan = y % 2 === 0 ? 1 : 0.78; /* CRT scanline */
-                var wave = Math.sin(y * 0.11 - t * 0.45);
-                var rowEdge = ((y / H - 0.5) * 2) ** 2 * 0.55;
+                var wave = Math.sin(y * 0.11 - t * 0.45) * ampScale;
 
                 for (var x = 0; x < W; x++) {
                     var i = (y * W + x) * 4;
@@ -70,44 +126,62 @@
                         continue;
                     }
 
-                    var sx = x + shift;
-                    var v =
-                        (Math.sin(sx * 0.09 + t * 0.6) * wave * 0.5 +
-                            Math.sin(
-                                sx * 0.04 + y * 0.06 + t * 0.3,
-                            ) *
-                                0.5 +
-                            1) /
-                        2;
+                    if (isGlitch) {
+                        /* a torn row snaps to a single plate rather
+                           than compositing all three -- reads as a
+                           signal dropout, not just misregistration */
+                        var on = sampleMask(x, y, t, glitchShift, wave);
+                        if (!on) {
+                            data[i + 3] = 0;
+                            continue;
+                        }
+                        var gcol = PALETTE[noise > 0.986 ? 1 : 2];
+                        data[i] = gcol[0];
+                        data[i + 1] = gcol[1];
+                        data[i + 2] = gcol[2];
+                        data[i + 3] = 78;
+                        continue;
+                    }
 
-                    /* fade out of the middle so body copy keeps its
-                       contrast against the cards */
-                    var nx = (x / W - 0.5) * 2;
-                    var edge = Math.min(1, nx * nx * 0.95 + rowEdge);
-                    v = Math.max(0, Math.min(1, v * edge)) * scan;
+                    /* composite the three ink plates, each sampled at
+                       its own drifted position -- pixels only one
+                       plate lands on read as pure ink; pixels two or
+                       three plates agree on average toward a lighter,
+                       "in-register" tone */
+                    var r = 0,
+                        g = 0,
+                        b = 0,
+                        hits = 0;
+                    for (var p = 0; p < 3; p++) {
+                        var off = plateOffset(p, t);
+                        if (
+                            sampleMask(
+                                x + off[0] * ampScale,
+                                y + off[1] * ampScale,
+                                t,
+                                0,
+                                wave,
+                            )
+                        ) {
+                            var col = PALETTE[p];
+                            r += col[0];
+                            g += col[1];
+                            b += col[2];
+                            hits++;
+                        }
+                    }
 
-                    if (v <= (bayer[y % 8][x % 8] + 0.5) / 64) {
+                    if (hits === 0) {
                         data[i + 3] = 0;
                         continue;
                     }
 
-                    var hash = ((x * 37 + y * 101) % 97) / 97;
-                    var ci = isGlitch
-                        ? noise > 0.986
-                            ? 1
-                            : 2
-                        : hash > 0.92
-                          ? 1
-                          : hash > 0.84
-                            ? 2
-                            : 0;
-                    var col = PALETTE[ci];
-                    data[i] = col[0];
-                    data[i + 1] = col[1];
-                    data[i + 2] = col[2];
-                    /* pink/blue sit darker than the teal at the
-                       same alpha, so lift them to match */
-                    data[i + 3] = isGlitch ? 78 : ci === 0 ? 42 : 66;
+                    data[i] = r / hits;
+                    data[i + 1] = g / hits;
+                    data[i + 2] = b / hits;
+                    /* more plates agreeing on a pixel reads as more
+                       "in register" -- give it a touch more ink */
+                    data[i + 3] = Math.round((34 + hits * 14) * scan);
                 }
             }
             ctx.putImageData(img, 0, 0);
@@ -117,17 +191,55 @@
             window.matchMedia &&
             window.matchMedia("(prefers-reduced-motion: reduce)")
                 .matches;
-        if (reduceMotion) {
-            render(0);
-        } else {
+
+        function fadeIn() {
+            requestAnimationFrame(function () {
+                canvas.style.opacity = 1;
+            });
+        }
+
+        render(0);
+        fadeIn();
+
+        if (!reduceMotion) {
             var last = 0;
-            (function loop(ts) {
-                if (ts - last > 90) {
+            var rafId = null;
+            var running = false;
+
+            function loop(ts) {
+                var v = (typeof window !== "undefined" && window.__rgbbV) || 0;
+                /* ~30fps cap, stretching to ~13fps at max scroll velocity --
+                   the canvas is receding anyway, so it can afford to draw
+                   less often exactly when scroll perf matters most. */
+                var throttle = 33 + 60 * Math.abs(v);
+                if (ts - last > throttle) {
                     render(ts / 1000);
                     last = ts;
                 }
-                requestAnimationFrame(loop);
-            })(0);
+                rafId = requestAnimationFrame(loop);
+            }
+
+            function start() {
+                if (running) return;
+                running = true;
+                rafId = requestAnimationFrame(loop);
+            }
+
+            function stop() {
+                running = false;
+                if (rafId !== null) cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+
+            document.addEventListener("visibilitychange", function () {
+                if (document.hidden) {
+                    stop();
+                } else {
+                    start();
+                }
+            });
+
+            if (!document.hidden) start();
         }
     })();
 </script>

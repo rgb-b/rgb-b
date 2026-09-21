@@ -54,6 +54,7 @@
         {% endif %}
 
         {% include "dither-bg.njk" %}
+        {% include "velocity.njk" %}
         <header>
             <a class="site-title" href="index.html">rgb-b</a>
             <nav>
@@ -82,7 +83,7 @@
                     window.matchMedia &&
                     window.matchMedia("(prefers-reduced-motion: reduce)")
                         .matches;
-                var cards = document.querySelectorAll(".card:not(.visible)");
+                var cards = document.querySelectorAll(".plate-card");
 
                 // Scroll-triggered reveal for project cards (GSAP), falling
                 // back to the old instant stagger if the CDN script failed.

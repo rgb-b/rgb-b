@@ -15,6 +15,11 @@
    =================================== */
 
 :root {
+    /* Scroll-velocity signal (-1..1, damped), published by velocity.njk.
+       Fallback of 0 keeps every calc() below valid before JS runs and
+       under prefers-reduced-motion, where the loop never starts. */
+    --v: 0;
+
     /* Monochrome palette — swap these to add color */
     --color-accent: #00ffcc; /* cyan-green, primary accent */
     --color-accent-alt: #ff44aa; /* hot pink, secondary accent */
@@ -144,6 +149,16 @@
     pointer-events: none;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    /* starts invisible so the canvas never blocks first paint; the
+       script flips this to 1 once the first frame is drawn */
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #dither-bg {
+        transition: none;
+    }
 }
 
 /* ===================================
@@ -220,7 +235,14 @@
     font-size: clamp(3rem, 12vw, 7rem);
     line-height: 0.95;
     color: var(--color-text);
-    font-variation-settings: "MONO" 0.25, "CASL" 0.15, "wght" 620, "slnt" 0;
+    /* Scroll velocity feeds into this same axis morph rather than getting
+       its own separate distortion -- wght/slnt nudge with --v, MONO/CASL
+       stay fixed until the discrete :hover state below takes over. */
+    font-variation-settings:
+        "MONO" 0.25,
+        "CASL" 0.15,
+        "wght" calc(620 + var(--v) * 40),
+        "slnt" calc(var(--v) * -6);
     transition:
         font-variation-settings 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
         color 0.4s,
@@ -644,6 +666,45 @@ section h2 {
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     white-space: nowrap;
+    /* The "staggered lag reads as liquid" mechanism from the scroll-warp
+       spec lives here rather than on the project grid -- this is the only
+       genuinely repeated run of horizontal type left on the page since the
+       plates replaced the old typographic project list. --i-lag ramps
+       0..1 across one repeat of the strip (see :nth-child rules below) so
+       badges lag progressively instead of skewing in lockstep. */
+    transform: skewY(calc(var(--v) * var(--i-lag, 0) * 1.6deg))
+        scaleY(calc(1 + var(--v) * var(--i-lag, 0) * 0.05));
+}
+
+.marquee-badge:nth-child(10n + 1) {
+    --i-lag: 0;
+}
+.marquee-badge:nth-child(10n + 2) {
+    --i-lag: 0.11;
+}
+.marquee-badge:nth-child(10n + 3) {
+    --i-lag: 0.22;
+}
+.marquee-badge:nth-child(10n + 4) {
+    --i-lag: 0.33;
+}
+.marquee-badge:nth-child(10n + 5) {
+    --i-lag: 0.44;
+}
+.marquee-badge:nth-child(10n + 6) {
+    --i-lag: 0.56;
+}
+.marquee-badge:nth-child(10n + 7) {
+    --i-lag: 0.67;
+}
+.marquee-badge:nth-child(10n + 8) {
+    --i-lag: 0.78;
+}
+.marquee-badge:nth-child(10n + 9) {
+    --i-lag: 0.89;
+}
+.marquee-badge:nth-child(10n) {
+    --i-lag: 1;
 }
 
 @keyframes scroll {
@@ -1295,10 +1356,21 @@ footer {
     color: var(--ink-300);
 }
 
+/* "The divider is a waveform" -- a hand-wobbled sine tile masks a flat
+   fill of the plate's own ink, so the line reads as a signal trace in
+   whatever color that plate is carrying, tying it back into the site's
+   dither/halftone/plate metaphor. Static -- this motif doesn't animate. */
 .plate-rule {
     flex: 1;
-    height: 1px;
-    background: color-mix(in oklab, var(--ink-500) 28%, transparent);
+    height: 4px;
+    background: var(--ink-500);
+    opacity: 0.4;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4' viewBox='0 0 24 4'%3E%3Cpath d='M0,2 C2,0.4 4,0.4 6,2 C8,3.6 10,3.6 12,2 C14,0.4 16,0.4 18,2 C20,3.6 22,3.6 24,2' fill='none' stroke='black' stroke-width='1.1'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4' viewBox='0 0 24 4'%3E%3Cpath d='M0,2 C2,0.4 4,0.4 6,2 C8,3.6 10,3.6 12,2 C14,0.4 16,0.4 18,2 C20,3.6 22,3.6 24,2' fill='none' stroke='black' stroke-width='1.1'/%3E%3C/svg%3E");
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: 24px 4px;
+    mask-size: 24px 4px;
 }
 
 /* Wordmark — baseline-anchored, not top-anchored, so every plate in a
@@ -1440,6 +1512,33 @@ footer {
     gap: 14px;
 }
 
+/* Static section divider under the "projects" heading -- the wave motif
+   stated once, plainly, before the per-plate ink-colored version repeats
+   it throughout the grid. Never animates, reduced motion or not. */
+.wave-rule {
+    display: block;
+    width: 100%;
+    height: 6px;
+    margin: var(--spacing-xs) 0 var(--spacing-md);
+    stroke: var(--color-accent);
+    stroke-width: 1px;
+}
+
+/* Velocity-modulated parallax: --p is each plate's own scroll-position
+   offset (set by velocity.njk, capped +-8px per the plate spec's
+   "parallax only" rule); --v amplifies it up to 60% while the page is
+   moving fast, so the grid drifts a little harder mid-scroll and settles
+   back to its resting position when scrolling stops. Containers drift,
+   never skew -- the wordmark inside keeps its own separate hover morph. */
+.plate-card {
+    transform: translate3d(
+        0,
+        calc(var(--p, 0px) * (1 + var(--v) * 0.6)),
+        0
+    );
+    will-change: transform;
+}
+
 /* Homepage project grid: a plate plus its blurb underneath. The plate
    itself is the only link (aria-labelled with the project name already) —
    the blurb is plain text, not a second clickable target. */
@@ -1465,5 +1564,13 @@ footer {
     .plate:focus-visible::after {
         transition: none;
         transform: rotate(var(--screen-angle));
+    }
+
+    /* Belt-and-braces: velocity.njk never starts under reduced motion so
+       --v stays 0 anyway, but pin these to their resting transform too in
+       case anything ever sets --p/--v another way. */
+    .plate-card,
+    .marquee-badge {
+        transform: none;
     }
 }

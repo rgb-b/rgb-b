@@ -1,0 +1,73 @@
+<!-- Sitewide scroll-velocity signal. One rAF loop damps raw scroll delta
+     into a clamped -1..1 value published two ways: as --v on the root
+     element (consumed by CSS calc() on the hero wordmark, the tech
+     marquee, and plate parallax) and as window.__rgbbV (read by
+     dither-bg.njk's render loop so the ambient canvas recedes while the
+     page is moving fast). Never starts under prefers-reduced-motion --
+     --v stays at its :root fallback of 0 and window.__rgbbV stays 0. -->
+<script>
+    (function () {
+        window.__rgbbV = 0;
+
+        var reduceMotion =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) return;
+
+        var root = document.documentElement;
+        var lastY = window.scrollY || window.pageYOffset || 0;
+        var v = 0;
+        var rafId = null;
+        var plates = null;
+
+        function setup() {
+            plates = document.querySelectorAll(".plate-card");
+            plates.forEach(function (el, i) {
+                el.style.setProperty("--i", i);
+            });
+        }
+
+        /* Baseline plate parallax: each plate's own scroll-position offset,
+           capped to the +-8px the plate spec allows ("parallax only,
+           <=8px"). This is the --p that velocity then modulates on top of. */
+        function updateParallax() {
+            if (!plates || !plates.length) return;
+            var center = window.innerHeight / 2;
+            for (var i = 0; i < plates.length; i++) {
+                var r = plates[i].getBoundingClientRect();
+                var dist = (r.top + r.height / 2 - center) / center;
+                var p = Math.max(-8, Math.min(8, dist * 8));
+                plates[i].style.setProperty("--p", p.toFixed(2) + "px");
+            }
+        }
+
+        function tick() {
+            var y = window.scrollY || window.pageYOffset || 0;
+            var delta = y - lastY;
+            lastY = y;
+            var target = Math.max(-1, Math.min(1, delta / 40));
+            v += (target - v) * 0.15;
+            if (Math.abs(v) < 0.001) v = 0;
+            root.style.setProperty("--v", v.toFixed(4));
+            window.__rgbbV = v;
+            updateParallax();
+            rafId = requestAnimationFrame(tick);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            setup();
+            updateParallax();
+        });
+
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                if (rafId !== null) cancelAnimationFrame(rafId);
+                rafId = null;
+            } else if (rafId === null) {
+                rafId = requestAnimationFrame(tick);
+            }
+        });
+
+        rafId = requestAnimationFrame(tick);
+    })();
+</script>
