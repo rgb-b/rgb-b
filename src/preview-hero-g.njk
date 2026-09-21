@@ -1,0 +1,168 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero G — left-set, serif line, fuller facts"
+description: "preview"
+scrollTitle: "preview G ✦ "
+permalink: "preview-hero-g.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation G — everything back on one shared left edge (F's
+       opposing-alignment split didn't land). Keeps B's wordmark scale +
+       real motion, and the E2/F ">" facts list (liked over a paragraph),
+       expanded to four lines with a bit more to say and a connecting
+       guide rule instead of floating in isolation. Adds back the serif
+       (Gloock, praised on E3) as a short editorial line ahead of the
+       facts -- serif carries the human voice, mono carries the facts,
+       instead of one or the other doing both jobs. One line of the facts
+       list gets the pink touch instead of it being all-teal. */
+    .pv-g {
+        padding: var(--spacing-lg) 0 var(--spacing-lg);
+    }
+    .pv-g .kicker {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-g .var-title {
+        font-size: clamp(4rem, 24vw, 8.5rem);
+        line-height: 0.85;
+        margin: 0 -2px var(--spacing-md);
+        font-variation-settings:
+            "MONO" 0.85,
+            "CASL" 0,
+            "wght" calc(720 + var(--v) * 90),
+            "slnt" calc(-3 + var(--v) * -12);
+    }
+    .pv-g .screen-rule {
+        height: 10px;
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.8;
+        background-size: 7px 7px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+    }
+    .pv-g .editorial {
+        font-family: var(--font-display-serif);
+        font-size: 23px;
+        line-height: 1.4;
+        max-width: 20ch;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-g .facts {
+        position: relative;
+        display: grid;
+        gap: 10px;
+        padding-left: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-g .facts::before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: 0;
+        width: 1px;
+        background: var(--color-border);
+    }
+    .pv-g .facts span {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.4;
+        letter-spacing: 0.02em;
+        color: var(--color-text-muted);
+    }
+    .pv-g .facts span b {
+        color: var(--color-accent);
+        font-weight: 400;
+    }
+    .pv-g .facts span.pink b {
+        color: var(--color-accent-alt);
+    }
+    .pv-g .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--color-border);
+    }
+    .pv-g .inline-links a {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 500;
+        font-size: 14px;
+        color: var(--color-text-muted);
+    }
+    .pv-g .inline-links a:hover {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation G — left-set, serif line, fuller facts &middot;
+    <a href="preview-hero-f.html">F</a> &middot;
+    <a href="preview-hero-e2.html">E2</a> &middot;
+    <a href="preview-hero-e3.html">E3</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-g">
+    <p class="kicker">el / pre-press apprentice / design + dev</p>
+    <h1 class="var-title">rgb-b</h1>
+    <div class="screen-rule" aria-hidden="true"></div>
+    <p class="editorial">
+        A rare combination of art and IT skills.
+    </p>
+    <div class="facts">
+        <span><b>&gt;</b> visual arts, design &amp; development background</span>
+        <span><b>&gt;</b> R&amp;D tinkerer — self-hosts &amp; manages own servers</span>
+        <span><b>&gt;</b> based in melbourne, australia</span>
+        <span class="pink"><b>&gt;</b> currently: pre-press apprentice</span>
+    </div>
+    <div class="inline-links">
+        <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+            >linkedin</a
+        >
+        <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+        <a href="mailto:el@rgb-b.com">email</a>
+    </div>
+</section>
