@@ -241,8 +241,8 @@
     font-variation-settings:
         "MONO" 0.25,
         "CASL" 0.15,
-        "wght" calc(620 + var(--v) * 40),
-        "slnt" calc(var(--v) * -6);
+        "wght" calc(620 + var(--v) * 90),
+        "slnt" calc(var(--v) * -14);
     transition:
         font-variation-settings 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
         color 0.4s,
@@ -672,8 +672,8 @@ section h2 {
        plates replaced the old typographic project list. --i-lag ramps
        0..1 across one repeat of the strip (see :nth-child rules below) so
        badges lag progressively instead of skewing in lockstep. */
-    transform: skewY(calc(var(--v) * var(--i-lag, 0) * 1.6deg))
-        scaleY(calc(1 + var(--v) * var(--i-lag, 0) * 0.05));
+    transform: skewY(calc(var(--v) * var(--i-lag, 0) * 4deg))
+        scaleY(calc(1 + var(--v) * var(--i-lag, 0) * 0.14));
 }
 
 .marquee-badge:nth-child(10n + 1) {
@@ -1524,6 +1524,14 @@ footer {
     stroke-width: 1px;
 }
 
+/* Cherry's Labs already recolors its own h2 to the site's pink via
+   .accent-pink -- the wave rule under it follows the same override so the
+   motif still reads as "this section's own accent," not a stray teal
+   line inside an otherwise pink-quarantined block. */
+.accent-pink .wave-rule {
+    stroke: var(--color-accent-alt);
+}
+
 /* Velocity-modulated parallax: --p is each plate's own scroll-position
    offset (set by velocity.njk, capped +-8px per the plate spec's
    "parallax only" rule); --v amplifies it up to 60% while the page is
@@ -1533,7 +1541,7 @@ footer {
 .plate-card {
     transform: translate3d(
         0,
-        calc(var(--p, 0px) * (1 + var(--v) * 0.6)),
+        calc(var(--p, 0px) * (1 + var(--v) * 1.4)),
         0
     );
     will-change: transform;

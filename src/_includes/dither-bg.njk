@@ -85,9 +85,16 @@
             var edge = Math.min(1, nx * nx * 0.95 + rowEdge);
             v = Math.max(0, Math.min(1, v * edge));
 
+            /* Bayer lookup needs integer cell coordinates -- x/y arrive
+               fractional here whenever a drifted plate offset is baked in
+               (see plateOffset), and indexing the table with a fractional
+               key returns undefined, which used to throw and kill the
+               whole render() call before it ever painted a frame. */
+            var by = Math.floor(y);
+            var bx = Math.floor(x);
             return (
                 v >
-                (bayer[((y % 8) + 8) % 8][((x % 8) + 8) % 8] + 0.5) / 64
+                (bayer[((by % 8) + 8) % 8][((bx % 8) + 8) % 8] + 0.5) / 64
             );
         }
 
@@ -143,14 +150,21 @@
                         continue;
                     }
 
-                    /* composite the three ink plates, each sampled at
-                       its own drifted position -- pixels only one
-                       plate lands on read as pure ink; pixels two or
-                       three plates agree on average toward a lighter,
-                       "in-register" tone */
-                    var r = 0,
-                        g = 0,
-                        b = 0,
+                    /* composite the three ink plates, each sampled at its
+                       own drifted position, as translucent layers (real
+                       "src over" alpha compositing, teal under pink under
+                       blue) rather than averaging their RGB together --
+                       averaging three saturated, differently-hued colors
+                       collapses straight to grey wherever they agree, which
+                       reads as "no color at all" exactly where the effect
+                       should look most in-register. Layering keeps each
+                       plate's own hue readable, with the ones underneath
+                       showing through faintly rather than being blended
+                       flat. */
+                    var cr = 0,
+                        cg = 0,
+                        cb = 0,
+                        ca = 0,
                         hits = 0;
                     for (var p = 0; p < 3; p++) {
                         var off = plateOffset(p, t);
@@ -164,9 +178,11 @@
                             )
                         ) {
                             var col = PALETTE[p];
-                            r += col[0];
-                            g += col[1];
-                            b += col[2];
+                            var srcA = 0.62;
+                            cr = col[0] * srcA + cr * (1 - srcA);
+                            cg = col[1] * srcA + cg * (1 - srcA);
+                            cb = col[2] * srcA + cb * (1 - srcA);
+                            ca = srcA + ca * (1 - srcA);
                             hits++;
                         }
                     }
@@ -176,12 +192,14 @@
                         continue;
                     }
 
-                    data[i] = r / hits;
-                    data[i + 1] = g / hits;
-                    data[i + 2] = b / hits;
+                    data[i] = cr;
+                    data[i + 1] = cg;
+                    data[i + 2] = cb;
                     /* more plates agreeing on a pixel reads as more
                        "in register" -- give it a touch more ink */
-                    data[i + 3] = Math.round((34 + hits * 14) * scan);
+                    data[i + 3] = Math.round(
+                        ca * (34 + hits * 14) * scan,
+                    );
                 }
             }
             ctx.putImageData(img, 0, 0);

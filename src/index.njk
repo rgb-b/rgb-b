@@ -19,6 +19,7 @@ scrollTitle: "eloise rgb-b ✦ "
 <!-- Intro section -->
 <section id="intro">
     <h2>welcome</h2>
+    {% include "wave-rule.njk" %}
     <div
         class="two-col mb-sm"
         style="margin-top: var(--spacing-sm)"
@@ -88,18 +89,7 @@ scrollTitle: "eloise rgb-b ✦ "
 <!-- Projects section -->
 <section id="projects">
     <h2>projects</h2>
-    <svg
-        class="wave-rule"
-        viewBox="0 0 240 6"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-    >
-        <path
-            d="M0,3 C10,0.5 20,0.5 30,3 C40,5.5 50,5.5 60,3 C70,0.5 80,0.5 90,3 C100,5.5 110,5.5 120,3 C130,0.5 140,0.5 150,3 C160,5.5 170,5.5 180,3 C190,0.5 200,0.5 210,3 C220,5.5 230,5.5 240,3"
-            fill="none"
-            vector-effect="non-scaling-stroke"
-        />
-    </svg>
+    {% include "wave-rule.njk" %}
     <div class="plate-grid">
         {% for p in projects %}
         <div class="plate-card">
@@ -116,6 +106,7 @@ scrollTitle: "eloise rgb-b ✦ "
 <!-- Cherry's Labs section -->
 <section id="cherryslabs" class="accent-pink">
     <h2>cherry's labs</h2>
+    {% include "wave-rule.njk" %}
     <p>
         Cherry's Laboratories is a small lab studio run by a
         collection of nerds with a very diverse set of skills. We
@@ -144,6 +135,7 @@ scrollTitle: "eloise rgb-b ✦ "
 <!-- Updates section -->
 <section id="updates">
     <h2>update log</h2>
+    {% include "wave-rule.njk" %}
     <div class="updates-box">
         {% for entry in updates %}
         <div class="update-entry">

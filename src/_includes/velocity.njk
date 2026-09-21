@@ -45,8 +45,16 @@
             var y = window.scrollY || window.pageYOffset || 0;
             var delta = y - lastY;
             lastY = y;
-            var target = Math.max(-1, Math.min(1, delta / 40));
-            v += (target - v) * 0.15;
+            /* Tuned against real trackpad/wheel scrolling, not a synthetic
+               fast flick -- a normal scroll gesture moves the page single
+               digits to ~20px per animation frame, so a /40 divisor with
+               slow (0.15) damping barely ever left the flat part of the
+               curve (--v stayed under 0.03 even under a fast synthetic
+               scroll test). /14 plus faster damping gets --v into a
+               visually meaningful range during ordinary scrolling instead
+               of only during an unrealistic flick. */
+            var target = Math.max(-1, Math.min(1, delta / 14));
+            v += (target - v) * 0.35;
             if (Math.abs(v) < 0.001) v = 0;
             root.style.setProperty("--v", v.toFixed(4));
             window.__rgbbV = v;
