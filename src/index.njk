@@ -5,21 +5,10 @@ title: "eloise rgb-b"
 description: "a site"
 scrollTitle: "eloise rgb-b ✦ "
 ---
-<!-- Hero title — the "rgb-b" wordmark, big, with a variable-font
-     hover morph (Recursive's MONO/CASL/wght/slnt axes). Hover or
-     tap to see it shift from a technical mono lean to a looser,
-     heavier casual weight. -->
-<section class="hero-title-section">
-    <p class="kicker">
-        el &middot; pre-press apprentice &middot; design + dev
-    </p>
-    <h1 class="var-title">rgb-b</h1>
-</section>
-
 <!-- Intro section -->
 <section id="intro">
+    <span class="section-kicker">who's this</span>
     <h2>welcome</h2>
-    {% include "wave-rule.njk" %}
     <div
         class="two-col mb-sm"
         style="margin-top: var(--spacing-sm)"
@@ -88,25 +77,30 @@ scrollTitle: "eloise rgb-b ✦ "
 
 <!-- Projects section -->
 <section id="projects">
+    <span class="section-kicker">the work</span>
     <h2>projects</h2>
-    {% include "wave-rule.njk" %}
     <div class="plate-grid">
         {% for p in projects %}
-        <div class="plate-card">
+        {% set gridOrder = plateOrder[p.slug] %}
+        <div
+            class="plate-card"
+            style="--order-1col: {{ gridOrder.c1 }}; --order-2col: {{ gridOrder.c2 }}; --order-3col: {{ gridOrder.c3 }};"
+        >
             {% include "plate.njk" %}
             <p>{{ p.cardBlurb | safe }}</p>
         </div>
         {% endfor %}
         <!-- plate recipes live in src/_data/projects.js — copy an existing
              plate block (ink/depth/angle/pitch/icon/label/axis/wmFit) to
-             add another project's plate here -->
+             add another project's plate here. Grid position is separate,
+             driven by src/_data/plateOrder.js (see its own comment) -->
     </div>
 </section>
 
 <!-- Cherry's Labs section -->
 <section id="cherryslabs" class="accent-pink">
+    <span class="section-kicker">the studio</span>
     <h2>cherry's labs</h2>
-    {% include "wave-rule.njk" %}
     <p>
         Cherry's Laboratories is a small lab studio run by a
         collection of nerds with a very diverse set of skills. We
@@ -134,8 +128,8 @@ scrollTitle: "eloise rgb-b ✦ "
 
 <!-- Updates section -->
 <section id="updates">
+    <span class="section-kicker">log</span>
     <h2>update log</h2>
-    {% include "wave-rule.njk" %}
     <div class="updates-box">
         {% for entry in updates %}
         <div class="update-entry">

@@ -135,33 +135,6 @@
 }
 
 /* ===================================
-   DITHERED BACKGROUND (original 2D canvas version — still used on every
-   project-*.html detail page; kept here rather than deleted so it keeps
-   rendering there)
-   =================================== */
-
-#dither-bg {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
-    /* starts invisible so the canvas never blocks first paint; the
-       script flips this to 1 once the first frame is drawn */
-    opacity: 0;
-    transition: opacity 0.6s ease-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #dither-bg {
-        transition: none;
-    }
-}
-
-/* ===================================
    GRAIN OVERLAY
    =================================== */
 
@@ -207,61 +180,6 @@
     to {
         transform: scaleX(1);
     }
-}
-
-/* ===================================
-   HERO TITLE (variable font morph)
-   =================================== */
-
-.hero-title-section {
-    text-align: center;
-    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-.hero-title-section .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-sm);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xs);
-}
-
-.var-title {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 12vw, 7rem);
-    line-height: 0.95;
-    color: var(--color-text);
-    /* Scroll velocity feeds into this same axis morph rather than getting
-       its own separate distortion -- wght/slnt nudge with --v, MONO/CASL
-       stay fixed until the discrete :hover state below takes over. */
-    font-variation-settings:
-        "MONO" 0.25,
-        "CASL" 0.15,
-        "wght" calc(620 + var(--v) * 90),
-        "slnt" calc(var(--v) * -14);
-    transition:
-        font-variation-settings 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
-        color 0.4s,
-        text-shadow 0.4s;
-    cursor: default;
-    display: inline-block;
-}
-
-.hero-title-section:hover .var-title,
-.hero-title-section:focus-within .var-title {
-    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
-    color: var(--color-accent);
-    /* RGB-split chromatic aberration — pink and blue channels peel apart
-       either side of the accent glow, since the whole site's namesake is
-       literally the R/G/B channels. */
-    text-shadow:
-        -3px 0 0 rgba(255, 68, 170, 0.75),
-        3px 0 0 rgba(90, 140, 255, 0.75),
-        var(--glow-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -508,10 +426,34 @@ section {
     box-shadow: var(--glow);
 }
 
-section h2 {
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-accent);
+/* A small mono eyebrow above each section heading -- introduces the
+   section, carries the section's own accent color, and gives the big
+   display heading below it something to sit against instead of floating
+   at the top of a wall of body copy. Replaces the wavy-divider motif as
+   the thing that visually separates sections, since the divider never
+   did more than decorate. */
+.section-kicker {
+    display: block;
     font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 2px;
+}
+
+.accent-pink .section-kicker {
+    color: var(--color-accent-alt);
+}
+
+section h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+    font-variation-settings: "MONO" 0.15, "CASL" 0.1, "wght" 640, "slnt" 0;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
 }
 
 /* ===================================
@@ -1356,21 +1298,11 @@ footer {
     color: var(--ink-300);
 }
 
-/* "The divider is a waveform" -- a hand-wobbled sine tile masks a flat
-   fill of the plate's own ink, so the line reads as a signal trace in
-   whatever color that plate is carrying, tying it back into the site's
-   dither/halftone/plate metaphor. Static -- this motif doesn't animate. */
 .plate-rule {
     flex: 1;
-    height: 4px;
+    height: 1px;
     background: var(--ink-500);
     opacity: 0.4;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4' viewBox='0 0 24 4'%3E%3Cpath d='M0,2 C2,0.4 4,0.4 6,2 C8,3.6 10,3.6 12,2 C14,0.4 16,0.4 18,2 C20,3.6 22,3.6 24,2' fill='none' stroke='black' stroke-width='1.1'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='4' viewBox='0 0 24 4'%3E%3Cpath d='M0,2 C2,0.4 4,0.4 6,2 C8,3.6 10,3.6 12,2 C14,0.4 16,0.4 18,2 C20,3.6 22,3.6 24,2' fill='none' stroke='black' stroke-width='1.1'/%3E%3C/svg%3E");
-    -webkit-mask-repeat: repeat-x;
-    mask-repeat: repeat-x;
-    -webkit-mask-size: 24px 4px;
-    mask-size: 24px 4px;
 }
 
 /* Wordmark — baseline-anchored, not top-anchored, so every plate in a
@@ -1512,25 +1444,6 @@ footer {
     gap: 14px;
 }
 
-/* Static section divider under the "projects" heading -- the wave motif
-   stated once, plainly, before the per-plate ink-colored version repeats
-   it throughout the grid. Never animates, reduced motion or not. */
-.wave-rule {
-    display: block;
-    width: 100%;
-    height: 6px;
-    margin: var(--spacing-xs) 0 var(--spacing-md);
-    stroke: var(--color-accent);
-    stroke-width: 1px;
-}
-
-/* Cherry's Labs already recolors its own h2 to the site's pink via
-   .accent-pink -- the wave rule under it follows the same override so the
-   motif still reads as "this section's own accent," not a stray teal
-   line inside an otherwise pink-quarantined block. */
-.accent-pink .wave-rule {
-    stroke: var(--color-accent-alt);
-}
 
 /* Velocity-modulated parallax: --p is each plate's own scroll-position
    offset (set by velocity.njk, capped +-8px per the plate spec's
@@ -1545,6 +1458,22 @@ footer {
         0
     );
     will-change: transform;
+    /* Each plate carries three grid positions (--order-1col/2col/3col, set
+       inline from src/_data/plateOrder.js), one per column count -- a
+       single shared order can't avoid same-ink plates touching at every
+       breakpoint at once, since the 1/2/3-column grids are three different
+       adjacency graphs. The right one applies at each width below. */
+    order: var(--order-1col);
+}
+@media (min-width: 600px) {
+    .plate-card {
+        order: var(--order-2col);
+    }
+}
+@media (min-width: 900px) {
+    .plate-card {
+        order: var(--order-3col);
+    }
 }
 
 /* Homepage project grid: a plate plus its blurb underneath. The plate

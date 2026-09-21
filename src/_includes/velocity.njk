@@ -2,9 +2,12 @@
      into a clamped -1..1 value published two ways: as --v on the root
      element (consumed by CSS calc() on the hero wordmark, the tech
      marquee, and plate parallax) and as window.__rgbbV (read by
-     dither-bg.njk's render loop so the ambient canvas recedes while the
-     page is moving fast). Never starts under prefers-reduced-motion --
-     --v stays at its :root fallback of 0 and window.__rgbbV stays 0. -->
+     particles-bg.njk's render loop, which speeds up the particle field's
+     spin and dollies the camera toward it while the page is moving fast --
+     scrolling should visibly do something to the background, not just be
+     tracked by a variable nothing reacts to). Never starts under
+     prefers-reduced-motion -- --v stays at its :root fallback of 0 and
+     window.__rgbbV stays 0. -->
 <script>
     (function () {
         window.__rgbbV = 0;

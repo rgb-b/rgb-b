@@ -206,7 +206,16 @@ coworkers.`,
         name: "tidal-collaborative",
         description: "real-time collaborative tidal playlist sync",
         plate: {
-            ink: "teal",
+            // Moved from teal to pink (2026-09-21) -- 7 teal plates couldn't
+            // fit into either half of the grid's own checkerboard split (max
+            // 6) at ANY breakpoint, which is why teal-teal touches kept
+            // showing up no matter how the order was searched: with 7 teal
+            // among 11 slots it's mathematically forced, not a tuning
+            // problem. Dropping to 6 teal / 4 pink / 1 blue makes a true
+            // zero-touch layout possible, verified per breakpoint below.
+            // Real-time sync also reads as a live/broadcast trait, in the
+            // same family as bracket/live-scores/tidal-radio's pink.
+            ink: "pink",
             depth: 3,
             angle: 0,
             pitch: "medium",
