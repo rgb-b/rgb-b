@@ -189,6 +189,61 @@
 }
 
 /* ===================================
+   HERO TITLE (variable font morph)
+   =================================== */
+
+.hero-title-section {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.hero-title-section .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.var-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 12vw, 7rem);
+    line-height: 0.95;
+    color: var(--color-text);
+    /* Scroll velocity feeds into this same axis morph rather than getting
+       its own separate distortion -- wght/slnt nudge with --v, MONO/CASL
+       stay fixed until the discrete :hover state below takes over. */
+    font-variation-settings:
+        "MONO" 0.25,
+        "CASL" 0.15,
+        "wght" calc(620 + var(--v) * 90),
+        "slnt" calc(var(--v) * -14);
+    transition:
+        font-variation-settings 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+        color 0.4s,
+        text-shadow 0.4s;
+    cursor: default;
+    display: inline-block;
+}
+
+.hero-title-section:hover .var-title,
+.hero-title-section:focus-within .var-title {
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
+    color: var(--color-accent);
+    /* RGB-split chromatic aberration — pink and blue channels peel apart
+       either side of the accent glow, since the whole site's namesake is
+       literally the R/G/B channels. */
+    text-shadow:
+        -3px 0 0 rgba(255, 68, 170, 0.75),
+        3px 0 0 rgba(90, 140, 255, 0.75),
+        var(--glow-hover);
+}
+
+/* ===================================
    RESET & BASE
    =================================== */
 
