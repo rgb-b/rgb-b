@@ -1439,6 +1439,15 @@ footer {
     grid-template-columns: 1fr;
     gap: 14px;
 }
+
+/* Homepage project grid: a plate plus its blurb underneath. The plate
+   itself is the only link (aria-labelled with the project name already) —
+   the blurb is plain text, not a second clickable target. */
+.plate-card p {
+    margin-top: var(--spacing-xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
 @media (min-width: 600px) {
     .plate-grid {
         grid-template-columns: repeat(2, 1fr);

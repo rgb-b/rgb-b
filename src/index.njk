@@ -88,20 +88,16 @@ scrollTitle: "eloise rgb-b ✦ "
 <!-- Projects section -->
 <section id="projects">
     <h2>projects</h2>
-    <div class="card-grid">
+    <div class="plate-grid">
         {% for p in projects %}
-        <div class="card">
-            <h3>{{ p.name }}</h3>
+        <div class="plate-card">
+            {% include "plate.njk" %}
             <p>{{ p.cardBlurb | safe }}</p>
-            <p
-                class="mono muted"
-                style="margin-top: var(--spacing-xs)"
-            >
-                <a class="card-link" href="project-{{ p.slug }}.html">view &rarr;</a>
-            </p>
         </div>
         {% endfor %}
-        <!-- copy .card blocks to add more -->
+        <!-- plate recipes live in src/_data/projects.js — copy an existing
+             plate block (ink/depth/angle/pitch/icon/label/axis/wmFit) to
+             add another project's plate here -->
     </div>
 </section>
 

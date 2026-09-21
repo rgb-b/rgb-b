@@ -101,6 +101,16 @@ coworkers.`,
         slug: "proofing-room",
         name: "proofing room",
         description: "proofing room workplace dashboard",
+        plate: {
+            ink: "teal",
+            depth: 2,
+            angle: 45,
+            pitch: "fine",
+            icon: "proofing-room",
+            label: "PREACT · SHOP DASHBOARD · 2026",
+            axis: { mono: 0.6, casl: 0, wght: 650, slnt: 0 },
+            wmFit: 11.5,
+        },
         cardBlurb: `Built after a day I couldn't find a single SOP I
 needed. Grew from one small inventory tracker into
 the dashboard the whole proofing room now runs on
@@ -169,195 +179,6 @@ more.`,
         closingLinks: `<p style="margin-top: var(--spacing-sm)">
     <a href="https://github.com/rgb-b/brandpack-tools-v2">source &rarr;</a>
     &mdash; not public yet
-</p>`,
-    },
-    {
-        slug: "colour-match",
-        name: "colour-match",
-        description: "colour-match LAB to CMYK matching tool",
-        cardBlurb: `Every press drifts from the textbook LAB&rarr;CMYK
-conversion. This measures exactly how far, so a
-proofer stops eyeballing a second correction pass by
-hand. A work-in-progress never published.`,
-        tags: ["node", "express", "sqlite", "vite"],
-        intro: `<p>
-    A tool for colour matching and corrections on the shop's
-    Roland VersaCAMM and CGS Flexpack printers, built to speed
-    up matching and take human error out of the process. It
-    generates a calibration chart to scan with a
-    spectrodensitometer &mdash; the same handheld device used
-    for ink density readings &mdash; then cross references the
-    LAB values that come back against CMYK<strong>OG</strong>
-    ink recipes (the usual four channels, plus orange and
-    green, which is what those printers actually mix with) to
-    tell you exactly how to adjust a mix. It measures the gap
-    with &Delta;E2000, the industry-standard formula for how
-    different two colours actually look to a human eye, not
-    just how far apart their numbers are.
-</p>`,
-        shots: [],
-        howItWorks: `<p>
-    Every printer and substrate combination drifts a little
-    from the "textbook" LAB&rarr;CMYK conversion &mdash; the
-    same formula can come out a shade warmer or cooler
-    depending on the press, the stock, even the day. The
-    calibration chart exists to measure that drift directly,
-    rather than guessing at it: you print and scan the chart
-    once, and the tool compares the LAB reading of your target
-    colour against the LAB reading of what actually came off
-    press. That difference becomes a correction factor, which
-    gets applied to the standard conversion so the CMYK
-    formula it hands back already accounts for how your setup
-    actually behaves &mdash; instead of a proofer eyeballing
-    another correction pass by hand. Each printer supports
-    three distinct print modes &mdash; surface, reverse, and
-    white-base &mdash; since a colour that's printed normally,
-    printed backwards behind clear film, or printed over a
-    white backing all need their own calibration.
-</p>`,
-        builtWith: `<p>
-    A Node.js server backed by SQLite, so calibration history
-    and jobs persist between sessions without needing separate
-    database software. Scanning still goes through X-Rite's
-    own DataCatcher software, the same way as
-    <a href="project-xrite-export.html">xrite-export</a> reads
-    a strip of patches &mdash; the readings just get routed into
-    this tool's comparison logic instead. Runs self-hosted on
-    a home server.
-</p>`,
-        closingLinks: `<p style="margin-top: var(--spacing-sm)">
-    <a href="https://colour.rgb-b.com">live site &rarr;</a>
-    &nbsp;&nbsp;
-    <a href="https://github.com/rgb-b/colour-match">source &rarr;</a>
-</p>`,
-    },
-    {
-        slug: "zpl-studio",
-        name: "zpl studio",
-        description: "wysiwyg label designer for zebra printers",
-        cardBlurb: `No more hand-writing ZPL line by line. Design a
-Zebra label visually, on a real canvas, and the
-print code writes itself. Import and render images,
-clipart, and text.`,
-        tags: ["rust", "egui", "android", "WIP"],
-        intro: `<p>
-    A Dymo-style WYSIWYG label designer for Zebra thermal
-    printers. You design labels visually on a canvas and the ZPL
-    is generated at print time &mdash; no hand-writing raw ZPL.
-</p>`,
-        shots: [],
-        howItWorks: `<p>
-    Zebra printers are told what to print using ZPL, a plain-text
-    command language for printers &mdash; normally something you'd
-    have to write by hand, line by line, with no way to see the
-    result until it's actually printed. This tool skips all of
-    that: you design the label visually, like arranging text and
-    boxes on a page, and the correct ZPL code is written for you
-    automatically the moment you hit print, with an accurate
-    on-screen preview the whole time so there are no surprises.
-    You can also turn any label into a reusable template &mdash;
-    mark a field as, say,
-    <span class="mono">{{Name}}</span>, and it automatically
-    becomes a fill-in-the-blank box the next time you use that
-    template, so printing a batch of different name badges from
-    one design is quick.
-</p>`,
-        builtWith: `<p>
-    Written in Rust, a programming language chosen for speed and
-    reliability, using a toolkit called egui to build the visual,
-    click-and-drag design screen. There's also a matching Android
-    version so labels can be designed from a phone or tablet, not
-    just a desktop computer. The finished program is a small,
-    self-contained download &mdash; only a few megabytes &mdash;
-    with nothing extra to install. Every update automatically
-    produces ready-to-use builds for Windows, Linux, and Android.
-</p>`,
-        closingLinks: `<p style="margin-top: var(--spacing-sm)">
-    <a href="https://github.com/elphiene/zpl-studio/releases">downloads &rarr;</a>
-    &nbsp;&nbsp;
-    <a href="https://github.com/elphiene/zpl-studio">source &rarr;</a>
-</p>`,
-    },
-    {
-        slug: "tidal-radio",
-        name: "tidal-radio",
-        description:
-            "self-hosted multi-station live radio with an auto-DJ audio pipeline",
-        cardBlurb: `A self-hosted radio station with its own auto-DJ
-&mdash; real loudness matching, dead-air trimming,
-and seamless crossfades, running five stations in
-production. Custom personalise music stations.`,
-        tags: ["node", "liquidsoap", "icecast", "sqlite", "docker", "websocket"],
-        intro: `<p>
-    A self-hosted, multi-station live radio. People link a Tidal
-    playlist, point a station at an artist, or submit individual
-    songs &mdash; each station downloads the audio into one
-    shared library and streams a fair-shuffle rotation
-    continuously, live, as its own Icecast mount. A station can
-    also be defined by genre instead of a link, drawing from
-    whatever's already in the library. Running in production
-    with five stations and a 650-track library, plus a 15,000+
-    file local collection indexed and matched on demand.
-</p>`,
-        shots: [
-            {
-                file: "tidal-radio.png",
-                height: "50px",
-                alt: "the tidal-radio listen page for a station called Night Shift, showing an on-air track, its progress, a tune-in button, volume slider, and the next track coming up",
-                caption: "the listen page &mdash; rendered straight from the shipped server code, no mockup",
-            },
-        ],
-        howItWorks: `<p>
-    Tidal is only ever used as a catalogue and a source of files
-    &mdash; a submitted track is downloaded once into the shared
-    library and played from there, never streamed live from
-    Tidal itself. Sync only ever flows one way in: linking a
-    playlist to a station can never write back to it, by
-    construction, because there's no code path that lets it.
-    Playback itself works as a pull, not a push: the streaming
-    engine (Liquidsoap) asks the app for the next track over a
-    small internal API, the app's rotation logic picks one, and
-    Liquidsoap reports back what actually went on air &mdash;
-    which is also what pushes the "on air" state out to
-    listeners' browsers over a live WebSocket connection.
-</p>
-<p>
-    Underneath that sits an auto-DJ pass that runs on every file
-    once, when it arrives, rather than while it's playing.
-    Loudness is measured properly (integrated LUFS, the same
-    standard broadcast uses) and turned into one fixed gain per
-    track, capped so it can never clip. Dead air at the start
-    and end of a file is detected and trimmed &mdash; over 95%
-    of the library was carrying trailing silence, which meant
-    crossfades used to start inside the silence rather than the
-    song. Crossfades themselves use a curve chosen specifically
-    so the overlap doesn't dip in volume in the middle, which is
-    what makes a fade sound like a hole, and for tracks with a
-    hard ending instead of a fadeable one, it cuts cleanly on
-    the beat instead of forcing an overlap that doesn't belong.
-    Track selection prefers whatever follows the last song well
-    in tempo and loudness, without ever letting that preference
-    stop a track from getting its turn. A station stops pulling
-    audio the
-    moment nobody's listening and picks back up the instant
-    someone tunes in &mdash; the stream itself never goes down,
-    so there's always something to tune into.
-</p>`,
-        builtWith: `<p>
-    The app is a Node.js server with no build step, storing
-    everything in SQLite. Four Docker containers make up the
-    full stack: the app itself, Liquidsoap (which pulls each
-    station's rotation and pushes it to air), Icecast (one
-    stream mount per station), and Caddy for TLS and routing.
-    Loudness analysis runs through ffmpeg, and beat-grid
-    measurement through aubio. The whole thing is covered by
-    40 self-contained test suites, run as plain Node scripts
-    rather than a test framework, each one named after the
-    specific bug it was written to catch.
-</p>`,
-        closingLinks: `<p class="muted mono" style="margin-top: var(--spacing-sm)">
-    self-hosted, running on the home network &mdash; not
-    publicly reachable
 </p>`,
     },
     {
@@ -443,123 +264,246 @@ AFL finals, ETC.`,
 </p>`,
     },
     {
-        slug: "live-scores",
-        name: "live-scores",
-        description: "the least annoying way to check the score",
-        cardBlurb: `Bracket's sibling for anything that isn't a
-knockout &mdash; golf majors and European league
-tables. No ads, no login, no betting odds, just
-the score.`,
-        tags: ["node", "express", "react", "vite", "in progress"],
+        slug: "tidal-radio",
+        name: "tidal-radio",
+        description:
+            "self-hosted multi-station live radio with an auto-DJ audio pipeline",
+        plate: {
+            ink: "pink",
+            depth: 3,
+            angle: 15,
+            pitch: "fine",
+            icon: "tidal-radio",
+            label: "NODE · AUTO-DJ RADIO · 2026",
+            // The broadcast face — a live radio station is the most literal
+            // case there is for it, alongside bracket and live-scores.
+            face: "alt",
+            axis: { wdth: 100, wght: 800 },
+            wmFit: 13.25,
+        },
+        cardBlurb: `A self-hosted radio station with its own auto-DJ
+&mdash; real loudness matching, dead-air trimming,
+and seamless crossfades, running five stations in
+production. Custom personalise music stations.`,
+        tags: ["node", "liquidsoap", "icecast", "sqlite", "docker", "websocket"],
         intro: `<p>
-    The least annoying way to check the score. One page for
-    golf majors and European football tables &mdash; no ads,
-    no login, no cookie banner, no betting odds shoved in your
-    face. Just the score.
-</p>`,
-        shots: [],
-        howItWorks: `<p>
-    This is the sibling to <a href="project-bracket.html">bracket</a>,
-    the World Cup/Wimbledon/AFL knockout display I'd already
-    built. Bracket is very good at one shape of tournament:
-    two sides, one winner, round after round. But a golf
-    leaderboard or a football league table isn't a bracket at
-    all &mdash; it's a ranked list that reshuffles all day,
-    with a completely different sense of what "currently
-    happening" even means. Rather than bend bracket's tree
-    layout into something it was never built for, it made
-    more sense to build a proper sibling site that starts from
-    the leaderboard shape instead, while keeping the same
-    house rules: no accounts, no tracking, nothing saved
-    anywhere except your own browser.
-</p>
-<p>
-    Under the hood it reuses the same trick as bracket: each
-    sport gets its own small translator that turns whatever
-    odd shape that sport's live-data source hands back into
-    one common format the rest of the site understands.
-    Currently wired up: the four golf majors (the Open, the
-    Masters, the PGA Championship, the US Open) and five
-    European leagues (Premier League, La Liga, Serie A,
-    Bundesliga, Ligue 1) &mdash; plus, through the same feed
-    bracket already has, whatever knockout tournament bracket
-    is currently tracking.
-</p>`,
-        builtWith: `<p>
-    Same stack as bracket: a small always-on Node/Express
-    server holds a short-lived cache of the latest scores so
-    the page stays fast, and a React front end renders it.
-    It's finished and running in production mode already
-    &mdash; the only thing left is wiring it up as a proper
-    always-on service with its own address, the same way
-    bracket is, rather than something I have to start by
-    hand.
-</p>`,
-        closingLinks: `<p style="margin-top: var(--spacing-sm)">
-    <a href="https://github.com/elphiene/live-scores">source &rarr;</a>
-    &mdash; not live yet, hang tight
-</p>`,
-    },
-    {
-        slug: "tidal-collaborative",
-        name: "tidal-collaborative",
-        description: "real-time collaborative tidal playlist sync",
-        cardBlurb: `Keeps a shared Tidal playlist in sync across
-everyone's own account in real time &mdash; without
-this app ever seeing or storing anyone's Tidal
-login.`,
-        tags: ["node", "websocket", "sqlite", "docker", "v1.0.0"],
-        intro: `<p>
-    Self-hosted real-time collaborative Tidal playlist sync.
-    Users sign into their Tidal accounts, link a playlist, and
-    any track added or removed propagates automatically to every
-    collaborator's own playlist.
+    A self-hosted, multi-station live radio. People link a Tidal
+    playlist, point a station at an artist, or submit individual
+    songs &mdash; each station downloads the audio into one
+    shared library and streams a fair-shuffle rotation
+    continuously, live, as its own Icecast mount. A station can
+    also be defined by genre instead of a link, drawing from
+    whatever's already in the library. Running in production
+    with five stations and a 650-track library, plus a 15,000+
+    file local collection indexed and matched on demand.
 </p>`,
         shots: [
             {
-                file: "tidal-collaborative.png",
-                alt: "tidal-collaborative sign-in screen with a 'sign in with Tidal' button",
-                caption: "server-side OAuth &mdash; the browser never touches a token",
+                file: "tidal-radio.png",
+                height: "50px",
+                alt: "the tidal-radio listen page for a station called Night Shift, showing an on-air track, its progress, a tune-in button, volume slider, and the next track coming up",
+                caption: "the listen page &mdash; rendered straight from the shipped server code, no mockup",
             },
         ],
         howItWorks: `<p>
-    Tidal doesn't offer any way to be notified the instant
-    someone changes a playlist, so instead the server quietly
-    checks each linked playlist every so often. When it spots a
-    change, it writes down exactly what changed in a running log
-    (a bit like a diary that's only ever added to, never edited),
-    tells everyone's browser about it instantly, and then queues
-    that same change up to be copied into every other
-    collaborator's own playlist. Keeping a full log like this
-    means that if someone's connection drops or the server
-    restarts, nothing gets lost or duplicated &mdash; it can always
-    pick up exactly where it left off, and the log doubles as a
-    built-in activity history.
+    Tidal is only ever used as a catalogue and a source of files
+    &mdash; a submitted track is downloaded once into the shared
+    library and played from there, never streamed live from
+    Tidal itself. Sync only ever flows one way in: linking a
+    playlist to a station can never write back to it, by
+    construction, because there's no code path that lets it.
+    Playback itself works as a pull, not a push: the streaming
+    engine (Liquidsoap) asks the app for the next track over a
+    small internal API, the app's rotation logic picks one, and
+    Liquidsoap reports back what actually went on air &mdash;
+    which is also what pushes the "on air" state out to
+    listeners' browsers over a live WebSocket connection.
+</p>
+<p>
+    Underneath that sits an auto-DJ pass that runs on every file
+    once, when it arrives, rather than while it's playing.
+    Loudness is measured properly (integrated LUFS, the same
+    standard broadcast uses) and turned into one fixed gain per
+    track, capped so it can never clip. Dead air at the start
+    and end of a file is detected and trimmed &mdash; over 95%
+    of the library was carrying trailing silence, which meant
+    crossfades used to start inside the silence rather than the
+    song. Crossfades themselves use a curve chosen specifically
+    so the overlap doesn't dip in volume in the middle, which is
+    what makes a fade sound like a hole, and for tracks with a
+    hard ending instead of a fadeable one, it cuts cleanly on
+    the beat instead of forcing an overlap that doesn't belong.
+    Track selection prefers whatever follows the last song well
+    in tempo and loudness, without ever letting that preference
+    stop a track from getting its turn. A station stops pulling
+    audio the
+    moment nobody's listening and picks back up the instant
+    someone tunes in &mdash; the stream itself never goes down,
+    so there's always something to tune into.
 </p>`,
         builtWith: `<p>
-    A Node.js server that talks to browsers over a
-    &ldquo;WebSocket&rdquo; &mdash; a permanently-open connection
-    that lets the server push updates to your screen instantly,
-    instead of your browser having to keep asking &ldquo;anything
-    new?&rdquo;. All the playlist data lives in SQLite, a
-    lightweight database that's just a single file rather than a
-    separate server to run. Signing in uses Tidal's own official
-    login flow, so this app never sees or stores your password
-    &mdash; and the access it is given is scrambled
-    (encrypted) before being saved, so even someone who got hold
-    of the database file couldn't use it to access anyone's
-    account. It's packaged with Docker, a way of bundling an app
-    so it runs identically on any computer, and comes with a
-    guided first-time setup. Released as version 1.0.0.
+    The app is a Node.js server with no build step, storing
+    everything in SQLite. Four Docker containers make up the
+    full stack: the app itself, Liquidsoap (which pulls each
+    station's rotation and pushes it to air), Icecast (one
+    stream mount per station), and Caddy for TLS and routing.
+    Loudness analysis runs through ffmpeg, and beat-grid
+    measurement through aubio. The whole thing is covered by
+    40 self-contained test suites, run as plain Node scripts
+    rather than a test framework, each one named after the
+    specific bug it was written to catch.
+</p>`,
+        closingLinks: `<p class="muted mono" style="margin-top: var(--spacing-sm)">
+    self-hosted, running on the home network &mdash; not
+    publicly reachable
+</p>`,
+    },
+    {
+        slug: "colour-match",
+        name: "colour-match",
+        description: "colour-match LAB to CMYK matching tool",
+        plate: {
+            ink: "teal",
+            depth: 1,
+            angle: 75,
+            pitch: "medium",
+            icon: "colour-match",
+            label: "NODE · COLOUR CALIBRATION · 2026",
+            // Gloock — reserved for projects whose actual output is an
+            // aesthetic judgement about colour/print. A LAB/CMYK matching
+            // tool is exactly that case; a static ink-flourish face reads
+            // truer than a variable one for a "what does this colour look
+            // like" subject.
+            face: "serif",
+            wmFit: 11.5,
+        },
+        cardBlurb: `Every press drifts from the textbook LAB&rarr;CMYK
+conversion. This measures exactly how far, so a
+proofer stops eyeballing a second correction pass by
+hand. A work-in-progress never published.`,
+        tags: ["node", "express", "sqlite", "vite"],
+        intro: `<p>
+    A tool for colour matching and corrections on the shop's
+    Roland VersaCAMM and CGS Flexpack printers, built to speed
+    up matching and take human error out of the process. It
+    generates a calibration chart to scan with a
+    spectrodensitometer &mdash; the same handheld device used
+    for ink density readings &mdash; then cross references the
+    LAB values that come back against CMYK<strong>OG</strong>
+    ink recipes (the usual four channels, plus orange and
+    green, which is what those printers actually mix with) to
+    tell you exactly how to adjust a mix. It measures the gap
+    with &Delta;E2000, the industry-standard formula for how
+    different two colours actually look to a human eye, not
+    just how far apart their numbers are.
+</p>`,
+        shots: [],
+        howItWorks: `<p>
+    Every printer and substrate combination drifts a little
+    from the "textbook" LAB&rarr;CMYK conversion &mdash; the
+    same formula can come out a shade warmer or cooler
+    depending on the press, the stock, even the day. The
+    calibration chart exists to measure that drift directly,
+    rather than guessing at it: you print and scan the chart
+    once, and the tool compares the LAB reading of your target
+    colour against the LAB reading of what actually came off
+    press. That difference becomes a correction factor, which
+    gets applied to the standard conversion so the CMYK
+    formula it hands back already accounts for how your setup
+    actually behaves &mdash; instead of a proofer eyeballing
+    another correction pass by hand. Each printer supports
+    three distinct print modes &mdash; surface, reverse, and
+    white-base &mdash; since a colour that's printed normally,
+    printed backwards behind clear film, or printed over a
+    white backing all need their own calibration.
+</p>`,
+        builtWith: `<p>
+    A Node.js server backed by SQLite, so calibration history
+    and jobs persist between sessions without needing separate
+    database software. Scanning still goes through X-Rite's
+    own DataCatcher software, the same way as
+    <a href="project-xrite-export.html">xrite-export</a> reads
+    a strip of patches &mdash; the readings just get routed into
+    this tool's comparison logic instead. Runs self-hosted on
+    a home server.
 </p>`,
         closingLinks: `<p style="margin-top: var(--spacing-sm)">
-    <a href="https://github.com/elphiene/tidal-collaborative">source &rarr;</a>
+    <a href="https://colour.rgb-b.com">live site &rarr;</a>
+    &nbsp;&nbsp;
+    <a href="https://github.com/rgb-b/colour-match">source &rarr;</a>
+</p>`,
+    },
+    {
+        slug: "zpl-studio",
+        name: "zpl studio",
+        description: "wysiwyg label designer for zebra printers",
+        plate: {
+            ink: "teal",
+            depth: 1,
+            angle: 0,
+            pitch: "medium",
+            icon: "zpl-studio",
+            label: "RUST · LABEL DESIGNER · 2026",
+            axis: { mono: 0.75, casl: 0, wght: 700, slnt: 0 },
+            wmFit: 13.25,
+        },
+        cardBlurb: `No more hand-writing ZPL line by line. Design a
+Zebra label visually, on a real canvas, and the
+print code writes itself. Import and render images,
+clipart, and text.`,
+        tags: ["rust", "egui", "android", "WIP"],
+        intro: `<p>
+    A Dymo-style WYSIWYG label designer for Zebra thermal
+    printers. You design labels visually on a canvas and the ZPL
+    is generated at print time &mdash; no hand-writing raw ZPL.
+</p>`,
+        shots: [],
+        howItWorks: `<p>
+    Zebra printers are told what to print using ZPL, a plain-text
+    command language for printers &mdash; normally something you'd
+    have to write by hand, line by line, with no way to see the
+    result until it's actually printed. This tool skips all of
+    that: you design the label visually, like arranging text and
+    boxes on a page, and the correct ZPL code is written for you
+    automatically the moment you hit print, with an accurate
+    on-screen preview the whole time so there are no surprises.
+    You can also turn any label into a reusable template &mdash;
+    mark a field as, say,
+    <span class="mono">{{Name}}</span>, and it automatically
+    becomes a fill-in-the-blank box the next time you use that
+    template, so printing a batch of different name badges from
+    one design is quick.
+</p>`,
+        builtWith: `<p>
+    Written in Rust, a programming language chosen for speed and
+    reliability, using a toolkit called egui to build the visual,
+    click-and-drag design screen. There's also a matching Android
+    version so labels can be designed from a phone or tablet, not
+    just a desktop computer. The finished program is a small,
+    self-contained download &mdash; only a few megabytes &mdash;
+    with nothing extra to install. Every update automatically
+    produces ready-to-use builds for Windows, Linux, and Android.
+</p>`,
+        closingLinks: `<p style="margin-top: var(--spacing-sm)">
+    <a href="https://github.com/elphiene/zpl-studio/releases">downloads &rarr;</a>
+    &nbsp;&nbsp;
+    <a href="https://github.com/elphiene/zpl-studio">source &rarr;</a>
 </p>`,
     },
     {
         slug: "whereis",
         name: "whereis",
         description: "self-hosted location tracker pwa",
+        plate: {
+            ink: "teal",
+            depth: 1,
+            angle: 15,
+            pitch: "medium",
+            icon: "whereis",
+            label: "REACT · LOCATION TRACKER · 2026",
+            axis: { mono: 0, casl: 0.8, wght: 550, slnt: -2 },
+            wmFit: 15.25,
+        },
         cardBlurb: `A private, self-hosted take on the "where's
 everyone" location apps &mdash; live location,
 history, and driving stats, for a small group who
@@ -669,6 +613,16 @@ terminal dwellers. WIP.`,
         slug: "lastfm-widget",
         name: "lastfm-widget",
         description: "always-on-top last.fm now-playing widget",
+        plate: {
+            ink: "teal",
+            depth: 2,
+            angle: 75,
+            pitch: "coarse",
+            icon: "lastfm-widget",
+            label: "PYTHON · NOW PLAYING · 2026",
+            axis: { mono: 0, casl: 0.7, wght: 600, slnt: -3 },
+            wmFit: 11.5,
+        },
         cardBlurb: `A tiny always-on-top now-playing widget with the
 Winamp energy modern desktops forgot &mdash;
 300&times;100px, updates every 15s. Pulls data from
@@ -708,6 +662,149 @@ users last.fm scrobbles.`,
 </p>`,
         closingLinks: `<p style="margin-top: var(--spacing-sm)">
     <a href="https://github.com/elphiene/lastfm-widget">source &rarr;</a>
+</p>`,
+    },
+    {
+        slug: "live-scores",
+        name: "live-scores",
+        description: "the least annoying way to check the score",
+        plate: {
+            ink: "pink",
+            depth: 2,
+            angle: 75,
+            pitch: "medium",
+            icon: "live-scores",
+            label: "NODE · LIVE LEADERBOARD · 2026",
+            // Same broadcast identity as bracket (its sibling) — angle,
+            // depth and pitch still vary so the two never look identical
+            // sitting next to each other in the grid.
+            face: "alt",
+            axis: { wdth: 100, wght: 800 },
+            wmFit: 13.25,
+        },
+        cardBlurb: `Bracket's sibling for anything that isn't a
+knockout &mdash; golf majors and European league
+tables. No ads, no login, no betting odds, just
+the score.`,
+        tags: ["node", "express", "react", "vite", "in progress"],
+        intro: `<p>
+    The least annoying way to check the score. One page for
+    golf majors and European football tables &mdash; no ads,
+    no login, no cookie banner, no betting odds shoved in your
+    face. Just the score.
+</p>`,
+        shots: [],
+        howItWorks: `<p>
+    This is the sibling to <a href="project-bracket.html">bracket</a>,
+    the World Cup/Wimbledon/AFL knockout display I'd already
+    built. Bracket is very good at one shape of tournament:
+    two sides, one winner, round after round. But a golf
+    leaderboard or a football league table isn't a bracket at
+    all &mdash; it's a ranked list that reshuffles all day,
+    with a completely different sense of what "currently
+    happening" even means. Rather than bend bracket's tree
+    layout into something it was never built for, it made
+    more sense to build a proper sibling site that starts from
+    the leaderboard shape instead, while keeping the same
+    house rules: no accounts, no tracking, nothing saved
+    anywhere except your own browser.
+</p>
+<p>
+    Under the hood it reuses the same trick as bracket: each
+    sport gets its own small translator that turns whatever
+    odd shape that sport's live-data source hands back into
+    one common format the rest of the site understands.
+    Currently wired up: the four golf majors (the Open, the
+    Masters, the PGA Championship, the US Open) and five
+    European leagues (Premier League, La Liga, Serie A,
+    Bundesliga, Ligue 1) &mdash; plus, through the same feed
+    bracket already has, whatever knockout tournament bracket
+    is currently tracking.
+</p>`,
+        builtWith: `<p>
+    Same stack as bracket: a small always-on Node/Express
+    server holds a short-lived cache of the latest scores so
+    the page stays fast, and a React front end renders it.
+    It's finished and running in production mode already
+    &mdash; the only thing left is wiring it up as a proper
+    always-on service with its own address, the same way
+    bracket is, rather than something I have to start by
+    hand.
+</p>`,
+        closingLinks: `<p style="margin-top: var(--spacing-sm)">
+    <a href="https://github.com/elphiene/live-scores">source &rarr;</a>
+    &mdash; not live yet, hang tight
+</p>`,
+    },
+    {
+        slug: "tidal-collaborative",
+        name: "tidal-collaborative",
+        description: "real-time collaborative tidal playlist sync",
+        plate: {
+            ink: "teal",
+            depth: 3,
+            angle: 0,
+            pitch: "medium",
+            icon: "tidal-collaborative",
+            label: "NODE · PLAYLIST SYNC · 2026",
+            axis: { mono: 0.3, casl: 0.2, wght: 600, slnt: 0 },
+            // At 19 characters this name is well outside the 3-rung ladder's
+            // range (longest sample it was tuned against was 12) — even the
+            // smallest rung clips it against the plate's own overflow:hidden
+            // backstop. One-off override rather than stretching the whole
+            // ladder for a single outlier.
+            wmFit: 8.5,
+        },
+        cardBlurb: `Keeps a shared Tidal playlist in sync across
+everyone's own account in real time &mdash; without
+this app ever seeing or storing anyone's Tidal
+login.`,
+        tags: ["node", "websocket", "sqlite", "docker", "v1.0.0"],
+        intro: `<p>
+    Self-hosted real-time collaborative Tidal playlist sync.
+    Users sign into their Tidal accounts, link a playlist, and
+    any track added or removed propagates automatically to every
+    collaborator's own playlist.
+</p>`,
+        shots: [
+            {
+                file: "tidal-collaborative.png",
+                alt: "tidal-collaborative sign-in screen with a 'sign in with Tidal' button",
+                caption: "server-side OAuth &mdash; the browser never touches a token",
+            },
+        ],
+        howItWorks: `<p>
+    Tidal doesn't offer any way to be notified the instant
+    someone changes a playlist, so instead the server quietly
+    checks each linked playlist every so often. When it spots a
+    change, it writes down exactly what changed in a running log
+    (a bit like a diary that's only ever added to, never edited),
+    tells everyone's browser about it instantly, and then queues
+    that same change up to be copied into every other
+    collaborator's own playlist. Keeping a full log like this
+    means that if someone's connection drops or the server
+    restarts, nothing gets lost or duplicated &mdash; it can always
+    pick up exactly where it left off, and the log doubles as a
+    built-in activity history.
+</p>`,
+        builtWith: `<p>
+    A Node.js server that talks to browsers over a
+    &ldquo;WebSocket&rdquo; &mdash; a permanently-open connection
+    that lets the server push updates to your screen instantly,
+    instead of your browser having to keep asking &ldquo;anything
+    new?&rdquo;. All the playlist data lives in SQLite, a
+    lightweight database that's just a single file rather than a
+    separate server to run. Signing in uses Tidal's own official
+    login flow, so this app never sees or stores your password
+    &mdash; and the access it is given is scrambled
+    (encrypted) before being saved, so even someone who got hold
+    of the database file couldn't use it to access anyone's
+    account. It's packaged with Docker, a way of bundling an app
+    so it runs identically on any computer, and comes with a
+    guided first-time setup. Released as version 1.0.0.
+</p>`,
+        closingLinks: `<p style="margin-top: var(--spacing-sm)">
+    <a href="https://github.com/elphiene/tidal-collaborative">source &rarr;</a>
 </p>`,
     },
 ];
