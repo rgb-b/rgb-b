@@ -1,4 +1,7 @@
 {
     "name": "rgb-b",
-    "pages_build_output_dir": "_site"
+    "compatibility_date": "2026-09-21",
+    "assets": {
+        "directory": "_site"
+    }
 }
