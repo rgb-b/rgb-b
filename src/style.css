@@ -110,9 +110,12 @@
     --spacing-lg: 50px;
     --spacing-xl: 80px;
 
-    /* Shape */
-    --radius: 14px;
-    --radius-sm: 8px;
+    /* Shape — sharp corners everywhere (2026-09-21). Rounded corners were
+       the loudest "generic SaaS card" signal on a site whose actual
+       identity is registration marks, screen angles, and crop marks — kept
+       the token names so nothing else needs touching, just zeroed them. */
+    --radius: 0;
+    --radius-sm: 0;
     --border-width: 1px;
     --border: var(--border-width) solid var(--color-border);
 
@@ -354,20 +357,16 @@ code {
    HEADER / NAV
    =================================== */
 
+/* Stripped of its glass panel (2026-09-21) -- it was the last piece of
+   rounded/blurred/bordered chrome on the page, and it sat directly on top
+   of the particle field, dimming the one thing under it that's supposed to
+   be visible. Fixed position stays; the panel doesn't. */
 header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-
-    background: rgba(8, 8, 8, 0.72);
-    background-image: var(--gradient-nav);
-    backdrop-filter: blur(var(--blur));
-    -webkit-backdrop-filter: blur(var(--blur));
-
-    border-bottom: var(--border);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 
     padding: var(--spacing-xs) var(--spacing-md);
     padding-top: max(var(--spacing-xs), env(safe-area-inset-top));
@@ -428,30 +427,29 @@ nav ul li {
     padding: 0;
 }
 
+/* Same eyebrow treatment as .section-kicker -- no background/border/glow,
+   hover is a color shift only, matching the rest of the chrome cleanup. */
 nav ul li a {
     display: block;
     color: var(--color-text-muted);
     text-decoration: none;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    border: var(--border-width) solid transparent;
-    font-family: var(--font-main);
-    font-size: var(--font-size-sm);
-    transition: all var(--transition);
+    padding: var(--spacing-xs) 2px;
+    font-family: var(--font-display);
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 550, "slnt" 0;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: color var(--transition);
 }
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: var(--color-text);
-    background: var(--color-bg-card);
-    border-color: var(--color-border);
-    box-shadow: var(--glow);
+    color: var(--color-accent);
     text-decoration: none;
 }
 
 nav ul li a:focus-visible {
-    color: var(--color-text);
-    background: var(--color-bg-card);
+    color: var(--color-accent);
     outline: 2px solid var(--color-accent-alt);
     outline-offset: 2px;
 }
@@ -472,13 +470,33 @@ main {
     margin: 0 auto;
 }
 
+/* No more card-in-a-box per section -- crop marks at each corner instead,
+   the same registration-mark language the plates and ambient canvas
+   already use, instead of a rounded bordered panel. */
 section {
-    background: var(--gradient-card);
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
-    box-shadow: var(--glow);
+    position: relative;
+    padding: var(--spacing-xl) 0;
+}
+
+section::before,
+section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-top: 1px solid var(--color-border);
+    pointer-events: none;
+}
+
+section::before {
+    left: 0;
+    border-left: 1px solid var(--color-border);
+}
+
+section::after {
+    right: 0;
+    border-right: 1px solid var(--color-border);
 }
 
 /* A small mono eyebrow above each section heading -- introduces the
@@ -487,100 +505,114 @@ section {
    at the top of a wall of body copy. Replaces the wavy-divider motif as
    the thing that visually separates sections, since the divider never
    did more than decorate. */
+/* Eyebrow uses Recursive in full mono mode (not Courier New) -- Courier's
+   thin, wide caps had no real weight contrast against the display heading
+   below, which was the actual pairing failure, not the heading font alone.
+   A full-width rule anchors it to the column instead of floating loose. */
 .section-kicker {
     display: block;
-    font-family: var(--font-mono);
-    font-size: var(--font-size-sm);
-    letter-spacing: 2.5px;
+    font-family: var(--font-display);
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 620, "slnt" 0;
+    font-size: 11px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-bottom: 2px;
+    margin: 0 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .accent-pink .section-kicker {
     color: var(--color-accent-alt);
 }
 
+/* Recursive is reserved for wordmarks (hero, header, plates) -- using it
+   for page furniture flattened the hierarchy, since "welcome" ended up
+   looking like just another plate. Bricolage Grotesque instead: it's
+   already the plates' "broadcast face," pushed here to full editorial
+   display scale with tight optical tracking instead of the plates' tighter
+   wmFit ladder. */
 section h2 {
-    font-family: var(--font-display);
-    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
-    line-height: 0.96;
-    letter-spacing: -0.01em;
-    font-variation-settings: "MONO" 0.15, "CASL" 0.1, "wght" 640, "slnt" 0;
+    font-family: var(--font-display-alt);
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    font-variation-settings: "wdth" 96, "wght" 760;
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+    text-transform: lowercase;
     color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+    margin: 0 0 var(--spacing-md);
 }
 
 /* ===================================
-   CARDS
+   WELCOME SPLIT (about / links)
    =================================== */
 
-.card {
-    position: relative;
-    background: var(--gradient-card);
-    border: var(--border);
-    border-radius: var(--radius);
-    padding: var(--spacing-sm);
-    box-shadow: var(--glow);
-    transition:
-        transform var(--transition),
-        box-shadow var(--transition),
-        border-color var(--transition);
-    opacity: 0;
+/* Replaces the old rounded-card two-up layout -- an asymmetric editorial
+   split with hairline rules instead of bordered boxes, matching the
+   crop-mark/registration language the rest of the site uses instead of
+   generic SaaS card chrome. */
+.split {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: var(--spacing-lg);
 }
 
-.card.visible {
-    opacity: 1;
+.split-side {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--spacing-md);
 }
 
-/* Project cards: the whole card is clickable, not just the small "view →"
-   text — the link gets a stretched ::after overlay covering the card, so
-   any other real links inside the card (there are none currently) would
-   still need their own higher z-index to stay clickable above it. */
-.card:has(.card-link) {
-    cursor: pointer;
-}
-
-.card-link::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    border-radius: inherit;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--glow-hover);
-    border-color: var(--color-accent-alt);
-}
-
-.card h3 {
-    color: var(--color-accent);
-    margin-top: 0;
-    margin-bottom: var(--spacing-xs);
-    font-family: var(--font-mono);
-    font-size: var(--font-size-base);
-}
-
-.card p {
+.field-label {
+    display: block;
+    font-family: var(--font-display);
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 620, "slnt" 0;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
 }
 
-/* Card grids */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
+.lede {
+    font-size: 19px;
+    line-height: 1.55;
+    max-width: 58ch;
 }
 
-/* Two-column intro layout */
-.two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-sm);
+.link-list {
+    list-style: none;
+}
+
+.link-list a {
+    display: block;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 500, "slnt" 0;
+    font-size: 14px;
+    transition:
+        color var(--transition),
+        padding-left var(--transition);
+}
+
+.link-list a:hover {
+    color: var(--color-accent);
+    padding-left: 10px;
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .split {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .split-side {
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+        padding-left: 0;
+        padding-top: var(--spacing-md);
+    }
 }
 
 /* ===================================
