@@ -1,0 +1,162 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero C — the first plate"
+description: "preview"
+scrollTitle: "preview C ✦ "
+permalink: "preview-hero-c.html"
+---
+<style>
+    .pv-note {
+        background: rgba(108, 123, 255, 0.1);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-blue-300, #8f9aff);
+    }
+
+    /* Variation C — "the first plate": instead of the hero being plain
+       text sitting apart from the site's own visual system, it borrows the
+       project plates' own halftone dot-screen + single-ink field
+       treatment (same technique as .plate::after in the main stylesheet,
+       teal ink) -- so the intro reads as the first "plate" in the series,
+       not a different kind of thing bolted on before it. */
+    .pv-c {
+        position: relative;
+        margin: var(--spacing-lg) 0;
+        padding: var(--spacing-xl) var(--spacing-md);
+        overflow: hidden;
+        border: 1px solid var(--color-border);
+        background-color: #050505;
+        background-image: radial-gradient(
+            ellipse 130% 95% at 30% 20%,
+            var(--color-teal-900) 0%,
+            #050505 85%
+        );
+    }
+    .pv-c::before {
+        content: "";
+        position: absolute;
+        inset: -60%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        transform: rotate(15deg);
+        background-size: 14px 14px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-teal-500) 0 1px,
+                transparent 1.4px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-teal-500) 0 1px,
+                transparent 1.4px
+            );
+    }
+    .pv-c > * {
+        position: relative;
+        z-index: 1;
+    }
+    .pv-c .plate-descriptor {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--color-teal-300, #7cffe2);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-c .plate-descriptor::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: color-mix(in oklab, var(--color-teal-500) 40%, transparent);
+    }
+    .pv-c h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 16vw, 5rem);
+        line-height: 0.9;
+        letter-spacing: -0.02em;
+        font-variation-settings: "MONO" 0.3, "CASL" 0.1, "wght" 700;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-c p {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--color-text-muted);
+        max-width: 44ch;
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-c .strip {
+        display: flex;
+        gap: 4px;
+        margin-top: var(--spacing-md);
+    }
+    .pv-c .strip span {
+        flex: 1;
+        height: 5px;
+        background: var(--color-teal-700);
+    }
+    .pv-c .strip span:nth-child(2) {
+        background: var(--color-teal-500);
+    }
+    .pv-c .strip span:nth-child(3) {
+        background: var(--color-teal-300);
+    }
+    .pv-c .strip span:nth-child(4) {
+        background: var(--color-teal-100);
+    }
+    .pv-c .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-md);
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 500;
+        font-size: 13px;
+    }
+    .pv-c .inline-links a {
+        color: var(--color-text-muted);
+    }
+    .pv-c .inline-links a:hover {
+        color: var(--color-teal-300, #7cffe2);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation C — the first plate &middot;
+    <a href="preview-hero-a.html">next: A</a> &middot;
+    <a href="preview-hero-b.html">B</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<div class="pv-c">
+    <p class="plate-descriptor">el &middot; melbourne, au &middot; 2026</p>
+    <h1>rgb-b</h1>
+    <p>
+        Pre-press apprentice with a background in visual arts, design,
+        and development. A rare combination of art and IT skills.
+        R&amp;D tinkerer, enough networking knowledge to run my own
+        servers and manage others.
+    </p>
+    <div class="inline-links">
+        <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+            >linkedin</a
+        >
+        <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+        <a href="mailto:el@rgb-b.com">email</a>
+    </div>
+    <div class="strip" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>

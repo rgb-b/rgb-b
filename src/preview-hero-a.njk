@@ -1,0 +1,108 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero A — merged masthead"
+description: "preview"
+scrollTitle: "preview A ✦ "
+permalink: "preview-hero-a.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation A — "merged masthead": the hero and the old separate
+       "welcome" card become one unmistakable opening statement instead of
+       two redundant introductions stacked on top of each other. No card,
+       no second heading — kicker, wordmark, and lede read as one
+       continuous block, the way a magazine masthead runs straight into
+       its standfirst. */
+    .pv-a {
+        text-align: left;
+        padding: var(--spacing-xl) 0 var(--spacing-lg);
+    }
+    .pv-a .kicker {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 550;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-a h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 15vw, 5rem);
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+        font-variation-settings: "MONO" 0.2, "CASL" 0.15, "wght" 640;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-a .lede {
+        font-size: 20px;
+        line-height: 1.55;
+        max-width: 46ch;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-a .lede + p {
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-a .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--color-border);
+    }
+    .pv-a .inline-links a {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 500;
+        font-size: 14px;
+        color: var(--color-text-muted);
+    }
+    .pv-a .inline-links a:hover {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation A — merged masthead &middot;
+    <a href="preview-hero-b.html">next: B</a> &middot;
+    <a href="preview-hero-c.html">C</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-a">
+    <p class="kicker">
+        el &middot; pre-press apprentice &middot; design + dev
+    </p>
+    <h1>rgb-b</h1>
+    <p class="lede">
+        A rare combination of art and IT skills — pre-press apprentice
+        with a background in visual arts, design, and development.
+    </p>
+    <p>
+        R&amp;D tinkerer, enough networking knowledge to run my own
+        servers and manage others. Melbourne, Australia.
+    </p>
+    <div class="inline-links">
+        <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+            >linkedin</a
+        >
+        <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+        <a href="mailto:el@rgb-b.com">email</a>
+    </div>
+</section>
