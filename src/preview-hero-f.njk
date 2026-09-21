@@ -1,0 +1,132 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero F — B scale + E2 voice + E3 asymmetry"
+description: "preview"
+scrollTitle: "preview F ✦ "
+permalink: "preview-hero-f.html"
+---
+<style>
+    .pv-note {
+        background: rgba(255, 68, 170, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent-alt);
+    }
+
+    /* Variation F — B's near-viewport wordmark scale and boldness (but
+       still real, tied to .var-title/--v, not a static clone) + E2's
+       structural device (a rule-offset block, two distinct type voices
+       instead of one paragraph size) + E3's break from the wordmark's own
+       left edge -- the body block sets against the RIGHT instead of
+       sharing the wordmark's alignment, with the rule flipped to the
+       right side and its content right-set, so the two elements pull in
+       opposite directions instead of stacking on one shared edge. */
+    .pv-f {
+        padding: var(--spacing-lg) 0 var(--spacing-lg);
+    }
+    .pv-f .kicker {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-f .var-title {
+        font-size: clamp(4rem, 24vw, 8.5rem);
+        line-height: 0.85;
+        margin: 0 -2px var(--spacing-lg);
+        /* Bolder resting state than the shared .var-title default (B's
+           assertiveness), still modulated by --v on top so it keeps its
+           real scroll-tied motion instead of sitting dead. */
+        font-variation-settings:
+            "MONO" 0.85,
+            "CASL" 0,
+            "wght" calc(720 + var(--v) * 90),
+            "slnt" calc(-3 + var(--v) * -12);
+    }
+    .pv-f .stack {
+        margin-left: auto;
+        max-width: 30ch;
+        text-align: right;
+        padding-right: var(--spacing-md);
+        border-right: 1px solid var(--color-border);
+    }
+    .pv-f .headline {
+        font-family: var(--font-display-alt);
+        font-variation-settings: "wdth" 100, "wght" 600;
+        font-size: 20px;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-f .facts {
+        display: grid;
+        gap: 4px;
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-f .facts span {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+    }
+    .pv-f .facts span b {
+        color: var(--color-accent-alt);
+        font-weight: 400;
+    }
+    .pv-f .inline-links {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--spacing-md);
+    }
+    .pv-f .inline-links a {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+    }
+    .pv-f .inline-links a:hover {
+        color: var(--color-accent-alt);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation F — B scale + E2 voice + E3 asymmetry &middot;
+    <a href="preview-hero-d.html">D</a> &middot;
+    <a href="preview-hero-e2.html">E2</a> &middot;
+    <a href="preview-hero-e3.html">E3</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-f">
+    <p class="kicker">el / pre-press apprentice / design + dev</p>
+    <h1 class="var-title">rgb-b</h1>
+    <div class="stack">
+        <p class="headline">
+            Pre-press apprentice with a background in visual arts,
+            design, and development.
+        </p>
+        <div class="facts">
+            <span><b>&gt;</b> art + IT, a rare combination</span>
+            <span><b>&gt;</b> self-hosts &amp; manages own servers</span>
+            <span><b>&gt;</b> melbourne, australia</span>
+        </div>
+        <div class="inline-links">
+            <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+                >linkedin</a
+            >
+            <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+            <a href="mailto:el@rgb-b.com">email</a>
+        </div>
+    </div>
+</section>
