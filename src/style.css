@@ -195,23 +195,6 @@
    HERO TITLE (variable font morph)
    =================================== */
 
-.hero-title-section {
-    text-align: center;
-    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-.hero-title-section .kicker {
-    font-family: var(--font-mono);
-    font-size: var(--font-size-sm);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xs);
-}
-
 .var-title {
     font-family: var(--font-display);
     font-size: clamp(3rem, 12vw, 7rem);
@@ -233,8 +216,7 @@
     display: inline-block;
 }
 
-.hero-title-section:hover .var-title,
-.hero-title-section:focus-within .var-title {
+.var-title:hover {
     font-variation-settings: "MONO" 1, "CASL" 0, "wght" 820, "slnt" -12;
     color: var(--color-accent);
     /* RGB-split chromatic aberration — pink and blue channels peel apart
@@ -555,75 +537,107 @@ section h2 {
 }
 
 /* ===================================
-   WELCOME SPLIT (about / links)
+   HERO / INTRO (merged masthead)
    =================================== */
 
-/* Replaces the old rounded-card two-up layout -- an asymmetric editorial
-   split with hairline rules instead of bordered boxes, matching the
-   crop-mark/registration language the rest of the site uses instead of
-   generic SaaS card chrome. */
-.split {
-    display: grid;
-    grid-template-columns: 1.7fr 1fr;
-    gap: var(--spacing-lg);
-}
-
-.split-side {
-    border-left: 1px solid var(--color-border);
-    padding-left: var(--spacing-md);
-}
-
-.field-label {
-    display: block;
+/* Replaces both the old separate hero-title-section and the "welcome"
+   split card layout -- built up over many rounds of on-device preview
+   comparison (see the hero-options review artifact from that session).
+   One unified block: status line, giant wordmark, a sentence headline
+   under it, a flat rule, a short ">" facts list, and the real links --
+   nothing repeats itself across the blocks, and the whole thing shares
+   one left edge instead of splitting into opposing columns. Sits in
+   #intro so it still gets the sitewide section corner marks. */
+.hero-status {
+    display: flex;
+    align-items: center;
+    gap: 0;
     font-family: var(--font-display);
-    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 620, "slnt" 0;
-    font-size: 10px;
+    font-variation-settings: "MONO" 1, "CASL" 0, "wght" 550, "slnt" 0;
+    font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: var(--spacing-xs);
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
 }
 
-.lede {
-    font-size: 19px;
-    line-height: 1.55;
-    max-width: 58ch;
+.hero-wordmark {
+    font-size: clamp(4rem, 24vw, 8.5rem);
+    line-height: 0.85;
+    margin: 0 -2px var(--spacing-sm);
+    /* Bolder resting state than the header's small .var-title default,
+       still modulated by --v on top so it keeps real scroll-tied motion
+       instead of sitting dead. */
+    font-variation-settings:
+        "MONO" 0.85,
+        "CASL" 0,
+        "wght" calc(720 + var(--v) * 90),
+        "slnt" calc(-3 + var(--v) * -12);
 }
 
-.link-list {
-    list-style: none;
+.hero-statement {
+    font-family: var(--font-display-alt);
+    font-variation-settings: "wdth" 100, "wght" 650;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
 }
 
-.link-list a {
+.hero-statement em {
+    font-family: var(--font-display-serif);
+    font-style: normal;
+    font-weight: 400;
+    color: var(--color-accent);
+}
+
+.hero-rule {
+    height: 4px;
+    background: var(--color-accent-alt);
+    margin-bottom: var(--spacing-md);
+    max-width: 320px;
+}
+
+.hero-facts {
+    display: grid;
+    gap: 6px;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-facts span {
     display: block;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
+}
+
+.hero-facts span b {
+    color: var(--color-accent);
+    font-weight: 400;
+}
+
+.hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border);
+    max-width: 320px;
+}
+
+.hero-links a {
     font-family: var(--font-display);
     font-variation-settings: "MONO" 1, "CASL" 0, "wght" 500, "slnt" 0;
     font-size: 14px;
-    transition:
-        color var(--transition),
-        padding-left var(--transition);
+    color: var(--color-text-muted);
 }
 
-.link-list a:hover {
+.hero-links a:hover {
     color: var(--color-accent);
-    padding-left: 10px;
     text-decoration: none;
-}
-
-@media (max-width: 700px) {
-    .split {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-md);
-    }
-
-    .split-side {
-        border-left: none;
-        border-top: 1px solid var(--color-border);
-        padding-left: 0;
-        padding-top: var(--spacing-md);
-    }
 }
 
 /* ===================================
