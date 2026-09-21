@@ -1,10 +1,10 @@
 ---
 layout: base.njk
 isHome: true
-title: "preview: hero D — merged masthead, real scale, real motion"
+title: "preview: hero E3 — right-set pull-quote"
 description: "preview"
-scrollTitle: "preview D ✦ "
-permalink: "preview-hero-d.html"
+scrollTitle: "preview E3 ✦ "
+permalink: "preview-hero-e3.html"
 ---
 <style>
     .pv-note {
@@ -19,19 +19,6 @@ permalink: "preview-hero-d.html"
     .pv-note a {
         color: var(--color-accent);
     }
-
-    /* Variation D — A's structure (one merged opening statement, no
-       redundant second "welcome" heading) at closer to B's scale, but
-       fixing the two things that made A/B both read as flat/generic:
-       (1) the wordmark reuses the REAL .var-title class instead of a
-       fresh static clone, so it's actually tied to scroll velocity
-       (--v) and the hover chromatic-aberration morph like everywhere
-       else the wordmark appears on the site -- on mobile that means it
-       has a small continuous reaction as you scroll instead of sitting
-       dead; (2) the divider is a thin single-ink dot-screen strip
-       (same halftone technique as the plates), not a flat solid-color
-       bar -- nothing else on the site is a flat color fill, so a solid
-       rule read as an outlier even without being able to name why. */
     .pv-d {
         padding: var(--spacing-lg) 0 var(--spacing-lg);
     }
@@ -49,9 +36,8 @@ permalink: "preview-hero-d.html"
         margin: 0 -1px var(--spacing-md);
     }
     .pv-d .screen-rule {
-        position: relative;
         height: 10px;
-        margin-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
         opacity: 0.8;
         background-size: 7px 7px;
         background-image: radial-gradient(
@@ -79,61 +65,67 @@ permalink: "preview-hero-d.html"
             transparent
         );
     }
-    .pv-d .lede {
-        font-size: 19px;
-        line-height: 1.55;
-        max-width: 46ch;
+
+    /* E3 — right-set pull-quote: the bio breaks from the wordmark's left
+       edge entirely, set flush-right in Gloock (the plates' "ink
+       flourish" serif, otherwise only ever used for colour-match's
+       plate) at a large pull-quote size -- a deliberate asymmetry
+       against the wordmark's left alignment, rather than everything
+       sharing one edge. */
+    .pv-e3 .quote {
+        text-align: right;
+        font-family: var(--font-display-serif);
+        font-size: 24px;
+        line-height: 1.4;
+        max-width: 27ch;
+        margin-left: auto;
         color: var(--color-text);
-        margin-bottom: var(--spacing-sm);
-    }
-    .pv-d .lede + p {
-        color: var(--color-text-muted);
         margin-bottom: var(--spacing-md);
     }
-    .pv-d .inline-links {
+    .pv-e3 .quote-attr {
+        text-align: right;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-lg);
+    }
+    .pv-e3 .inline-links {
         display: flex;
+        justify-content: flex-end;
         flex-wrap: wrap;
         gap: var(--spacing-md);
         padding-top: var(--spacing-sm);
         border-top: 1px solid var(--color-border);
     }
-    .pv-d .inline-links a {
+    .pv-e3 .inline-links a {
         font-family: var(--font-display);
         font-variation-settings: "MONO" 1, "wght" 500;
-        font-size: 14px;
+        font-size: 13px;
         color: var(--color-text-muted);
     }
-    .pv-d .inline-links a:hover {
+    .pv-e3 .inline-links a:hover {
         color: var(--color-accent);
         text-decoration: none;
     }
 </style>
 
 <p class="pv-note">
-    variation D — merged masthead, real scale &amp; motion &middot;
-    <a href="preview-hero-a.html">A</a> &middot;
-    <a href="preview-hero-b.html">B</a> &middot;
-    <a href="preview-hero-c.html">C</a> &middot;
-    <a href="preview-hero-e1.html">E1</a> &middot;
+    variation E3 — right-set pull-quote &middot;
+    <a href="preview-hero-e1.html">next: E1</a> &middot;
     <a href="preview-hero-e2.html">E2</a> &middot;
-    <a href="preview-hero-e3.html">E3</a> &middot;
+    <a href="preview-hero-d.html">D</a> &middot;
     <a href="index.html">back to real site</a>
 </p>
 
-<section class="pv-d">
-    <p class="kicker">
-        el &middot; pre-press apprentice &middot; design + dev
+<section class="pv-d pv-e3">
+    {% include "pv-header.njk" %}
+    <p class="quote">
+        "A rare combination of art and IT skills" — pre-press
+        apprentice, self-hosted everything, Melbourne.
     </p>
-    <h1 class="var-title">rgb-b</h1>
-    <div class="screen-rule" aria-hidden="true"></div>
-    <p class="lede">
-        A rare combination of art and IT skills — pre-press apprentice
-        with a background in visual arts, design, and development.
-    </p>
-    <p>
-        R&amp;D tinkerer, enough networking knowledge to run my own
-        servers and manage others. Melbourne, Australia.
-    </p>
+    <p class="quote-attr">el &middot; design + dev</p>
     <div class="inline-links">
         <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
             >linkedin</a

@@ -1,0 +1,150 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero E2 — indented spec block"
+description: "preview"
+scrollTitle: "preview E2 ✦ "
+permalink: "preview-hero-e2.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+    .pv-d {
+        padding: var(--spacing-lg) 0 var(--spacing-lg);
+    }
+    .pv-d .kicker {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 550;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-d .var-title {
+        font-size: clamp(3.5rem, 19vw, 7.5rem);
+        margin: 0 -1px var(--spacing-md);
+    }
+    .pv-d .screen-rule {
+        height: 10px;
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.8;
+        background-size: 7px 7px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+    }
+
+    /* E2 — indented "spec block": the bio hangs off a left rule, offset
+       from the wordmark's own left edge instead of sharing it, like a
+       caption indented under a figure. Two distinct type voices instead
+       of one uniform paragraph size: the identity line in the same
+       display face as the section headings (Bricolage Grotesque, so the
+       hero finally shares a voice with "welcome"/"projects" below it
+       instead of being its own third typeface), the facts line in small
+       tracked mono -- a spec sheet, not a paragraph. */
+    .pv-e2 .stack {
+        margin-left: 18px;
+        padding-left: var(--spacing-md);
+        border-left: 1px solid var(--color-border);
+    }
+    .pv-e2 .headline {
+        font-family: var(--font-display-alt);
+        font-variation-settings: "wdth" 100, "wght" 600;
+        font-size: 21px;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-e2 .facts {
+        display: grid;
+        gap: 4px;
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-e2 .facts span {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+    }
+    .pv-e2 .facts span b {
+        color: var(--color-accent);
+        font-weight: 400;
+    }
+    .pv-e2 .inline-links {
+        display: flex;
+        gap: var(--spacing-md);
+    }
+    .pv-e2 .inline-links a {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--color-text-muted);
+    }
+    .pv-e2 .inline-links a:hover {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation E2 — indented spec block &middot;
+    <a href="preview-hero-e3.html">next: E3</a> &middot;
+    <a href="preview-hero-e1.html">E1</a> &middot;
+    <a href="preview-hero-d.html">D</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-d pv-e2">
+    {% include "pv-header.njk" %}
+    <div class="stack">
+        <p class="headline">
+            Pre-press apprentice with a background in visual arts,
+            design, and development.
+        </p>
+        <div class="facts">
+            <span><b>&gt;</b> art + IT, a rare combination</span>
+            <span><b>&gt;</b> self-hosts &amp; manages own servers</span>
+            <span><b>&gt;</b> melbourne, australia</span>
+        </div>
+        <div class="inline-links">
+            <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+                >linkedin</a
+            >
+            <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+            <a href="mailto:el@rgb-b.com">email</a>
+        </div>
+    </div>
+</section>

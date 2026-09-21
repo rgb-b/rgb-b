@@ -1,10 +1,10 @@
 ---
 layout: base.njk
 isHome: true
-title: "preview: hero D — merged masthead, real scale, real motion"
+title: "preview: hero E1 — centered, single block"
 description: "preview"
-scrollTitle: "preview D ✦ "
-permalink: "preview-hero-d.html"
+scrollTitle: "preview E1 ✦ "
+permalink: "preview-hero-e1.html"
 ---
 <style>
     .pv-note {
@@ -19,19 +19,6 @@ permalink: "preview-hero-d.html"
     .pv-note a {
         color: var(--color-accent);
     }
-
-    /* Variation D — A's structure (one merged opening statement, no
-       redundant second "welcome" heading) at closer to B's scale, but
-       fixing the two things that made A/B both read as flat/generic:
-       (1) the wordmark reuses the REAL .var-title class instead of a
-       fresh static clone, so it's actually tied to scroll velocity
-       (--v) and the hover chromatic-aberration morph like everywhere
-       else the wordmark appears on the site -- on mobile that means it
-       has a small continuous reaction as you scroll instead of sitting
-       dead; (2) the divider is a thin single-ink dot-screen strip
-       (same halftone technique as the plates), not a flat solid-color
-       bar -- nothing else on the site is a flat color fill, so a solid
-       rule read as an outlier even without being able to name why. */
     .pv-d {
         padding: var(--spacing-lg) 0 var(--spacing-lg);
     }
@@ -49,9 +36,8 @@ permalink: "preview-hero-d.html"
         margin: 0 -1px var(--spacing-md);
     }
     .pv-d .screen-rule {
-        position: relative;
         height: 10px;
-        margin-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
         opacity: 0.8;
         background-size: 7px 7px;
         background-image: radial-gradient(
@@ -79,60 +65,67 @@ permalink: "preview-hero-d.html"
             transparent
         );
     }
-    .pv-d .lede {
-        font-size: 19px;
-        line-height: 1.55;
-        max-width: 46ch;
+
+    /* E1 — centered, single merged block. One idea: identity, skills,
+       location all as one sentence-driven paragraph at a real reading
+       size (not a tiny caption), centered under the equally-centered
+       kicker/wordmark instead of the left-aligned block every other
+       variant tried. No split lede/footnote hierarchy -- the two
+       previous blocks become one. */
+    .pv-e1 {
+        text-align: center;
+    }
+    .pv-e1 .kicker,
+    .pv-e1 .screen-rule {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pv-e1 .bio {
+        font-size: 22px;
+        line-height: 1.6;
+        max-width: 30ch;
+        margin: 0 auto var(--spacing-lg);
         color: var(--color-text);
-        margin-bottom: var(--spacing-sm);
     }
-    .pv-d .lede + p {
-        color: var(--color-text-muted);
-        margin-bottom: var(--spacing-md);
+    .pv-e1 .bio em {
+        font-style: normal;
+        color: var(--color-accent);
     }
-    .pv-d .inline-links {
+    .pv-e1 .inline-links {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         gap: var(--spacing-md);
-        padding-top: var(--spacing-sm);
-        border-top: 1px solid var(--color-border);
     }
-    .pv-d .inline-links a {
+    .pv-e1 .inline-links a {
         font-family: var(--font-display);
         font-variation-settings: "MONO" 1, "wght" 500;
-        font-size: 14px;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
         color: var(--color-text-muted);
     }
-    .pv-d .inline-links a:hover {
+    .pv-e1 .inline-links a:hover {
         color: var(--color-accent);
         text-decoration: none;
     }
 </style>
 
 <p class="pv-note">
-    variation D — merged masthead, real scale &amp; motion &middot;
-    <a href="preview-hero-a.html">A</a> &middot;
-    <a href="preview-hero-b.html">B</a> &middot;
-    <a href="preview-hero-c.html">C</a> &middot;
-    <a href="preview-hero-e1.html">E1</a> &middot;
-    <a href="preview-hero-e2.html">E2</a> &middot;
+    variation E1 — centered, single block &middot;
+    <a href="preview-hero-e2.html">next: E2</a> &middot;
     <a href="preview-hero-e3.html">E3</a> &middot;
+    <a href="preview-hero-d.html">D</a> &middot;
     <a href="index.html">back to real site</a>
 </p>
 
-<section class="pv-d">
-    <p class="kicker">
-        el &middot; pre-press apprentice &middot; design + dev
-    </p>
-    <h1 class="var-title">rgb-b</h1>
-    <div class="screen-rule" aria-hidden="true"></div>
-    <p class="lede">
-        A rare combination of art and IT skills — pre-press apprentice
-        with a background in visual arts, design, and development.
-    </p>
-    <p>
-        R&amp;D tinkerer, enough networking knowledge to run my own
-        servers and manage others. Melbourne, Australia.
+<section class="pv-d pv-e1">
+    {% include "pv-header.njk" %}
+    <p class="bio">
+        <em>Pre-press apprentice</em> with a background in visual arts,
+        design, and development — Melbourne-based, self-hosts
+        everything, and knows just enough of both art and IT to be
+        dangerous at both.
     </p>
     <div class="inline-links">
         <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
