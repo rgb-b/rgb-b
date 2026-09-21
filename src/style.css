@@ -697,14 +697,45 @@ section h2 {
    =================================== */
 
 .marquee-wrapper {
-    width: 100%;
-    overflow: hidden;
+    width: 100vw;
     position: relative;
-    margin: var(--spacing-md) 0;
+    left: 50%;
+    right: 50%;
+    margin: var(--spacing-md) -50vw;
+    overflow: hidden;
     padding: var(--spacing-xs) 0;
     border-top: var(--border);
     border-bottom: var(--border);
     background: rgba(0, 0, 0, 0.45);
+}
+
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: min(12vw, 160px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(
+        to right,
+        var(--color-bg) 0%,
+        transparent 100%
+    );
+}
+
+.marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(
+        to left,
+        var(--color-bg) 0%,
+        transparent 100%
+    );
 }
 
 .marquee-track {
