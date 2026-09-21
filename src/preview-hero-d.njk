@@ -1,0 +1,141 @@
+---
+layout: base.njk
+isHome: true
+title: "preview: hero D — merged masthead, real scale, real motion"
+description: "preview"
+scrollTitle: "preview D ✦ "
+permalink: "preview-hero-d.html"
+---
+<style>
+    .pv-note {
+        background: rgba(0, 255, 204, 0.08);
+        border: 1px solid var(--color-border);
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-align: center;
+    }
+    .pv-note a {
+        color: var(--color-accent);
+    }
+
+    /* Variation D — A's structure (one merged opening statement, no
+       redundant second "welcome" heading) at closer to B's scale, but
+       fixing the two things that made A/B both read as flat/generic:
+       (1) the wordmark reuses the REAL .var-title class instead of a
+       fresh static clone, so it's actually tied to scroll velocity
+       (--v) and the hover chromatic-aberration morph like everywhere
+       else the wordmark appears on the site -- on mobile that means it
+       has a small continuous reaction as you scroll instead of sitting
+       dead; (2) the divider is a thin single-ink dot-screen strip
+       (same halftone technique as the plates), not a flat solid-color
+       bar -- nothing else on the site is a flat color fill, so a solid
+       rule read as an outlier even without being able to name why. */
+    .pv-d {
+        padding: var(--spacing-lg) 0 var(--spacing-lg);
+    }
+    .pv-d .kicker {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 550;
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-d .var-title {
+        font-size: clamp(3.5rem, 19vw, 7.5rem);
+        margin: 0 -1px var(--spacing-md);
+    }
+    .pv-d .screen-rule {
+        position: relative;
+        height: 10px;
+        margin-bottom: var(--spacing-md);
+        opacity: 0.8;
+        background-size: 7px 7px;
+        background-image: radial-gradient(
+                circle at 25% 25%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            ),
+            radial-gradient(
+                circle at 75% 75%,
+                var(--color-accent) 0 1px,
+                transparent 1.3px
+            );
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 8%,
+            black 92%,
+            transparent
+        );
+    }
+    .pv-d .lede {
+        font-size: 19px;
+        line-height: 1.55;
+        max-width: 46ch;
+        color: var(--color-text);
+        margin-bottom: var(--spacing-sm);
+    }
+    .pv-d .lede + p {
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-md);
+    }
+    .pv-d .inline-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        padding-top: var(--spacing-sm);
+        border-top: 1px solid var(--color-border);
+    }
+    .pv-d .inline-links a {
+        font-family: var(--font-display);
+        font-variation-settings: "MONO" 1, "wght" 500;
+        font-size: 14px;
+        color: var(--color-text-muted);
+    }
+    .pv-d .inline-links a:hover {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+</style>
+
+<p class="pv-note">
+    variation D — merged masthead, real scale &amp; motion &middot;
+    <a href="preview-hero-a.html">A</a> &middot;
+    <a href="preview-hero-b.html">B</a> &middot;
+    <a href="preview-hero-c.html">C</a> &middot;
+    <a href="index.html">back to real site</a>
+</p>
+
+<section class="pv-d">
+    <p class="kicker">
+        el &middot; pre-press apprentice &middot; design + dev
+    </p>
+    <h1 class="var-title">rgb-b</h1>
+    <div class="screen-rule" aria-hidden="true"></div>
+    <p class="lede">
+        A rare combination of art and IT skills — pre-press apprentice
+        with a background in visual arts, design, and development.
+    </p>
+    <p>
+        R&amp;D tinkerer, enough networking knowledge to run my own
+        servers and manage others. Melbourne, Australia.
+    </p>
+    <div class="inline-links">
+        <a href="https://www.linkedin.com/in/eloise-bartrop-braybon-407060212/"
+            >linkedin</a
+        >
+        <a href="https://cherryslabs.elphiene.com">cherry's labs</a>
+        <a href="mailto:el@rgb-b.com">email</a>
+    </div>
+</section>
